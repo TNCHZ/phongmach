@@ -35,10 +35,15 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         String createNguoiDungTable = "CREATE TABLE NguoiDung (" +
                 "TaiKhoanID INTEGER PRIMARY KEY, " +
                 "HoTen TEXT NOT NULL, " +
+                "GioiTinh TEXT, " +
+                "NamSinh TEXT, " +
+                "DiaChi TEXT, " +
+                "CCCD TEXT UNIQUE, " +
                 "SoDT TEXT UNIQUE, " +
                 "Email TEXT UNIQUE, " +
                 "VaiTro TEXT, " +
                 "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
+
 
         // Tạo bảng Admin
         String createAdminTable = "CREATE TABLE Admin (" +
@@ -174,7 +179,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             ContentValues taiKhoan = new ContentValues();
             taiKhoan.put("TaiKhoan", username);
             taiKhoan.put("MatKhau", password);
-            taiKhoan.put("NgayThamGia", setting.getCurrentDate());
+            taiKhoan.put("NgayThamGia", Setting.getCurrentDate());
             taiKhoan.put("HoatDong", 1);
             long addTK = db.insert("TaiKhoan", null, taiKhoan);
             if (addTK == -1) {

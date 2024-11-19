@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.jpyou.Login">
+    tools:context="com.example.jpyou.User.UserSignIn">
 
     <TextView
         android:id="@+id/textView"
@@ -22,14 +22,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="text" />
+        android:inputType="phone"
+        android:hint="Nhập số điện thoại"
+        />
 
     <EditText
         android:id="@+id/txtPasswork_User"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:hint="Nhập mật khẩu"
+        />
 
     <CheckBox
         android:id="@+id/ckbShow_User"
