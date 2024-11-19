@@ -11,11 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/lam"
-        android:padding="20dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="20dp">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imgLogo_UserInterface"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:scaleType="fitXY"
@@ -33,20 +33,21 @@
             android:textStyle="bold" />
 
         <ImageButton
-            android:id="@+id/imgbtnAvatar_FragmentUserHome"
+            android:id="@+id/imgbtnAvatar_UserInterface"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/ic_person" />
     </LinearLayout>
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager_User"
+        android:id="@+id/viewPager_UserInterface"
+        android:layout_marginTop="90dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottomNavigation_User" />
+        android:layout_above="@id/bottomNavigation_UserInterface" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigation_User"
+        android:id="@+id/bottomNavigation_UserInterface"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

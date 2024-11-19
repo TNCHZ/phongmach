@@ -33,8 +33,8 @@ public class UserSignUp extends AppCompatActivity {
 
         db = new MyDatabaseHelper(this);
 
-        txtUsername = findViewById(R.id.txtPasswordSignUp_User);
-        txtPassword = findViewById(R.id.txtUserNameSignUp_User);
+        txtUsername = findViewById(R.id.txtUserNameSignUp_User);
+        txtPassword = findViewById(R.id.txtPasswordSignUp_User);
 
         btnAddUser = findViewById(R.id.btnAdd_User);
 

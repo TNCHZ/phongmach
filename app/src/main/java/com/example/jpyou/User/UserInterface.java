@@ -38,8 +38,8 @@ public class UserInterface extends AppCompatActivity {
         txtHeader = findViewById(R.id.txtHeader_UserInterface);
         txtHeader.setText("Trang chủ");
 
-        viewPager = findViewById(R.id.viewPager_User);
-        bottomNavigationView = findViewById(R.id.bottomNavigation_User);
+        viewPager = findViewById(R.id.viewPager_UserInterface);
+        bottomNavigationView = findViewById(R.id.bottomNavigation_UserInterface);
         ViewPagerAdapterUser adapterUser = new ViewPagerAdapterUser(this);
         viewPager.setAdapter(adapterUser);
 

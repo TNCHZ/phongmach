@@ -12,8 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
+        <activity android:name="com.example.jpyou.User.UserInterface"
+            android:parentActivityName="com.example.jpyou.User.UserSignIn"/>
         <activity
-            android:name="com.example.jpyou.User.UserInterface"
+            android:name="com.example.jpyou.User.UserSignUp"
+            android:parentActivityName="com.example.jpyou.User.UserSignIn" />
+
+        <activity
+            android:name="com.example.jpyou.User.UserSignIn"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

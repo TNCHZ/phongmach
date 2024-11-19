@@ -37,12 +37,16 @@ public class UserSignIn extends AppCompatActivity {
         txtUsername = findViewById(R.id.txtUserName_User);
         txtPassword = findViewById(R.id.txtPasswork_User);
 
+
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (db.verifyPassword(txtUsername.getText().toString(), txtPassword.getText().toString(), "Bệnh nhân").equals("-1"))
+                String taiKhoanID = db.verifyPassword(txtUsername.getText().toString(), txtPassword.getText().toString(), "Bệnh nhân");
+                if (taiKhoanID.equals("-1"))
                     return;
-
+                Intent intent = new Intent(UserSignIn.this, UserInterface.class);
+                intent.putExtra("TaiKhoanID", taiKhoanID);
+                startActivity(intent);
             }
         });
 
