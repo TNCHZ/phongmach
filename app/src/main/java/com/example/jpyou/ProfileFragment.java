@@ -1,4 +1,4 @@
-package com.example.jpyou.User.UserFragment;
+package com.example.jpyou;
 
 import android.os.Bundle;
 
@@ -12,10 +12,10 @@ import com.example.myapplication.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ProfileUserFragment#newInstance} factory method to
+ * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileUserFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class ProfileUserFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ProfileUserFragment() {
+    public ProfileFragment() {
         // Required empty public constructor
     }
 
@@ -39,8 +39,8 @@ public class ProfileUserFragment extends Fragment {
      * @return A new instance of fragment ProfileUserFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProfileUserFragment newInstance(String param1, String param2) {
-        ProfileUserFragment fragment = new ProfileUserFragment();
+    public static ProfileFragment newInstance(String param1, String param2) {
+        ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

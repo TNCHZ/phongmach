@@ -41,16 +41,24 @@
                 android:layout_height="match_parent" >
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/btnTreatment_FragmentUserHome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Đặt lịch khám" />
+                    android:background="@drawable/custom_button"
+                    android:text="Đặt lịch khám"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/btnVaccination_FragmentUserHome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Đặt lịch tiêm chủng" />
+                    android:text="Đặt lịch tiêm chủng"
+                    android:background="@drawable/custom_button"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
             </TableRow>
 
             <TableRow
@@ -58,16 +66,24 @@
                 android:layout_height="match_parent" >
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/btnTest_FragmentUserHome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Đặt lịch xét nghiệm" />
+                    android:text="Đặt lịch xét nghiệm"
+                    android:background="@drawable/custom_button"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
 
                 <Button
-                    android:id="@+id/button4"
+                    android:id="@+id/btnResults_FragmentUserHome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Xem kết quả khám " />
+                    android:background="@drawable/custom_button"
+                    android:text="Xem kết quả khám"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
             </TableRow>
 
         </TableLayout>

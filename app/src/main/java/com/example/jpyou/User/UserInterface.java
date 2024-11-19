@@ -35,7 +35,7 @@ public class UserInterface extends AppCompatActivity {
             return insets;
         });
 
-        txtHeader = findViewById(R.id.txtHeader_UserInterface);
+        txtHeader = findViewById(R.id.textViewHeader_UserInterface);
         txtHeader.setText("Trang chủ");
 
         viewPager = findViewById(R.id.viewPager_UserInterface);

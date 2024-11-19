@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/textView2"
@@ -22,6 +22,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Nhập số điện thoại"
+        app:backgroundTint="@null"
+        android:background="@drawable/custome_edit_text"
         android:inputType="phone" />
 
     <TextView
@@ -39,6 +41,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Nhập mật khẩu"
+        app:backgroundTint="@null"
+        android:background="@drawable/custome_edit_text"
         android:inputType="textPassword" />
 
     <Button

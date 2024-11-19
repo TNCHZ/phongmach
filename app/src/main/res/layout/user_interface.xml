@@ -22,7 +22,7 @@
             android:src="@drawable/jpyou" />
 
         <TextView
-            android:id="@+id/txtHeader_UserInterface"
+            android:id="@+id/textViewHeader_UserInterface"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
