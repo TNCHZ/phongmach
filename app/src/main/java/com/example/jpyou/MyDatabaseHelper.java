@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -34,7 +35,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         // Tạo bảng NguoiDung
         String createNguoiDungTable = "CREATE TABLE NguoiDung (" +
                 "TaiKhoanID INTEGER PRIMARY KEY, " +
-                "HoTen TEXT NOT NULL, " +
+                "HoTen TEXT, " +
                 "GioiTinh TEXT, " +
                 "NamSinh TEXT, " +
                 "DiaChi TEXT, " +
@@ -172,71 +173,27 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public void addNguoiDung(String username, String password, String tenNguoiDung, String gioiTinh, String ngaySinh, String diaChi, String email, String soDT, String cccd, String chuyenKhoa, String chucVu) {
+    public void addUser(String username, String password, String role) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         try {
-            ContentValues taiKhoan = new ContentValues();
-            taiKhoan.put("TaiKhoan", username);
-            taiKhoan.put("MatKhau", password);
-            taiKhoan.put("NgayThamGia", Setting.getCurrentDate());
-            taiKhoan.put("HoatDong", 1);
-            long addTK = db.insert("TaiKhoan", null, taiKhoan);
-            if (addTK == -1) {
-                Toast.makeText(context, "Không thêm được tài khoản", Toast.LENGTH_SHORT).show();
-                return;
-            }
+            ContentValues account = new ContentValues();
+            account.put("TaiKhoan", username);
+            account.put("MatKhau", password);
+            account.put("NgayThamGia", Setting.getCurrentDate());
+            account.put("HoatDong", 1);
+            long addAccount = db.insert("TaiKhoan", null, account);
 
-            // Bước 1: Thêm người dùng vào bảng NguoiDung
-            ContentValues NguoiDung = new ContentValues();
-            NguoiDung.put("TaiKhoanID", addTK);
-            NguoiDung.put("HoTen", tenNguoiDung);  // Updated column name
-            NguoiDung.put("GioiTinh", gioiTinh);
-            NguoiDung.put("NamSinh", ngaySinh);
-            NguoiDung.put("DiaChi", diaChi);
-            NguoiDung.put("CCCD", cccd);
-            NguoiDung.put("SoDT", soDT);
-            NguoiDung.put("Email", email);
-            NguoiDung.put("VaiTro", chucVu);
-            long addNguoiDung = db.insert("NguoiDung", null, NguoiDung);
+            ContentValues userinform = new ContentValues();
+            userinform.put("TaiKhoanID", addAccount);
+            userinform.put("VaiTro", role);
+            long addUserInform = db.insert("NguoiDung", null, userinform);
 
-            if (addNguoiDung == -1) {
-                Toast.makeText(context, "Không thêm được người dùng", Toast.LENGTH_SHORT).show();
-            }
+            ContentValues patientinform = new ContentValues();
+            patientinform.put("TaiKhoanID", addAccount);
+            long addpatientinform = db.insert("BenhNhan", null, patientinform);
 
-            switch (chucVu) {
-                case "Bác sĩ": {
-                    ContentValues bacSi = new ContentValues();
-                    bacSi.put("ChuyenKhoa", chuyenKhoa);
-                    bacSi.put("TaiKhoanID", addTK);  // Use the same TaiKhoanID
-                    long addBacSi = db.insert("BacSi", null, bacSi);
-                    if (addBacSi == -1) {
-                        Toast.makeText(context, "Không thêm được bác sĩ", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                }
-                case "Y tá": {
-                    ContentValues yTa = new ContentValues();
-                    yTa.put("KhoaPhuTrach", chuyenKhoa);  // Use chuyenKhoa as KhoaPhuTrach for YTa
-                    yTa.put("TaiKhoanID", addTK);  // Use the same TaiKhoanID
-                    long addYTa = db.insert("Yta", null, yTa);
-                    if (addYTa == -1) {
-                        Toast.makeText(context, "Không thêm được y tá", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                }
-                default: {
-                    ContentValues benhNhan = new ContentValues();
-                    benhNhan.put("TaiKhoanID", addTK);
-                    long addYTa = db.insert("BenhNhan", null, benhNhan);
-                    if (addYTa == -1) {
-                        Toast.makeText(context, "Không thêm được y tá", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                break;
 
-            }
-            Toast.makeText(context, "Thêm dữ liệu thành công", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(context, "Lỗi khi thêm người dùng: " + e.getMessage(), Toast.LENGTH_LONG).show();
         } finally {
@@ -254,25 +211,26 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Truy vấn JOIN để lấy cả mật khẩu, vai trò và TaiKhoanID
-        String query = "SELECT TaiKhoan.MatKhau, TaiKhoan.TaiKhoanID, NguoiDung.VaiTro " +
+        String query = "SELECT TaiKhoan.MatKhau, TaiKhoan.TaiKhoanID, NguoiDung.VaiTro, TaiKhoan.HoatDong " +
                 "FROM TaiKhoan " +
                 "INNER JOIN NguoiDung ON TaiKhoan.TaiKhoanID = NguoiDung.TaiKhoanID " +
-                "WHERE TaiKhoan.TaiKhoan = ?";
-
+                "WHERE TaiKhoan.TaiKhoan = ? AND TaiKhoan.HoatDong = 1";
         Cursor cursor = db.rawQuery(query, new String[]{username});
 
         String taiKhoanID = "-1";
         if (cursor.moveToFirst()) {
-            // Lấy mật khẩu, vai trò và TaiKhoanID từ kết quả truy vấn
-            String storedPassword = cursor.getString(cursor.getColumnIndex("MatKhau"));
-            String storedVaiTro = cursor.getString(cursor.getColumnIndex("VaiTro"));
-            String storedTaiKhoanID = cursor.getString(cursor.getColumnIndex("TaiKhoanID"));
 
-            // So sánh mật khẩu và vai trò
-            if (storedPassword != null && storedPassword.equals(plainPassword)) {
-                if (storedVaiTro != null && storedVaiTro.equals(vaiTro)) {
-                    // Đăng nhập thành công, gán TaiKhoanID cho biến kết quả
-                    taiKhoanID = storedTaiKhoanID;
+            String storedPassword = cursor.getString(cursor.getColumnIndex("MatKhau"));
+            String storedRole = cursor.getString(cursor.getColumnIndex("VaiTro"));
+            String storedId = cursor.getString(cursor.getColumnIndex("TaiKhoanID"));
+            String storedActive = cursor.getString(cursor.getColumnIndex("HoatDong"));
+
+            if (storedActive.equals("1")) {
+                if (storedPassword != null && storedPassword.equals(plainPassword)) {
+                    if (storedRole != null && storedRole.equals(vaiTro)) {
+                        // Đăng nhập thành công, gán TaiKhoanID cho biến kết quả
+                        taiKhoanID = storedId;
+                    }
                 }
             }
         }

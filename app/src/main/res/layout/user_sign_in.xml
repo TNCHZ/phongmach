@@ -51,5 +51,5 @@
         android:id="@+id/btnSignUp_User"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Đăng ký tài khoản mới ?" />
+        android:text="Đăng ký tài khoản mới" />
 </LinearLayout>
