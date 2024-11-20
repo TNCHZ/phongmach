@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item
+        android:id="@+id/navListParient_Nurse"
+        android:icon="@drawable/ic_list"
+        android:title="Danh sách Bệnh nhân" />
+    <item
+        android:id="@+id/navProfile_Nurse"
+        android:icon="@drawable/ic_person"
+        android:title="Thông tin" />
 </menu>

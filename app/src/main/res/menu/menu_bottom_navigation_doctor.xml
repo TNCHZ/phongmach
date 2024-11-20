@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Item" />
-    <item android:title="Item" />
+    <item
+        android:id="@+id/navHome_Doctor"
+        android:icon="@drawable/ic_home"
+        android:title="Trang chủ" />
+    <item
+        android:id="@+id/navSchedule_Doctor"
+        android:icon="@drawable/ic_list"
+        android:title="Lịch trình" />
+    <item
+        android:id="@+id/navProfile_Doctor"
+        android:icon="@drawable/ic_person"
+        android:title="Thông tin" />
 </menu>

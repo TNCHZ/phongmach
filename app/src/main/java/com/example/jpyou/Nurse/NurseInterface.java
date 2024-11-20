@@ -1,6 +1,5 @@
-package com.example.jpyou.User;
+package com.example.jpyou.Nurse;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -13,64 +12,59 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.jpyou.User.UserFragments.ViewPagerAdapterUser;
+import com.example.jpyou.Nurse.NurseFragments.ViewPagerAdapterNurse;
 import com.example.myapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class UserInterface extends AppCompatActivity {
+public class NurseInterface extends AppCompatActivity {
     private ViewPager2 viewPager;
-    private BottomNavigationView bottomNavigationView;
+    private BottomNavigationView bottomNavigationViewn;
     private TextView txtHeader;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.user_interface);
+        setContentView(R.layout.nurse_interface);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        txtHeader = findViewById(R.id.textViewHeader_UserInterface);
-        txtHeader.setText("Trang chủ");
+        txtHeader =findViewById(R.id.textViewHearder_NurseInterface);
+        txtHeader.setText("Danh sách Bệnh nhân");
 
-        viewPager = findViewById(R.id.viewPager_UserInterface);
-        bottomNavigationView = findViewById(R.id.bottomNavigation_UserInterface);
-        ViewPagerAdapterUser adapterUser = new ViewPagerAdapterUser(this);
-        viewPager.setAdapter(adapterUser);
+        viewPager = findViewById(R.id.viewPager_NurseInterface);
+        bottomNavigationViewn = findViewById(R.id.bottomNavigation_NurseInterface);
+        ViewPagerAdapterNurse adapterNurse = new ViewPagerAdapterNurse(this);
+        viewPager.setAdapter(adapterNurse);
 
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+        bottomNavigationViewn.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if (id == R.id.navHome_User){
+                if (id==R.id.navListParient_Nurse){
                     viewPager.setCurrentItem(0);
-                } else if (id == R.id.navSchedule_User) {
+                } else if (id == R.id.navProfile_Nurse) {
                     viewPager.setCurrentItem(1);
-                } else if (id == R.id.navProfile_User) {
-                    viewPager.setCurrentItem(2);
                 }
                 txtHeader.setText(item.getTitle());
                 return true;
             }
         });
+
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                switch (position) {
+                switch (position){
                     case 1:
-                        bottomNavigationView.getMenu().findItem(R.id.navSchedule_User).setChecked(true);
-                        break;
-                    case 2:
-                        bottomNavigationView.getMenu().findItem(R.id.navProfile_User).setChecked(true);
+                        bottomNavigationViewn.getMenu().findItem(R.id.navListParient_Nurse).setChecked(true);
                         break;
                     default:
-                        bottomNavigationView.getMenu().findItem(R.id.navHome_User).setChecked(true);
+                        bottomNavigationViewn.getMenu().findItem(R.id.navProfile_Nurse).setChecked(true);
                         break;
                 }
             }
