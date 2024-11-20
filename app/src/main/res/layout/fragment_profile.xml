@@ -12,11 +12,11 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnUpdateInformation_FragmentProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Thông tin cá nhân"
+            android:text="Cập nhật thông tin cá nhân"
             android:textAlignment="viewStart"
             android:textSize="16sp" />
 
@@ -40,6 +40,20 @@
             android:layout_height="wrap_content"
             android:text="Liên hệ hỗ trợ"
             android:textAlignment="viewStart" />
+
+        <Button
+            android:id="@+id/btnChangePassword_FragmentProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Đổi mật khẩu"
+            android:textAlignment="viewStart" />
+
+        <Button
+            android:id="@+id/btnLogOut_FragmentProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Đăng xuất"
+            android:textAlignment="viewStart"/>
     </LinearLayout>
 
 </FrameLayout>

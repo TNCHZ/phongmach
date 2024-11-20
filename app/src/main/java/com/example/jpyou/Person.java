@@ -1,30 +1,31 @@
 package com.example.jpyou;
+import androidx.annotation.NonNull;
 
-public class Person {
-    private String id;
+import java.io.Serializable;
+
+public class Person implements Serializable {
+    private int id;
     private String hoTen;
     private String gioiTinh;
     private String ngaySinh;
     private String soDT;
-    private String diaChi;
     private String email;
 
+    public Person() {
+    }
 
-    public Person(String id, String hoTen, String gioiTinh, String ngaySinh, String soDT, String diaChi, String email) {
+    public Person(int id, String hoTen, String gioiTinh, String ngaySinh, String soDT, String email) {
         this.id = id;
         this.hoTen = hoTen;
         this.gioiTinh = gioiTinh;
         this.ngaySinh = ngaySinh;
         this.soDT = soDT;
-        this.diaChi = diaChi;
         this.email = email;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
-
-
     public String getHoTen() {
         return hoTen;
     }
@@ -57,19 +58,17 @@ public class Person {
         this.soDT = soDT;
     }
 
-    public String getDiaChi() {
-        return diaChi;
-    }
-
-    public void setDiaChi(String diaChi) {
-        this.diaChi = diaChi;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "alo";
     }
 }

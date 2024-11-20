@@ -37,12 +37,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 "TaiKhoanID INTEGER PRIMARY KEY, " +
                 "HoTen TEXT, " +
                 "GioiTinh TEXT, " +
-                "NamSinh TEXT, " +
-                "DiaChi TEXT, " +
-                "CCCD TEXT UNIQUE, " +
+                "NgaySinh TEXT, " +
                 "SoDT TEXT UNIQUE, " +
                 "Email TEXT UNIQUE, " +
-                "VaiTro TEXT, " +
                 "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
 
 
@@ -75,40 +72,41 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         // Tạo bảng LichHen
         String createLichHenTable = "CREATE TABLE LichHen (" +
-                "lichhenID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "bacsiID INTEGER, " +
-                "benhnhanID INTEGER, " +
+                "LichhenID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "BacSiID INTEGER, " +
+                "BenhNhanID INTEGER, " +
                 "YtaID INTEGER, " +
-                "ngayKham TEXT NOT NULL, " +
-                "gioKham TEXT NOT NULL," +
-                "soThuTuKham INTEGER, " +
-                "tinhTrangHen INTEGER," +
-                "khoaChon TEXT NOT NULL," +
-                "FOREIGN KEY(bacsiID) REFERENCES BacSi(BacSiID), " +
-                "FOREIGN KEY(benhnhanID) REFERENCES BenhNhan(BenhNhanID), " +
+                "NgayKham TEXT NOT NULL, " +
+                "GioKham TEXT NOT NULL," +
+                "SoThuTuKham INTEGER, " +
+                "TinhTrangHen INTEGER," +
+                "KhoaChon TEXT NOT NULL," +
+                "FOREIGN KEY(BacSiID) REFERENCES BacSi(BacSiID), " +
+                "FOREIGN KEY(BenhNhanID) REFERENCES BenhNhan(BenhNhanID), " +
                 "FOREIGN KEY(YtaID) REFERENCES Yta(YtaID));";
 
         // Tạo bảng ketQuaChuanDoan
-        String createKetQuaChuanDoanTable = "CREATE TABLE ketQuaChuanDoan (" +
-                "ketquachuandoanID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "tenKetQuaChuanDoan TEXT NOT NULL, " +
-                "trieuChung TEXT, " +
-                "ngayKeToa TEXT, " +
-                "bacsiID INTEGER, " +
-                "benhnhanID INTEGER, " +
-                "FOREIGN KEY(bacsiID) REFERENCES BacSi(BacSiID), " +
-                "FOREIGN KEY(benhnhanID) REFERENCES BenhNhan(BenhNhanID));";
+        String createKetQuaChuanDoanTable = "CREATE TABLE KetQuaChuanDoan (" +
+                "KetQuaChuanDoanID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "TenKetQuaChuanDoan TEXT NOT NULL, " +
+                "TrieuChung TEXT, " +
+                "NgayKeToa TEXT, " +
+                "BacSiID INTEGER, " +
+                "BenhNhanID INTEGER, " +
+                "FOREIGN KEY(BacSiID) REFERENCES BacSi(BacSiID), " +
+                "FOREIGN KEY(BenhNhanID) REFERENCES BenhNhan(BenhNhanID));";
+
 
         // Tạo bảng Thuoc
         String createThuocTable = "CREATE TABLE Thuoc (" +
-                "thuocID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "tenThuoc TEXT NOT NULL);";
+                "ThuocID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "TenThuoc TEXT NOT NULL);";
 
         // Tạo bảng ToaThuoc
         String createToaThuocTable = "CREATE TABLE ToaThuoc (" +
-                "toathuocID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "ketquachuandoanID INTEGER, " +
-                "FOREIGN KEY(ketquachuandoanID) REFERENCES ketQuaChuanDoan(ketquachuandoanID));";
+                "ToathuocID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "KetQuaChuanDoanID INTEGER, " +
+                "FOREIGN KEY(KetquachuandoanID) REFERENCES KetQuaChuanDoan(KetQuaChuanDoanID));";
 
         // Tạo bảng ToaThuoc_Thuoc
         String createToaThuocThuocTable = "CREATE TABLE ToaThuoc_Thuoc (" +
@@ -117,8 +115,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 "LieuDung TEXT, " +
                 "HuongDanSuDung TEXT, " +
                 "PRIMARY KEY(ThuocID, ToaThuocID), " +
-                "FOREIGN KEY(ThuocID) REFERENCES Thuoc(thuocID), " +
-                "FOREIGN KEY(ToaThuocID) REFERENCES ToaThuoc(toathuocID));";
+                "FOREIGN KEY(ThuocID) REFERENCES Thuoc(ThuocID), " +
+                "FOREIGN KEY(ToaThuocID) REFERENCES ToaThuoc(ToaThuocID));";
 
         // Thực thi các lệnh tạo bảng
         db.execSQL(createTaiKhoanTable);
@@ -139,8 +137,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(insertTaiKhoan1);
         db.execSQL(insertTaiKhoan2);
 
-        String insertNguoiDung1 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen, VaiTro) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_user'), 'Admin User', 'Admin');";
-        String insertNguoiDung2 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen, VaiTro) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_report'), 'Admin Report', 'Admin');";
+        String insertNguoiDung1 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_user'), 'Admin User');";
+        String insertNguoiDung2 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_report'), 'Admin Report');";
 
         db.execSQL(insertNguoiDung1);
         db.execSQL(insertNguoiDung2);
@@ -173,7 +171,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public void addUser(String username, String password, String role) {
+    public void addUser(String username, String password, String name, String gender, String dayOfBirth, String phone, String email) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         try {
@@ -186,12 +184,17 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
             ContentValues userinform = new ContentValues();
             userinform.put("TaiKhoanID", addAccount);
-            userinform.put("VaiTro", role);
+            userinform.put("HoTen", name);
+            userinform.put("GioiTinh", gender);
+            userinform.put("NgaySinh", dayOfBirth);
+            userinform.put("SoDT", phone);
+            userinform.put("Email", email);
             long addUserInform = db.insert("NguoiDung", null, userinform);
 
             ContentValues patientinform = new ContentValues();
             patientinform.put("TaiKhoanID", addAccount);
             long addpatientinform = db.insert("BenhNhan", null, patientinform);
+
 
 
         } catch (Exception e) {
@@ -204,34 +207,29 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-
-
     @SuppressLint("Range")
     public String verifyPassword(String username, String plainPassword, String vaiTro) {
         SQLiteDatabase db = this.getReadableDatabase();
+        String query = null;
 
-        // Truy vấn JOIN để lấy cả mật khẩu, vai trò và TaiKhoanID
-        String query = "SELECT TaiKhoan.MatKhau, TaiKhoan.TaiKhoanID, NguoiDung.VaiTro, TaiKhoan.HoatDong " +
-                "FROM TaiKhoan " +
-                "INNER JOIN NguoiDung ON TaiKhoan.TaiKhoanID = NguoiDung.TaiKhoanID " +
-                "WHERE TaiKhoan.TaiKhoan = ? AND TaiKhoan.HoatDong = 1";
+        switch (vaiTro) {
+            case "Bệnh nhân":
+                query = "SELECT TaiKhoan.MatKhau, TaiKhoan.TaiKhoanID, TaiKhoan.HoatDong " +
+                        "FROM TaiKhoan " +
+                        "JOIN BenhNhan ON TaiKhoan.TaiKhoanID = BenhNhan.TaiKhoanID " +
+                        "WHERE TaiKhoan.TaiKhoan = ? AND TaiKhoan.HoatDong = 1";
+                break;
+        }
         Cursor cursor = db.rawQuery(query, new String[]{username});
 
         String taiKhoanID = "-1";
         if (cursor.moveToFirst()) {
 
             String storedPassword = cursor.getString(cursor.getColumnIndex("MatKhau"));
-            String storedRole = cursor.getString(cursor.getColumnIndex("VaiTro"));
             String storedId = cursor.getString(cursor.getColumnIndex("TaiKhoanID"));
-            String storedActive = cursor.getString(cursor.getColumnIndex("HoatDong"));
 
-            if (storedActive.equals("1")) {
-                if (storedPassword != null && storedPassword.equals(plainPassword)) {
-                    if (storedRole != null && storedRole.equals(vaiTro)) {
-                        // Đăng nhập thành công, gán TaiKhoanID cho biến kết quả
-                        taiKhoanID = storedId;
-                    }
-                }
+            if (storedPassword != null && storedPassword.equals(plainPassword)) {
+                taiKhoanID = storedId;
             }
         }
 
@@ -239,6 +237,32 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return taiKhoanID;
+    }
+
+    @SuppressLint("Range")
+    public Person getInformation(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Person ps = null;
+        String query = "SELECT * " +
+                "FROM NguoiDung " +
+                "WHERE TaiKhoanID = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{id});
+
+        if (cursor.moveToFirst()) {
+            // Lấy dữ liệu từ Cursor và tạo đối tượng Person
+            int taiKhoanID = cursor.getInt(cursor.getColumnIndex("TaiKhoanID"));
+            String hoTen = cursor.getString(cursor.getColumnIndex("HoTen"));
+            String gioiTinh = cursor.getString(cursor.getColumnIndex("GioiTinh"));
+            String ngaySinh = cursor.getString(cursor.getColumnIndex("NgaySinh"));
+            String soDT = cursor.getString(cursor.getColumnIndex("SoDT"));
+            String email = cursor.getString(cursor.getColumnIndex("Email"));
+
+            // Khởi tạo đối tượng Person với các giá trị lấy từ database
+            ps = new Person(taiKhoanID, hoTen, gioiTinh, ngaySinh, soDT, email);
+        }
+
+        return ps;
     }
 
 }

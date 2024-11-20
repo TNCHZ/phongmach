@@ -1,8 +1,12 @@
 package com.example.jpyou.User;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -13,6 +17,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.jpyou.ProfileFragment;
 import com.example.jpyou.User.UserFragments.ViewPagerAdapterUser;
 import com.example.myapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -22,8 +27,8 @@ public class UserInterface extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView bottomNavigationView;
     private TextView txtHeader;
+    private ImageButton imgbtnAvatarUserInterface;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +43,26 @@ public class UserInterface extends AppCompatActivity {
         txtHeader = findViewById(R.id.textViewHeader_UserInterface);
         txtHeader.setText("Trang chủ");
 
+
+        SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("TaiKhoanID", getIntent().getStringExtra("TaiKhoanID"));
+        editor.apply();
+
         viewPager = findViewById(R.id.viewPager_UserInterface);
         bottomNavigationView = findViewById(R.id.bottomNavigation_UserInterface);
         ViewPagerAdapterUser adapterUser = new ViewPagerAdapterUser(this);
         viewPager.setAdapter(adapterUser);
+
+
+        imgbtnAvatarUserInterface = findViewById(R.id.imgbtnAvatar_UserInterface);
+        imgbtnAvatarUserInterface.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomNavigationView.getMenu().findItem(R.id.navHome_User).setChecked(true);
+                viewPager.setCurrentItem(2);
+            }
+        });
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
