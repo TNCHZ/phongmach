@@ -1,5 +1,6 @@
 package com.example.jpyou.Nurse.NurseFragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -10,18 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.jpyou.Nurse.SchedulePatientAdapter;
 import com.example.jpyou.Nurse.SchedulePatient;
+import com.example.jpyou.Nurse.SchedulePatientAdapter;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SchedulePatientNurseFragment#newInstance} factory method to
+ * Use the {@link CancelPatientNurseFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SchedulePatientNurseFragment extends Fragment {
+public class CancelPatientNurseFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,7 +33,7 @@ public class SchedulePatientNurseFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public SchedulePatientNurseFragment() {
+    public CancelPatientNurseFragment() {
         // Required empty public constructor
     }
 
@@ -42,11 +43,11 @@ public class SchedulePatientNurseFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ScheduleNurseFragment.
+     * @return A new instance of fragment CancelSchedulePatientNurseFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SchedulePatientNurseFragment newInstance(String param1, String param2) {
-        SchedulePatientNurseFragment fragment = new SchedulePatientNurseFragment();
+    public static CancelPatientNurseFragment newInstance(String param1, String param2) {
+        CancelPatientNurseFragment fragment = new CancelPatientNurseFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -63,31 +64,28 @@ public class SchedulePatientNurseFragment extends Fragment {
         }
     }
 
-    ListView listView;
-    ArrayList<SchedulePatient> arrayList;
-    SchedulePatientAdapter adapter;
-    Context context;
+
+    //====================================================================
+    private ListView listView;
+    private ArrayList<SchedulePatient> arrayList;
+    private SchedulePatientAdapter adapter;
+    private Context context;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_nurse_schedule_patient, container, false);
+        View viewCancelPatient = inflater.inflate(R.layout.fragment_nurse_cancel_patient, container, false);
         {
-            listView = (ListView) view.findViewById(R.id.listSchedulePatient_ScheduleNurseFragment);
-            //Add các phiếu khám
+            listView = (ListView) viewCancelPatient.findViewById(R.id.list_CancelPatientNurseFragment);
             arrayList = new ArrayList<>();
-            arrayList.add(new SchedulePatient("Tuấn", "Bệnh: chán đời", R.drawable.ic_person));
-            arrayList.add(new SchedulePatient("Tú", "Bệnh: sốt, ho, xổ mũi, phê pha, ngáo đớ,...", R.drawable.ic_person));
-            arrayList.add(new SchedulePatient("Đức", "Bệnh: Sơ hở là về quê bỏ rơi Tú", R.drawable.ic_person));
-            arrayList.add(new SchedulePatient("Minh", "Bệnh: Hắc xì dễ thương", R.drawable.ic_person));
-            arrayList.add(new SchedulePatient("Chương", "Bệnh: hết tiền", R.drawable.ic_person));
-            arrayList.add(new SchedulePatient("Trung", "Bệnh: Đẹp trai vãi", R.drawable.ic_person));
-
-
-            context = view.getContext();
+            SchedulePatient p1;
+            p1 = new SchedulePatient("nguyen Van A", "aaa", R.drawable.ic_person);
+            arrayList.add(p1);
+            context = viewCancelPatient.getContext();
             adapter = new SchedulePatientAdapter(context, R.layout.nurse_row_schedule_patient, arrayList);
             listView.setAdapter(adapter);
         }
-        return view;
+        return viewCancelPatient;
     }
 }

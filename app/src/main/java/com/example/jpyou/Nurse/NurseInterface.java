@@ -34,7 +34,7 @@ public class NurseInterface extends AppCompatActivity {
         });
 
         txtHeader = findViewById(R.id.textViewHearder_NurseInterface);
-        txtHeader.setText("Danh sách Bệnh nhân");
+        txtHeader.setText("Xác nhận lịch khám");
 
         viewPager = findViewById(R.id.viewPager_NurseInterface);
         bottomNavigationView = findViewById(R.id.bottomNavigation_NurseInterface);
@@ -45,10 +45,12 @@ public class NurseInterface extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if (id == R.id.navSchedulePatient_Nurse) {
+                if (id == R.id.navConfirmPatient_Nurse) {
                     viewPager.setCurrentItem(0);
-                } else if (id == R.id.navProfile_Nurse) {
+                } else if (id == R.id.navCancelPatient_Nurse) {
                     viewPager.setCurrentItem(1);
+                } else if (id == R.id.navProfile_Nurse) {
+                    viewPager.setCurrentItem(2);
                 }
                 txtHeader.setText(item.getTitle());
                 return true;
@@ -61,10 +63,13 @@ public class NurseInterface extends AppCompatActivity {
                 super.onPageSelected(position);
                 switch (position) {
                     case 1:
+                        bottomNavigationView.getMenu().findItem(R.id.navCancelPatient_Nurse).setChecked(true);
+                        break;
+                    case 2:
                         bottomNavigationView.getMenu().findItem(R.id.navProfile_Nurse).setChecked(true);
                         break;
                     default:
-                        bottomNavigationView.getMenu().findItem(R.id.navSchedulePatient_Nurse).setChecked(true);
+                        bottomNavigationView.getMenu().findItem(R.id.navConfirmPatient_Nurse).setChecked(true);
                         break;
                 }
             }

@@ -2,9 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navSchedulePatient_Nurse"
+        android:id="@+id/navConfirmPatient_Nurse"
         android:icon="@drawable/ic_list"
-        android:title="Danh sách Bệnh nhân" />
+        android:title="Xác nhận lịch khám" />
+    <item
+        android:id="@+id/navCancelPatient_Nurse"
+        android:icon="@drawable/ic_cancel"
+        android:title="Hủy lịch khám" />
     <item
         android:id="@+id/navProfile_Nurse"
         android:icon="@drawable/ic_person"

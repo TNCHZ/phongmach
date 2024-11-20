@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
 
@@ -24,6 +25,16 @@ public class SchedulePatientAdapter extends BaseAdapter {
         this.schedulePatientList = schedulePatientList;
     }
 
+    //Lớp ViewHolder giúp tránh ánh xạ lặp đi lặp lại khi lướt lên xuống
+    private class ViewHolder{
+        TextView txtName;
+        TextView txtDescribe;
+        ImageView imgAvatar;
+        Button btnComfirm;
+        Button btnCancel;
+    }
+
+
     @Override
     public int getCount() {
         return schedulePatientList.size();
@@ -37,38 +48,50 @@ public class SchedulePatientAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) { //Trả về mỗi dòng trên item của ListView
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE); //Khai báo của hệ thống
-        view = inflater.inflate(layout, null); //Lấy layout NurseRowSchedule
+        ViewHolder holder;
+        if (view == null){
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE); //Khai báo của hệ thống
+            view = inflater.inflate(layout, null); //Lấy layout NurseRowSchedule
+            holder = new ViewHolder();
+            //Ánh xạ "id" từ view
+            holder.txtName = (TextView) view.findViewById(R.id.textViewName_NurseRowSchedule);
+            holder.txtDescribe = (TextView) view.findViewById(R.id.textViewDescribe_NurseRowSchedule);
+            holder.imgAvatar = (ImageView) view.findViewById(R.id.imgAvatar_NurseRowSchedule);
+            holder.btnComfirm = (Button) view.findViewById(R.id.btnConfirm_NurseRowSchedule);
+            //holder.btnCancel = (Button) view.findViewById(R.id.btnCancel_NurseRowSchedule);
+            view.setTag(holder);//Truyền trạng thái ánh xạ
+        }else {
+            holder = (ViewHolder) view.getTag();
+        }
 
-        //Ánh xạ "id" từ view
-        TextView txtName = (TextView) view.findViewById(R.id.textViewName_NurseRowSchedule);
-        TextView txtDescribe = (TextView) view.findViewById(R.id.textViewDescribe_NurseRowSchedule);
-        ImageView imgAvatar = (ImageView) view.findViewById(R.id.imgAvatar_NurseRowSchedule);
-        Button btnComfirm = (Button) view.findViewById(R.id.btnConfirm_NurseRowSchedule);
-        Button btnCancel = (Button) view.findViewById(R.id.btnCancel_NurseRowSchedule);
+
+
 
         //Gán giá trị
         SchedulePatient schedulePatient = schedulePatientList.get(i);
 
-        txtName.setText(schedulePatient.getTxtName());
-        txtDescribe.setText(schedulePatient.getTxtDescribe());
-        imgAvatar.setImageResource(schedulePatient.getImgAvatar());
-        btnComfirm.setOnClickListener(new View.OnClickListener() {
+        holder.txtName.setText(schedulePatient.getTxtName());
+        holder.txtDescribe.setText(schedulePatient.getTxtDescribe());
+        holder.imgAvatar.setImageResource(schedulePatient.getImgAvatar());
+        holder.btnComfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!schedulePatient.getBlConfirmed()){
                     schedulePatient.setBlConfirmed(true);
+                    Toast.makeText(context.getApplicationContext(), "True",Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (schedulePatient.getBlConfirmed()){
-                    schedulePatient.setBlConfirmed(false);
-                }
-            }
-        });
+
+//        holder.btnCancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (schedulePatient.getBlConfirmed()){
+//                    schedulePatient.setBlConfirmed(false);
+//                    Toast.makeText(context.getApplicationContext(), "False", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
 
         return view;

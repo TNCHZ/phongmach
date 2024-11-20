@@ -6,7 +6,6 @@ public class SchedulePatient {
     private Integer imgAvatar;
     private Boolean blConfirmed;
 
-
     public SchedulePatient(String txtName, String txtDescribe, Integer imgAvatar) {
         this.txtName = txtName;
         this.txtDescribe = txtDescribe;
