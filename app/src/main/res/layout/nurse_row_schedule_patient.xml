@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:backgroundTint="@null"
+    android:background="@drawable/custom_button_cancel" >
+
+    <ImageView
+        android:id="@+id/imgAvatar_NurseRowSchedule"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_margin="10dp"
+        app:backgroundTint="@null"
+        android:background="@drawable/custom_button_cancel"
+        app:srcCompat="@drawable/ic_person" />
+
+    <TextView
+        android:id="@+id/textViewName_NurseRowSchedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@id/btnConfirm_NurseRowSchedule"
+        android:layout_toRightOf="@id/imgAvatar_NurseRowSchedule"
+        android:text="Name"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewDescribe_NurseRowSchedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewName_NurseRowSchedule"
+        android:layout_toLeftOf="@id/btnConfirm_NurseRowSchedule"
+        android:layout_toRightOf="@id/imgAvatar_NurseRowSchedule"
+        android:text="Describe"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btnConfirm_NurseRowSchedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/custom_button"
+        android:text="Confirm"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:backgroundTint="@null" />
+
+    <Button
+        android:id="@+id/btnCancel_NurseRowSchedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnConfirm_NurseRowSchedule"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/custom_button_cancel"
+        android:text="Cancel"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        app:backgroundTint="@null" />
+</RelativeLayout>

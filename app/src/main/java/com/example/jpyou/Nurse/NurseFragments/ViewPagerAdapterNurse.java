@@ -16,9 +16,9 @@ public class ViewPagerAdapterNurse extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position){
-            case 0: return new ScheduleNurseFragment();
+            case 0: return new SchedulePatientNurseFragment();
             case 1: return new ProfileFragment();
-            default: return new ScheduleNurseFragment();
+            default: return new SchedulePatientNurseFragment();
         }
     }
 

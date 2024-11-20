@@ -8,11 +8,13 @@
     tools:context="com.example.jpyou.Nurse.NurseInterface">
 
     <LinearLayout
+        android:id="@+id/linearLayoutHeader_NurseInterface"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
         android:background="@color/lam"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:padding="15dp">
 
         <ImageView
             android:id="@+id/imgLogo_NurseInterface"
@@ -42,7 +44,7 @@
         android:id="@+id/viewPager_NurseInterface"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="90dp"
+        android:layout_below="@id/linearLayoutHeader_NurseInterface"
         android:layout_above="@id/bottomNavigation_NurseInterface" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

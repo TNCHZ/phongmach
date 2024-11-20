@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navListParient_Nurse"
+        android:id="@+id/navSchedulePatient_Nurse"
         android:icon="@drawable/ic_list"
         android:title="Danh sách Bệnh nhân" />
     <item
