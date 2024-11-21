@@ -15,45 +15,69 @@
             android:id="@+id/btnUpdateInformation_FragmentProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/custom_button_empty"
             android:text="Cập nhật thông tin cá nhân"
             android:textAlignment="viewStart"
-            android:textSize="16sp" />
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:backgroundTint="@null" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginTop="100dp"
+            android:layout_margin="5dp"
+            android:text="Cài đặt"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/button3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/custom_button_empty"
             android:text="Thông tin hỗ trợ"
-            android:textAlignment="viewStart" />
+            android:textAlignment="viewStart"
+            android:textColor="@color/black"
+            app:backgroundTint="@null" />
 
         <Button
             android:id="@+id/button4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/custom_button_empty"
             android:text="Liên hệ hỗ trợ"
-            android:textAlignment="viewStart" />
+            android:textAlignment="viewStart"
+            android:textColor="@color/black"
+            app:backgroundTint="@null" />
 
         <Button
             android:id="@+id/btnChangePassword_FragmentProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/custom_button_empty"
             android:text="Đổi mật khẩu"
-            android:textAlignment="viewStart" />
+            android:textAlignment="viewStart"
+            android:textColor="@color/black"
+            app:backgroundTint="@null" />
 
         <Button
             android:id="@+id/btnLogOut_FragmentProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/custom_button_empty"
             android:text="Đăng xuất"
-            android:textAlignment="viewStart"/>
+            android:textAlignment="viewStart"
+            android:textColor="@color/black"
+            app:backgroundTint="@null" />
     </LinearLayout>
 
 </FrameLayout>
