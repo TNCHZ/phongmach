@@ -2,8 +2,11 @@ package com.example.jpyou.User;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
@@ -19,6 +22,7 @@ public class UserSignIn extends AppCompatActivity {
     private Button btnSignIn, btnSignUp;
     private EditText txtUsername, txtPassword;
     private MyDatabaseHelper db;
+    private CheckBox ckbShowPasswork;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +35,13 @@ public class UserSignIn extends AppCompatActivity {
             return insets;
         });
         db = new MyDatabaseHelper(this);
-        btnSignUp = findViewById(R.id.btnSignUp_User);
-        btnSignIn = findViewById(R.id.btnSignIn_User);
+        btnSignUp = findViewById(R.id.btnSignUp_UserSignIn);
+        btnSignIn = findViewById(R.id.btnSignIn_UserSignIn);
 
-        txtUsername = findViewById(R.id.txtUserName_User);
-        txtPassword = findViewById(R.id.txtPasswork_User);
+        txtUsername = findViewById(R.id.txtUserName_UserSignIn);
+        txtPassword = findViewById(R.id.txtPasswork_UserSignIn);
 
+        showPasswork();
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,5 +63,22 @@ public class UserSignIn extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void showPasswork() {
+        ckbShowPasswork = findViewById(R.id.ckbShow_UserSignIn);
+        txtPassword = findViewById(R.id.txtPasswork_UserSignIn);
+
+        ckbShowPasswork.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked){
+                    txtPassword.setTransformationMethod(null);
+                }else {
+                    txtPassword.setTransformationMethod(new PasswordTransformationMethod());
+                    txtPassword.setSelection(txtPassword.getText().length());
+                }
+            }
+        });
     }
 }

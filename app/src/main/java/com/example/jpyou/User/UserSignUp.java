@@ -18,7 +18,7 @@ import com.example.myapplication.R;
 
 public class UserSignUp extends AppCompatActivity {
     private Button btnAddUser;
-    private EditText txtUsername, txtPassword, txtName, txtDayOfBirth, txtPhone, txtEmail;
+    private EditText txtPassword, txtName, txtDayOfBirth, txtPhone, txtEmail;
     private MyDatabaseHelper db;
     private RadioButton rdMale;
 
@@ -35,30 +35,28 @@ public class UserSignUp extends AppCompatActivity {
 
         db = new MyDatabaseHelper(this);
 
-        txtUsername = findViewById(R.id.txtUserNameSignUp_User);
-        txtPassword = findViewById(R.id.txtPasswordSignUp_User);
-        txtName = findViewById(R.id.txtNameSignUp_User);
-        txtDayOfBirth = findViewById(R.id.txtDayOfBirthSignUp_User);
-        txtPhone = findViewById(R.id.txtPhoneSignUp_User);
-        txtEmail = findViewById(R.id.txtEmailSignUp_User);
-        rdMale = findViewById(R.id.rdMaleSignUp_User);
+        txtPassword = findViewById(R.id.txtPassword_UserSignUp);
+        txtName = findViewById(R.id.txtName_UserSignUp);
+        txtDayOfBirth = findViewById(R.id.txtDayOfBirth_UserSignUp);
+        txtPhone = findViewById(R.id.txtPhone_UserSignUp);
+        txtEmail = findViewById(R.id.txtEmail_UserSignUp);
+        rdMale = findViewById(R.id.rdMale_UserSignUp);
 
 
-        btnAddUser = findViewById(R.id.btnAdd_User);
+        btnAddUser = findViewById(R.id.btnAdd_UserSignUp);
 
         btnAddUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = txtUsername.getText().toString();
                 String password = txtPassword.getText().toString();
                 String name = txtName.getText().toString();
                 String gender = rdMale.isChecked() ? "Nam" : "Nữ";
                 String dayOfBirth = txtDayOfBirth.getText().toString();
                 String phone = txtPhone.getText().toString();
                 String email = txtEmail.getText().toString();
-                if(username.isEmpty() || password.isEmpty() || name.isEmpty() || dayOfBirth.isEmpty() || phone.isEmpty() || email.isEmpty())
+                if(password.isEmpty() || name.isEmpty() || dayOfBirth.isEmpty() || phone.isEmpty() || email.isEmpty())
                     return;
-                db.addUser(username, password, name,gender, dayOfBirth, phone, email);
+                db.addUser(phone, password, name,gender, dayOfBirth, phone, email);
                 Intent intent = new Intent(UserSignUp.this, UserSignIn.class);
                 startActivity(intent);
             }

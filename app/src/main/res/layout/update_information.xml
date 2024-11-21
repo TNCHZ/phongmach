@@ -7,7 +7,7 @@
     >
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/textViewName_UserSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Nhập họ và tên" />
@@ -20,7 +20,7 @@
         android:inputType="text" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/textViewSex_UserSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Giới tính" />
@@ -39,7 +39,7 @@
             />
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/rdFemale_UserSignUp"
             android:layout_width="226dp"
             android:layout_height="wrap_content"
             android:text="Nữ" />
@@ -47,7 +47,7 @@
     </RadioGroup>
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/textViewBirtday_UserSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Ngày, tháng, năm sinh" />
@@ -60,7 +60,7 @@
         android:inputType="date" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/textViewPhone_UserSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Số điện thoại" />
@@ -73,7 +73,7 @@
         android:inputType="phone" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/textViewEmail_UserSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Email" />
