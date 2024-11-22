@@ -7,6 +7,9 @@ import java.util.List;
 public class UserInformation extends PersonInformation {
     private List<String> appointDay;
 
+    public UserInformation() {
+    }
+
     public UserInformation(int id, String hoTen, String gioiTinh, String ngaySinh, String soDT, String email) {
         super(id, hoTen, gioiTinh, ngaySinh, soDT, email);
     }

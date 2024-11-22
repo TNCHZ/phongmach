@@ -43,17 +43,22 @@ public class UserInterface extends AppCompatActivity {
         txtHeader = findViewById(R.id.textViewHeader_UserInterface);
         txtHeader.setText("Trang chủ");
 
-
         SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("TaiKhoanID", getIntent().getStringExtra("TaiKhoanID"));
         editor.apply();
 
+        setUpBottomNavigation();
+
+
+
+    }
+
+    private void setUpBottomNavigation() {
         viewPager = findViewById(R.id.viewPager_UserInterface);
         bottomNavigationView = findViewById(R.id.bottomNavigation_UserInterface);
         ViewPagerAdapterUser adapterUser = new ViewPagerAdapterUser(this);
         viewPager.setAdapter(adapterUser);
-
 
         imgbtnAvatarUserInterface = findViewById(R.id.imgbtnAvatar_UserInterface);
         imgbtnAvatarUserInterface.setOnClickListener(new View.OnClickListener() {

@@ -16,7 +16,6 @@ public class ViewPagerAdapterUser extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position){
-            case 0: return new HomeUserFragment();
             case 1: return new ScheduleUserFragment();
             case 2: return new ProfileFragment();
             default: return new HomeUserFragment();

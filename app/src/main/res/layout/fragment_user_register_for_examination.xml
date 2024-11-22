@@ -7,6 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/background_empty"
         android:orientation="vertical">
 
         <TableLayout
@@ -37,6 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="2"
                     android:ems="10"
+                    android:enabled="false"
                     android:inputType="text" />
             </TableRow>
 
@@ -138,28 +140,25 @@
             </TableRow>
         </TableLayout>
 
-        <TextClock
-            android:id="@+id/textClock_RegisterForExaminonUserFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
         <TableLayout
             android:id="@+id/tableMake_RegisterForExaminonUserFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:background="@drawable/custom_button_rim"
             android:stretchColumns="*">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <TextClock
+                    android:id="@+id/textClock_RegisterForExaminonUserFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
             </TableRow>
 
             <TableRow
@@ -168,10 +167,11 @@
 
                 <TextView
                     android:id="@+id/textView2_RegisterForExaminonUserFragment"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Chọn ngày khám"
                     android:textAlignment="center"
+                    android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -181,6 +181,7 @@
                     android:layout_height="wrap_content"
                     android:text="Chọn khoa khám"
                     android:textAlignment="center"
+                    android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -192,7 +193,7 @@
 
                 <EditText
                     android:id="@+id/editTextDate_RegisterForExaminonUserFragment"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="date" />
@@ -200,17 +201,23 @@
                 <Spinner
                     android:id="@+id/spinnerDepartment_RegisterForExaminonUserFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <Button
+                    android:id="@+id/btnUpdate_RegisterForExaminonUserFragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_span="2"
+                    android:text="Đặt lịch khám" />
             </TableRow>
 
         </TableLayout>
-
-        <Button
-            android:id="@+id/btnUpdate_RegisterForExaminonUserFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:text="Đặt lịch khám" />
 
     </LinearLayout>
 

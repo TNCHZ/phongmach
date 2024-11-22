@@ -71,12 +71,6 @@ public class UpdateInformation extends AppCompatActivity {
                 String email = txtEmail.getText().toString();
 
                 db.updateInformation(String.valueOf(id), name, gender, dayOfBirth, phone, email);
-                Log.d( "ID: ", String.valueOf(id));
-                Log.d( "Name: ", name);
-                Log.d( "Gender: ", gender);
-                Log.d( "Day of Birth: ", dayOfBirth);
-                Log.d( "Phone: ", phone);
-                Log.d( "Email: ", email);
 
                 Intent intent = new Intent(UpdateInformation.this, UserInterface.class);
                 startActivity(intent);

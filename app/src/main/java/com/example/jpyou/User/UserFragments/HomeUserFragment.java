@@ -1,43 +1,36 @@
 package com.example.jpyou.User.UserFragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
+import com.example.jpyou.MyDatabaseHelper;
 import com.example.myapplication.R;
 
 public class HomeUserFragment extends Fragment {
+    private String userID;
+    private MyDatabaseHelper db;
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
 
     public HomeUserFragment() {
         // Required empty public constructor
-    }
-    public static HomeUserFragment newInstance(String param1, String param2) {
-        HomeUserFragment fragment = new HomeUserFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
+        userID = sharedPreferences.getString("TaiKhoanID", null);
     }
 
     @Override
@@ -46,8 +39,30 @@ public class HomeUserFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_home, container, false);
         {
+            Button btnRegis = view.findViewById(R.id.btnTreatment_FragmentUserHome);
+            btnRegis.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    RegisterForExaminationUserFragment anotherFragment = new RegisterForExaminationUserFragment();
+                    transaction.replace(R.id.fragment_container_home, anotherFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+
+                }
+            });
+
+
+
 
         }
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 }

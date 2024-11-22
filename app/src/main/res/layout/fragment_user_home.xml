@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jpyou.User.UserFragments.HomeUserFragment">
+    android:id="@+id/fragment_container_home"
+    tools:context="com.example.jpyou.User.UserFragments.HomeUserFragment"
+    >
 
     <!-- TODO: Update blank fragment layout -->
 

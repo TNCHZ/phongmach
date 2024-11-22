@@ -76,10 +76,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 "BenhNhanID INTEGER, " +
                 "YtaID INTEGER, " +
                 "NgayKham TEXT NOT NULL, " +
-                "GioKham TEXT NOT NULL," +
                 "SoThuTuKham INTEGER, " +
                 "TinhTrangHen INTEGER," +
-                "KhoaChon TEXT NOT NULL," +
+                "Khoa TEXT NOT NULL," +
                 "FOREIGN KEY(BacSiID) REFERENCES BacSi(BacSiID), " +
                 "FOREIGN KEY(BenhNhanID) REFERENCES BenhNhan(BenhNhanID), " +
                 "FOREIGN KEY(YtaID) REFERENCES Yta(YtaID));";
@@ -266,12 +265,25 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void updateInformation(String id, String name, String gender, String dayOfBirth, String phone, String email) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String sql = "UPDATE NguoiDung SET HoTen = ?, GioiTinh = ?, NgaySinh = ?, SoDT = ?, Email = ? WHERE TaiKhoanID = ?";
+        String query = "UPDATE NguoiDung SET HoTen = ?, GioiTinh = ?, NgaySinh = ?, SoDT = ?, Email = ? WHERE TaiKhoanID = ?";
 
         // Sử dụng SQLiteStatement hoặc phương thức execSQL với các tham số
-        db.execSQL(sql, new String[]{name, gender, dayOfBirth, phone, email, id});
+        db.execSQL(query, new String[]{name, gender, dayOfBirth, phone, email, id});
 
         db.close(); // Đóng kết nối với cơ sở dữ liệu
     }
+
+    public void registerExamination(String id, String dayRegis, String department){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues regis = new ContentValues();
+        regis.put("BenhNhanID", id);
+        regis.put("NgayKham", dayRegis);
+        regis.put("Khoa", department);
+        long addRegis = db.insert("LichHen", null, regis);
+
+        db.close();
+    }
+
 
 }

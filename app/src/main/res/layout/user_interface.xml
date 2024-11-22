@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:background="@color/lam"
         android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:id="@+id/linearLayoutTop_UserInterface"
         android:padding="20dp">
 
         <ImageView
@@ -41,9 +43,9 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager_UserInterface"
-        android:layout_marginTop="90dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/linearLayoutTop_UserInterface"
         android:layout_above="@id/bottomNavigation_UserInterface" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
