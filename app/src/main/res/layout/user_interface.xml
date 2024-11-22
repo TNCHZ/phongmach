@@ -45,7 +45,7 @@
         android:id="@+id/viewPager_UserInterface"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/linearLayoutTop_UserInterface"
+        android:paddingTop="90dp"
         android:layout_above="@id/bottomNavigation_UserInterface" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
