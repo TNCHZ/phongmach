@@ -44,7 +44,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), UserUpdateInformation.class);
-                intent.putExtra("Person", db.getInformation(userID));
+                intent.putExtra("PersonInformation", db.getInformation(userID));
                 startActivity(intent);
             }
         });

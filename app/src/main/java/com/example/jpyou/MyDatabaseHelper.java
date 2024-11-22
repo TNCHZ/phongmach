@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -196,7 +195,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             long addpatientinform = db.insert("BenhNhan", null, patientinform);
 
 
-
         } catch (Exception e) {
             Toast.makeText(context, "Lỗi khi thêm người dùng: " + e.getMessage(), Toast.LENGTH_LONG).show();
         } finally {
@@ -240,9 +238,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     @SuppressLint("Range")
-    public Person getInformation(String id) {
+    public PersonInformation getInformation(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Person ps = null;
+        PersonInformation ps = null;
         String query = "SELECT * " +
                 "FROM NguoiDung " +
                 "WHERE TaiKhoanID = ?";
@@ -250,19 +248,30 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, new String[]{id});
 
         if (cursor.moveToFirst()) {
-            // Lấy dữ liệu từ Cursor và tạo đối tượng Person
-            int taiKhoanID = cursor.getInt(cursor.getColumnIndex("TaiKhoanID"));
-            String hoTen = cursor.getString(cursor.getColumnIndex("HoTen"));
-            String gioiTinh = cursor.getString(cursor.getColumnIndex("GioiTinh"));
-            String ngaySinh = cursor.getString(cursor.getColumnIndex("NgaySinh"));
-            String soDT = cursor.getString(cursor.getColumnIndex("SoDT"));
+            // Lấy dữ liệu từ Cursor và tạo đối tượng PersonInformation
+            int userID = cursor.getInt(cursor.getColumnIndex("TaiKhoanID"));
+            String name = cursor.getString(cursor.getColumnIndex("HoTen"));
+            String gender = cursor.getString(cursor.getColumnIndex("GioiTinh"));
+            String dayOfBirth = cursor.getString(cursor.getColumnIndex("NgaySinh"));
+            String phone = cursor.getString(cursor.getColumnIndex("SoDT"));
             String email = cursor.getString(cursor.getColumnIndex("Email"));
 
-            // Khởi tạo đối tượng Person với các giá trị lấy từ database
-            ps = new Person(taiKhoanID, hoTen, gioiTinh, ngaySinh, soDT, email);
+            // Khởi tạo đối tượng PersonInformation với các giá trị lấy từ database
+            ps = new PersonInformation(userID, name, gender, dayOfBirth, phone, email);
         }
 
         return ps;
+    }
+
+    public void updateInformation(String id, String name, String gender, String dayOfBirth, String phone, String email) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "UPDATE NguoiDung SET HoTen = ?, GioiTinh = ?, NgaySinh = ?, SoDT = ?, Email = ? WHERE TaiKhoanID = ?";
+
+        // Sử dụng SQLiteStatement hoặc phương thức execSQL với các tham số
+        db.execSQL(sql, new String[]{name, gender, dayOfBirth, phone, email, id});
+
+        db.close(); // Đóng kết nối với cơ sở dữ liệu
     }
 
 }

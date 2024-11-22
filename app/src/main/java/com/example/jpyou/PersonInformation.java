@@ -3,7 +3,7 @@ import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 
-public class Person implements Serializable {
+public class PersonInformation implements Serializable {
     private int id;
     private String hoTen;
     private String gioiTinh;
@@ -11,10 +11,10 @@ public class Person implements Serializable {
     private String soDT;
     private String email;
 
-    public Person() {
+    public PersonInformation() {
     }
 
-    public Person(int id, String hoTen, String gioiTinh, String ngaySinh, String soDT, String email) {
+    public PersonInformation(int id, String hoTen, String gioiTinh, String ngaySinh, String soDT, String email) {
         this.id = id;
         this.hoTen = hoTen;
         this.gioiTinh = gioiTinh;
@@ -26,6 +26,8 @@ public class Person implements Serializable {
     public int getId() {
         return id;
     }
+
+
     public String getHoTen() {
         return hoTen;
     }
