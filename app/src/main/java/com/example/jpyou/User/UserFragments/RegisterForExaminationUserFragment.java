@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.example.jpyou.MyDatabaseHelper;
@@ -52,9 +53,10 @@ public class RegisterForExaminationUserFragment extends Fragment {
             View view_UserInterface = inflater.inflate(R.layout.user_interface, container ,false);
             viewPager = view_UserInterface.findViewById(R.id.viewPager_UserInterface);
             linearLayout = view_UserInterface.findViewById(R.id.linearLayoutTop_UserInterface);
-            if (linearLayout != null){
-                linearLayout.setVisibility(View.GONE);
-            }
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) linearLayout.getLayoutParams();
+            params.removeRule(RelativeLayout.BELOW);
+            linearLayout.setLayoutParams(params);
+
 
             setUpSpinnerDepartment(view);
 

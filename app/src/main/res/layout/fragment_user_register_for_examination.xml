@@ -198,6 +198,7 @@
                     android:ems="10"
                     android:inputType="date" />
 
+
                 <Spinner
                     android:id="@+id/spinnerDepartment_RegisterForExaminonUserFragment"
                     android:layout_width="match_parent"
