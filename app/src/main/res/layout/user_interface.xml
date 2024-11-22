@@ -8,12 +8,12 @@
     tools:context="com.example.jpyou.User.UserInterface">
 
     <LinearLayout
+        android:id="@+id/linearLayoutTop_UserInterface"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:background="@color/lam"
         android:orientation="horizontal"
-        android:layout_alignParentTop="true"
-        android:id="@+id/linearLayoutTop_UserInterface"
         android:padding="20dp">
 
         <ImageView
@@ -39,14 +39,15 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/ic_person" />
+
     </LinearLayout>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager_UserInterface"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="90dp"
-        android:layout_above="@id/bottomNavigation_UserInterface" />
+        android:layout_above="@id/bottomNavigation_UserInterface"
+        android:layout_below="@id/linearLayoutTop_UserInterface" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation_UserInterface"

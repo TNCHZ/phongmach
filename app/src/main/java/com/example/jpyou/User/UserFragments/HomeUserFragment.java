@@ -50,7 +50,6 @@ public class HomeUserFragment extends Fragment {
                     transaction.replace(R.id.fragment_container_home, anotherFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
-
                 }
             });
 

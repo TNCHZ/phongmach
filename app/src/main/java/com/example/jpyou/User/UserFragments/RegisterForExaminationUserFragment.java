@@ -1,6 +1,7 @@
 package com.example.jpyou.User.UserFragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -25,6 +26,7 @@ import android.widget.Spinner;
 import com.example.jpyou.MyDatabaseHelper;
 import com.example.jpyou.PersonInformation;
 import com.example.jpyou.User.UserInformation;
+import com.example.jpyou.User.UserInterface;
 import com.example.myapplication.R;
 
 
@@ -38,9 +40,6 @@ public class RegisterForExaminationUserFragment extends Fragment {
     private String[] itemsDepartment;
     private Spinner spinner;
     private Context context;
-
-    private ViewPager2 viewPager;
-    private LinearLayout linearLayout;
 
 
     @Override
