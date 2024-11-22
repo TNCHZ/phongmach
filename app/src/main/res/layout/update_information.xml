@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/main"
-    >
+    android:id="@+id/main" >
 
     <TextView
         android:id="@+id/textViewName_UserSignUp"
@@ -35,8 +34,7 @@
             android:layout_width="203dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Nam"
-            />
+            android:text="Nam" />
 
         <RadioButton
             android:id="@+id/rdFemaleUpdate"

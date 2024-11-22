@@ -1,0 +1,217 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.example.jpyou.User.UserFragments.RegisterForExaminationUserFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TableLayout
+            android:id="@+id/tableInformation_RegisterForExaminonUserFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:shrinkColumns="*">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewName_RegisterForExaminonUserFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nhập họ và tên" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/txtName_RegisterForExaminonUserFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:ems="10"
+                    android:inputType="text" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewBirtday_RegisterForExaminonUserFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ngày, tháng, năm sinh" />
+
+                <TextView
+                    android:id="@+id/textViewSex_RegisterForExaminonUserFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Giới tính" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/txtDayOfBirth_RegisterForExaminonUserFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="date" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rdMale_RegisterForExaminonUserFragment"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="Nam" />
+
+                    <RadioButton
+                        android:id="@+id/rdFemale_RegisterForExaminonUserFragment"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Nữ" />
+
+                </RadioGroup>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewPhone_RegisterForExaminonUserFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Số điện thoại" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/txtPhone_RegisterForExaminonUserFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:ems="10"
+                    android:inputType="phone" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewEmail_RegisterForExaminonUserFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/txtEmail_RegisterForExaminonUserFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:ems="10"
+                    android:inputType="textEmailAddress" />
+            </TableRow>
+        </TableLayout>
+
+        <TextClock
+            android:id="@+id/textClock_RegisterForExaminonUserFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TableLayout
+            android:id="@+id/tableMake_RegisterForExaminonUserFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:stretchColumns="*">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView2_RegisterForExaminonUserFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Chọn ngày khám"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textViewDepartment_RegisterForExaminonUserFragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chọn khoa khám"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/editTextDate_RegisterForExaminonUserFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="date" />
+
+                <Spinner
+                    android:id="@+id/spinnerDepartment_RegisterForExaminonUserFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </TableRow>
+
+        </TableLayout>
+
+        <Button
+            android:id="@+id/btnUpdate_RegisterForExaminonUserFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="Đặt lịch khám" />
+
+    </LinearLayout>
+
+</FrameLayout>
