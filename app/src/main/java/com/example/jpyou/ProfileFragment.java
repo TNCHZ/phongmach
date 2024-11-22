@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.jpyou.User.UserInterface;
-import com.example.jpyou.User.UserUpdateInformation;
 import com.example.myapplication.R;
 
 
@@ -43,7 +42,7 @@ public class ProfileFragment extends Fragment {
         btnUpdateInformation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), UserUpdateInformation.class);
+                Intent intent = new Intent(getActivity(), UpdateInformation.class);
                 intent.putExtra("PersonInformation", db.getInformation(userID));
                 startActivity(intent);
             }
@@ -52,7 +51,7 @@ public class ProfileFragment extends Fragment {
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), UserUpdateInformation.class);
+                Intent intent = new Intent(getActivity(), UpdateInformation.class);
                 intent.putExtra("NamePerson", userID);
                 startActivity(intent);
             }

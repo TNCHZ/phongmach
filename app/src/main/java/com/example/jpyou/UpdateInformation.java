@@ -1,7 +1,8 @@
-package com.example.jpyou.User;
+package com.example.jpyou;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,15 +15,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.jpyou.MyDatabaseHelper;
-import com.example.jpyou.PersonInformation;
+import com.example.jpyou.User.UserInterface;
 import com.example.myapplication.R;
 
-public class UserUpdateInformation extends AppCompatActivity {
+public class UpdateInformation extends AppCompatActivity {
     private PersonInformation ps;
     private EditText txtName, txtDayOfBirth, txtPhone, txtEmail;
     private MyDatabaseHelper db;
-    private RadioButton rdMale;
+    private RadioButton rdMale, rdFemale;
     private Button btnUpdate;
 
     @Override
@@ -44,7 +44,8 @@ public class UserUpdateInformation extends AppCompatActivity {
         txtPhone = findViewById(R.id.txtPhoneUpdate);
         txtEmail = findViewById(R.id.txtEmailUpdate);
         rdMale = findViewById(R.id.rdMaleUpdate);
-
+        rdFemale = findViewById(R.id.rdFemaleUpdate);
+        
         txtName.setText(ps.getHoTen());
         txtDayOfBirth.setText(ps.getNgaySinh());
         txtPhone.setText(ps.getSoDT());
@@ -53,23 +54,31 @@ public class UserUpdateInformation extends AppCompatActivity {
         if (ps.getGioiTinh().equals("Nam")) {
             rdMale.setChecked(true);
         } else {
-            rdMale.setChecked(false);
+            rdFemale.setChecked(true);
         }
 
 
         btnUpdate = findViewById(R.id.btnUpdate);
         btnUpdate.setOnClickListener(new View.OnClickListener() {
-            int id = ps.getId();
-            String name = txtName.getText().toString();
-            String gender = rdMale.isChecked() ? "Nam" : "Nữ";
-            String dayOfBirth = txtDayOfBirth.getText().toString();
-            String phone = txtPhone.getText().toString();
-            String email = txtEmail.getText().toString();
-
             @Override
             public void onClick(View view) {
+
+                int id = ps.getId();
+                String name = txtName.getText().toString();
+                String gender = rdMale.isChecked() ? "Nam" : "Nữ";
+                String dayOfBirth = txtDayOfBirth.getText().toString();
+                String phone = txtPhone.getText().toString();
+                String email = txtEmail.getText().toString();
+
                 db.updateInformation(String.valueOf(id), name, gender, dayOfBirth, phone, email);
-                Intent intent = new Intent(UserUpdateInformation.this, UserInterface.class);
+                Log.d( "ID: ", String.valueOf(id));
+                Log.d( "Name: ", name);
+                Log.d( "Gender: ", gender);
+                Log.d( "Day of Birth: ", dayOfBirth);
+                Log.d( "Phone: ", phone);
+                Log.d( "Email: ", email);
+
+                Intent intent = new Intent(UpdateInformation.this, UserInterface.class);
                 startActivity(intent);
             }
         });

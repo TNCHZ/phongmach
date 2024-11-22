@@ -39,7 +39,7 @@
             />
 
         <RadioButton
-            android:id="@+id/rdFemale_UserSignUp"
+            android:id="@+id/rdFemaleUpdate"
             android:layout_width="226dp"
             android:layout_height="wrap_content"
             android:text="Nữ" />

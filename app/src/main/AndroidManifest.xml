@@ -22,7 +22,7 @@
             android:name="com.example.jpyou.User.UserInterface"
             android:parentActivityName="com.example.jpyou.User.UserSignIn" />
         <activity
-            android:name="com.example.jpyou.User.UserUpdateInformation"
+            android:name="com.example.jpyou.UpdateInformation"
             android:parentActivityName="com.example.jpyou.User.UserInterface" />
         <activity
             android:name="com.example.jpyou.User.UserSignUp"
