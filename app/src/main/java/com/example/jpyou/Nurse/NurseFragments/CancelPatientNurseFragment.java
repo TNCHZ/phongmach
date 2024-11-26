@@ -83,7 +83,7 @@ public class CancelPatientNurseFragment extends Fragment {
             p1 = new SchedulePatient("nguyen Van A", "aaa", R.drawable.ic_person);
             arrayList.add(p1);
             context = viewCancelPatient.getContext();
-            adapter = new SchedulePatientAdapter(context, R.layout.nurse_row_schedule_patient, arrayList);
+            adapter = new SchedulePatientAdapter(context, R.layout.row_list_patient, arrayList);
             listView.setAdapter(adapter);
         }
         return viewCancelPatient;

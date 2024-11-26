@@ -88,7 +88,7 @@ public class ConfirmPatientNurseFragment extends Fragment {
             arrayList.add(p2);
 
             context = view.getContext();
-            adapter = new SchedulePatientAdapter(context, R.layout.nurse_row_schedule_patient, arrayList);
+            adapter = new SchedulePatientAdapter(context, R.layout.row_list_patient, arrayList);
             listView.setAdapter(adapter);
         }
         return view;
