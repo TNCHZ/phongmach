@@ -64,9 +64,6 @@ public class SchedulePatientAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-
-
-
         //Gán giá trị
         SchedulePatient schedulePatient = schedulePatientList.get(i);
 
@@ -92,8 +89,6 @@ public class SchedulePatientAdapter extends BaseAdapter {
 //                }
 //            }
 //        });
-
-
         return view;
     }
 }
