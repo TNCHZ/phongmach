@@ -71,6 +71,7 @@ public class ConfirmPatientNurseFragment extends Fragment {
     private ArrayList<SchedulePatient> arrayList;
     private SchedulePatientAdapter adapter;
     private Context context;
+
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

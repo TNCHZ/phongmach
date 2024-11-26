@@ -1,5 +1,6 @@
 package com.example.jpyou.Doctor.DoctorFragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +8,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import com.example.jpyou.Nurse.SchedulePatient;
 import com.example.myapplication.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,10 +62,20 @@ public class MedicalRecordDoctorFragment extends Fragment {
         }
     }
 
+
+
+    //====================================================================
+    private ListView listView;
+    private Context context;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_doctor_medical_record, container, false);
+        View view = inflater.inflate(R.layout.fragment_doctor_medical_record, container, false);
+        {
+
+        }
+        return view;
     }
 }
