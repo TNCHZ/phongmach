@@ -5,14 +5,18 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.jpyou.Nurse.SchedulePatient;
 import com.example.jpyou.Nurse.SchedulePatientAdapter;
+import com.example.jpyou.User.UserFragments.RegisterForExaminationUserFragment;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
@@ -78,17 +82,35 @@ public class ScheduleDoctorFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_doctor_schedule, container, false);
         {
             listView = view.findViewById(R.id.list_ScheduleDoctorFragment);
-            arrayList = new ArrayList<>();
-            SchedulePatient p1, p2;
-            p1 = new SchedulePatient("Chương", "Bệnh: hết tiền", R.drawable.ic_person);
-            p2 = new SchedulePatient("Trung", "Bệnh: Đẹp trai vãi", R.drawable.ic_person);
-            arrayList.add(p1);
-            arrayList.add(p2);
+            init(view);
 
-            context = view.getContext();
-            adapter = new SchedulePatientAdapter(context, R.layout.row_list_patient, arrayList);
-            listView.setAdapter(adapter);
+//            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+//                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+//                    MedicalRecordDoctorFragment anotherFragment = new MedicalRecordDoctorFragment();
+//                    transaction.replace(R.id.fragment_medical_records, anotherFragment);
+//                    transaction.addToBackStack(null);
+//                    transaction.commit();
+//                }
+//            });
         }
         return view;
+    }
+
+    private void init(View view) {
+        listView = view.findViewById(R.id.list_ScheduleDoctorFragment);
+        arrayList = new ArrayList<>();
+
+        SchedulePatient p1, p2;
+        p1 = new SchedulePatient("Chương", "Bệnh: hết tiền", R.drawable.ic_person);
+        p2 = new SchedulePatient("Trung", "Bệnh: Đẹp trai vãi", R.drawable.ic_person);
+        arrayList.add(p1);
+        arrayList.add(p2);
+
+        context = view.getContext();
+        adapter = new SchedulePatientAdapter(context, R.layout.row_list_patient, arrayList);
+        listView.setAdapter(adapter);
     }
 }
