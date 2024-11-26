@@ -55,29 +55,7 @@ public class RegisterForExaminationUserFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_register_for_examination, container, false);
         {
-            ps = new PersonInformation();
-            db = new MyDatabaseHelper(getActivity());
-            ps = db.getInformation(userID);
-            txtName = view.findViewById(R.id.txtName_RegisterForExaminonUserFragment);
-            txtDayOfBirth = view.findViewById(R.id.txtDayOfBirth_RegisterForExaminonUserFragment);
-            txtPhone = view.findViewById(R.id.txtPhone_RegisterForExaminonUserFragment);
-            txtEmail = view.findViewById(R.id.txtEmail_RegisterForExaminonUserFragment);
-            rdMale = view.findViewById(R.id.rdMale_RegisterForExaminonUserFragment);
-            rdFemale = view.findViewById(R.id.rdFemale_RegisterForExaminonUserFragment);
-            txtDayRegis = view.findViewById(R.id.editTextDate_RegisterForExaminonUserFragment);
-
-            txtName.setText(ps.getHoTen());
-            txtDayOfBirth.setText(ps.getNgaySinh());
-            txtEmail.setText(ps.getEmail());
-            txtPhone.setText(ps.getSoDT());
-
-            if (ps.getGioiTinh().equals("Nam")) {
-                rdMale.setChecked(true);
-            } else {
-                rdFemale.setChecked(true);
-            }
-
-
+            init(view);
             setUpSpinnerDepartment(view);
 
             btnRegis = view.findViewById(R.id.btnUpdate_RegisterForExaminonUserFragment);
@@ -89,6 +67,30 @@ public class RegisterForExaminationUserFragment extends Fragment {
             });
         }
         return view;
+    }
+
+    private void init(View view) {
+        ps = new PersonInformation();
+        db = new MyDatabaseHelper(getActivity());
+        ps = db.getInformation(userID);
+        txtName = view.findViewById(R.id.txtName_RegisterForExaminonUserFragment);
+        txtDayOfBirth = view.findViewById(R.id.txtDayOfBirth_RegisterForExaminonUserFragment);
+        txtPhone = view.findViewById(R.id.txtPhone_RegisterForExaminonUserFragment);
+        txtEmail = view.findViewById(R.id.txtEmail_RegisterForExaminonUserFragment);
+        rdMale = view.findViewById(R.id.rdMale_RegisterForExaminonUserFragment);
+        rdFemale = view.findViewById(R.id.rdFemale_RegisterForExaminonUserFragment);
+        txtDayRegis = view.findViewById(R.id.editTextDate_RegisterForExaminonUserFragment);
+
+        txtName.setText(ps.getHoTen());
+        txtDayOfBirth.setText(ps.getNgaySinh());
+        txtEmail.setText(ps.getEmail());
+        txtPhone.setText(ps.getSoDT());
+
+        if (ps.getGioiTinh().equals("Nam")) {
+            rdMale.setChecked(true);
+        } else {
+            rdFemale.setChecked(true);
+        }
     }
 
     private void setUpSpinnerDepartment(View view) {
