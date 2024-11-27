@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,11 +17,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.jpyou.MyDatabaseHelper;
+import com.example.jpyou.WarningAccount;
 import com.example.myapplication.R;
 
 public class UserSignIn extends AppCompatActivity {
     private Button btnSignIn, btnSignUp;
     private EditText txtUsername, txtPassword;
+    private TextView txtWarning;
     private MyDatabaseHelper db;
     private CheckBox ckbShowPasswork;
 
@@ -34,27 +37,31 @@ public class UserSignIn extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        db = new MyDatabaseHelper(this);
-        btnSignUp = findViewById(R.id.btnSignUp_UserSignIn);
-        btnSignIn = findViewById(R.id.btnSignIn_UserSignIn);
 
+
+
+        db = new MyDatabaseHelper(this);
         txtUsername = findViewById(R.id.txtUserName_UserSignIn);
         txtPassword = findViewById(R.id.txtPasswork_UserSignIn);
-
+        txtWarning = findViewById(R.id.textViewWarning_UserSignIn);
         showPasswork();
+
+        btnSignUp = findViewById(R.id.btnSignUp_UserSignIn);
+        btnSignIn = findViewById(R.id.btnSignIn_UserSignIn);
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String taiKhoanID = db.verifyPassword(txtUsername.getText().toString(), txtPassword.getText().toString(), "Bệnh nhân");
-                if (taiKhoanID.equals("-1"))
-                    return;
-                Intent intent = new Intent(UserSignIn.this, UserInterface.class);
-                intent.putExtra("TaiKhoanID", taiKhoanID);
-                startActivity(intent);
+
+                WarningAccount warningAccount = new WarningAccount(txtUsername, txtPassword, taiKhoanID, txtWarning);
+                if (warningAccount.checkAccount()) {
+                    Intent intent = new Intent(UserSignIn.this, UserInterface.class);
+                    intent.putExtra("TaiKhoanID", taiKhoanID);
+                    startActivity(intent);
+                }
             }
         });
-
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,9 +69,7 @@ public class UserSignIn extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
-
     private void showPasswork() {
         ckbShowPasswork = findViewById(R.id.ckbShow_UserSignIn);
         txtPassword = findViewById(R.id.txtPasswork_UserSignIn);

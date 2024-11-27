@@ -44,10 +44,11 @@
             android:ems="10"
             android:hint="Nhập số điện thoại"
             android:inputType="phone"
+            android:maxLength="10"
             app:backgroundTint="@null" />
 
         <TextView
-            android:id="@+id/textViewWaring_UserSignIn"
+            android:id="@+id/textViewWarning_UserSignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/red"
