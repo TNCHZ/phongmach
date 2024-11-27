@@ -1,28 +1,29 @@
-package com.example.jpyou.Nurse.NurseFragments;
+package com.example.jpyou.Employee.Nurse.NurseFragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.jpyou.Nurse.SchedulePatient;
-import com.example.jpyou.Nurse.SchedulePatientAdapter;
+import com.example.jpyou.Employee.Nurse.SchedulePatientAdapter;
+import com.example.jpyou.MyDatabaseHelper;
+import com.example.jpyou.User.UserInformation;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CancelPatientNurseFragment#newInstance} factory method to
+ * Use the {@link ConfirmPatientNurseFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CancelPatientNurseFragment extends Fragment {
+public class ConfirmPatientNurseFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,7 +34,7 @@ public class CancelPatientNurseFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public CancelPatientNurseFragment() {
+    public ConfirmPatientNurseFragment() {
         // Required empty public constructor
     }
 
@@ -43,11 +44,11 @@ public class CancelPatientNurseFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CancelSchedulePatientNurseFragment.
+     * @return A new instance of fragment ScheduleNurseFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CancelPatientNurseFragment newInstance(String param1, String param2) {
-        CancelPatientNurseFragment fragment = new CancelPatientNurseFragment();
+    public static ConfirmPatientNurseFragment newInstance(String param1, String param2) {
+        ConfirmPatientNurseFragment fragment = new ConfirmPatientNurseFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,27 +66,32 @@ public class CancelPatientNurseFragment extends Fragment {
     }
 
 
+
     //====================================================================
     private ListView listView;
-    private ArrayList<SchedulePatient> arrayList;
+    private List<UserInformation> arrayList;
     private SchedulePatientAdapter adapter;
     private Context context;
+    private MyDatabaseHelper db;
 
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View viewCancelPatient = inflater.inflate(R.layout.fragment_nurse_cancel_patient, container, false);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_nurse_confirm_patient, container, false);
         {
-            listView = (ListView) viewCancelPatient.findViewById(R.id.list_CancelPatientNurseFragment);
+            db = new MyDatabaseHelper(getActivity());
+            listView = (ListView) view.findViewById(R.id.list_ComfirmPatientNurseFragment);
+            //Add các phiếu khám
             arrayList = new ArrayList<>();
-            SchedulePatient p1;
-            p1 = new SchedulePatient("nguyen Van A", "aaa", R.drawable.ic_person);
-            arrayList.add(p1);
-            context = viewCancelPatient.getContext();
+            arrayList = db.showPatient();
+
+            context = view.getContext();
+
             adapter = new SchedulePatientAdapter(context, R.layout.row_list_patient, arrayList);
             listView.setAdapter(adapter);
         }
-        return viewCancelPatient;
+        return view;
     }
 }

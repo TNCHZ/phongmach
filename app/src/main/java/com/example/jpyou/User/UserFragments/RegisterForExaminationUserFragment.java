@@ -1,16 +1,10 @@
 package com.example.jpyou.User.UserFragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.CompositePageTransformer;
-import androidx.viewpager2.widget.ViewPager2;
-
-import android.util.Log;
-import android.util.Printer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +12,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.example.jpyou.MyDatabaseHelper;
 import com.example.jpyou.PersonInformation;
-import com.example.jpyou.User.UserInformation;
-import com.example.jpyou.User.UserInterface;
 import com.example.myapplication.R;
 
 
@@ -62,7 +52,7 @@ public class RegisterForExaminationUserFragment extends Fragment {
             btnRegis.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    db.registerExamination(userID, txtDayRegis.getText().toString(), selectedItem);
+                    db.registerExamination(db.getPatientID(userID), txtDayRegis.getText().toString(), selectedItem);
                 }
             });
         }

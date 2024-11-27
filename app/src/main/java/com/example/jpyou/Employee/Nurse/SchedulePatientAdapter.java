@@ -1,6 +1,7 @@
-package com.example.jpyou.Nurse;
+package com.example.jpyou.Employee.Nurse;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.jpyou.User.UserInformation;
 import com.example.myapplication.R;
 
 import java.util.List;
@@ -17,12 +19,12 @@ import java.util.List;
 public class SchedulePatientAdapter extends BaseAdapter {
     private Context context;
     private Integer layout;
-    private List<SchedulePatient> schedulePatientList;
+    private List<UserInformation> userInformation;
 
-    public SchedulePatientAdapter(Context context, Integer layout, List<SchedulePatient> schedulePatientList) {
+    public SchedulePatientAdapter(Context context, Integer layout, List<UserInformation> userInformation) {
         this.context = context;
         this.layout = layout;
-        this.schedulePatientList = schedulePatientList;
+        this.userInformation = userInformation;
     }
 
     //Lớp ViewHolder giúp tránh ánh xạ lặp đi lặp lại khi lướt lên xuống
@@ -37,7 +39,7 @@ public class SchedulePatientAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return schedulePatientList.size();
+        return userInformation.size();
     } //Hiển thị mỗi phần từ trong List
 
     @Override
@@ -56,7 +58,6 @@ public class SchedulePatientAdapter extends BaseAdapter {
             //Ánh xạ "id" từ view
             holder.txtName = (TextView) view.findViewById(R.id.textViewName_NurseRowSchedule);
             holder.txtDescribe = (TextView) view.findViewById(R.id.textViewDescribe_NurseRowSchedule);
-            holder.imgAvatar = (ImageView) view.findViewById(R.id.imgAvatar_NurseRowSchedule);
             holder.btnComfirm = (Button) view.findViewById(R.id.btnConfirm_NurseRowSchedule);
             //holder.btnCancel = (Button) view.findViewById(R.id.btnCancel_NurseRowSchedule);
             view.setTag(holder);//Truyền trạng thái ánh xạ
@@ -65,16 +66,14 @@ public class SchedulePatientAdapter extends BaseAdapter {
         }
 
         //Gán giá trị
-        SchedulePatient schedulePatient = schedulePatientList.get(i);
-
-        holder.txtName.setText(schedulePatient.getTxtName());
-        holder.txtDescribe.setText(schedulePatient.getTxtDescribe());
-        holder.imgAvatar.setImageResource(schedulePatient.getImgAvatar());
+        UserInformation ps = userInformation.get(i);
+        holder.txtName.setText(ps.getHoTen());
+        holder.txtDescribe.setText(ps.getTxtDescribe());
         holder.btnComfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!schedulePatient.getBlConfirmed()){
-                    schedulePatient.setBlConfirmed(true);
+                if (!ps.getBlConfirmed()){
+                    ps.setBlConfirmed(true);
                     Toast.makeText(context.getApplicationContext(), "True",Toast.LENGTH_SHORT).show();
                 }
             }
@@ -83,8 +82,8 @@ public class SchedulePatientAdapter extends BaseAdapter {
 //        holder.btnCancel.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//                if (schedulePatient.getBlConfirmed()){
-//                    schedulePatient.setBlConfirmed(false);
+//                if (ps.getBlConfirmed()){
+//                    ps.setBlConfirmed(false);
 //                    Toast.makeText(context.getApplicationContext(), "False", Toast.LENGTH_SHORT).show();
 //                }
 //            }

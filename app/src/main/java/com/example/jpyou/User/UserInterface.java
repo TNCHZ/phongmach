@@ -1,10 +1,7 @@
 package com.example.jpyou.User;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -19,9 +16,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.jpyou.Nurse.NurseInterface;
-import com.example.jpyou.ProfileFragment;
-import com.example.jpyou.User.UserFragments.RegisterForExaminationUserFragment;
 import com.example.jpyou.User.UserFragments.ViewPagerAdapterUser;
 import com.example.myapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

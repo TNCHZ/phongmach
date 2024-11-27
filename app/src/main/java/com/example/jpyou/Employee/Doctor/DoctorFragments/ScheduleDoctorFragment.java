@@ -1,22 +1,18 @@
-package com.example.jpyou.Doctor.DoctorFragments;
+package com.example.jpyou.Employee.Doctor.DoctorFragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.jpyou.Nurse.SchedulePatient;
-import com.example.jpyou.Nurse.SchedulePatientAdapter;
-import com.example.jpyou.User.UserFragments.RegisterForExaminationUserFragment;
+import com.example.jpyou.Employee.Nurse.SchedulePatientAdapter;
+import com.example.jpyou.User.UserInformation;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
@@ -71,7 +67,7 @@ public class ScheduleDoctorFragment extends Fragment {
 
     //====================================================================
     private ListView listView;
-    private ArrayList<SchedulePatient> arrayList;
+    private ArrayList<UserInformation> arrayList;
     private SchedulePatientAdapter adapter;
     private Context context;
     @SuppressLint("MissingInflatedId")
@@ -103,9 +99,9 @@ public class ScheduleDoctorFragment extends Fragment {
         listView = view.findViewById(R.id.list_ScheduleDoctorFragment);
         arrayList = new ArrayList<>();
 
-        SchedulePatient p1, p2;
-        p1 = new SchedulePatient("Chương", "Bệnh: hết tiền", R.drawable.ic_person);
-        p2 = new SchedulePatient("Trung", "Bệnh: Đẹp trai vãi", R.drawable.ic_person);
+        UserInformation p1, p2;
+        p1 = new UserInformation("Chương", "Bệnh: hết tiền", R.drawable.ic_person);
+        p2 = new UserInformation("Trung", "Bệnh: Đẹp trai vãi", R.drawable.ic_person);
         arrayList.add(p1);
         arrayList.add(p2);
 

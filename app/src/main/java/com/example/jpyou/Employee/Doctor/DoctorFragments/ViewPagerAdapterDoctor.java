@@ -1,4 +1,4 @@
-package com.example.jpyou.Nurse.NurseFragments;
+package com.example.jpyou.Employee.Doctor.DoctorFragments;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -7,8 +7,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.jpyou.ProfileFragment;
 
-public class ViewPagerAdapterNurse extends FragmentStateAdapter {
-    public ViewPagerAdapterNurse(@NonNull FragmentActivity fragmentActivity) {
+public class ViewPagerAdapterDoctor extends FragmentStateAdapter {
+    public ViewPagerAdapterDoctor(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 
@@ -16,10 +16,10 @@ public class ViewPagerAdapterNurse extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position){
-            case 0: return new ConfirmPatientNurseFragment();
-            case 1: return new CancelPatientNurseFragment();
+            case 0: return new HomeDoctorFragment();
+            case 1: return new ScheduleDoctorFragment();
             case 2: return new ProfileFragment();
-            default: return new ConfirmPatientNurseFragment();
+            default: return new HomeDoctorFragment();
         }
     }
 

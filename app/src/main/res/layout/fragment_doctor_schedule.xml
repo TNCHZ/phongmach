@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jpyou.Doctor.DoctorFragments.ScheduleDoctorFragment">
+    tools:context="com.example.jpyou.Employee.Doctor.DoctorFragments.ScheduleDoctorFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <ListView

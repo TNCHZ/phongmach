@@ -6,9 +6,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import com.example.jpyou.User.UserInformation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
     private Context context;
@@ -280,9 +286,62 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         regis.put("BenhNhanID", id);
         regis.put("NgayKham", dayRegis);
         regis.put("Khoa", department);
+        regis.put("TinhTrangHen", 0);
         long addRegis = db.insert("LichHen", null, regis);
 
         db.close();
+    }
+
+    @SuppressLint("Recycle")
+    public List<UserInformation> showPatient() {
+        List<UserInformation> ls = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT NguoiDung.HoTen " +
+                "FROM LichHen " +
+                "JOIN BenhNhan ON LichHen.BenhNhanID = BenhNhan.BenhNhanID " +
+                "INNER JOIN NguoiDung ON BenhNhan.TaiKhoanID = NguoiDung.TaiKhoanID " +
+                "WHERE LichHen.TinhTrangHen = 0";
+
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor != null) {
+            try {
+                while (cursor.moveToNext()) {
+                    // Assuming UserInformation has a constructor that takes HoTen as a parameter
+                    String hoTen = cursor.getString(cursor.getColumnIndexOrThrow("HoTen"));
+                    Log.d("alo", hoTen);
+                    ls.add(new UserInformation(hoTen));
+                }
+            } finally {
+                cursor.close(); // Ensure the Cursor is closed to prevent resource leaks
+            }
+        }
+
+        return ls;
+    }
+
+    public String getPatientID(String id)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT BenhNhan.BenhNhanID " +
+                "FROM BenhNhan " +
+                "JOIN NguoiDung ON BenhNhan.TaiKhoanID = NguoiDung.TaiKhoanID " +
+                "WHERE NguoiDung.TaiKhoanID = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{id});
+
+        String patientID = null; // Default value in case no result is found
+        if (cursor != null) {
+            try {
+                if (cursor.moveToFirst()) {
+                    // Retrieve BenhNhanID from the first row of the result
+                    patientID = cursor.getString(cursor.getColumnIndexOrThrow("BenhNhanID"));
+                }
+            } finally {
+                cursor.close(); // Ensure the cursor is closed to avoid resource leaks
+            }
+        }
+        return patientID;
     }
 
 

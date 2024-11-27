@@ -4,7 +4,7 @@
     android:id="@+id/fragment_medical_records"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jpyou.Doctor.DoctorFragments.MedicalRecordDoctorFragment">
+    tools:context="com.example.jpyou.Employee.Doctor.DoctorFragments.MedicalRecordDoctorFragment">
 
     <!-- TODO: Update blank fragment layout -->
 

@@ -14,6 +14,10 @@ public class PersonInformation implements Serializable {
     public PersonInformation() {
     }
 
+    public PersonInformation(String hoTen) {
+        this.hoTen = hoTen;
+    }
+
     public PersonInformation(int id, String hoTen, String gioiTinh, String ngaySinh, String soDT, String email) {
         this.id = id;
         this.hoTen = hoTen;
@@ -71,6 +75,6 @@ public class PersonInformation implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        return "alo";
+        return this.hoTen;
     }
 }
