@@ -11,6 +11,13 @@ public class WarningAccount {
 
     private Boolean check = false;
 
+    public WarningAccount(EditText txtUserName, EditText txtPassword, TextView txtWarning) {
+        this.txtUserName = txtUserName;
+        this.txtPassword = txtPassword;
+        this.txtWarning = txtWarning;
+        this.taiKhoanID = "0";
+        this.check = false;
+    }
 
     public WarningAccount(EditText txtUserName, EditText txtPassword, String taiKhoanID, TextView txtWarning) {
         this.txtUserName = txtUserName;
@@ -21,14 +28,19 @@ public class WarningAccount {
     }
 
     public Boolean checkAccount() {
-        if (txtUserName.getText().toString().isEmpty() && txtPassword.getText().toString().isEmpty()) {
+        String userName = txtUserName.getText().toString();
+        String password = txtPassword.getText().toString();
+
+        if (userName.isEmpty() && password.isEmpty()) {
             txtWarning.setText("Vui lòng nhập \"Số điện thoại\" và \"Mật khẩu\"");
-        } else if (txtUserName.getText().toString().isEmpty()) {
+        } else if (userName.isEmpty()) {
             txtWarning.setText("Vui lòng nhập \"Số điện thoại\"");
-        } else if (txtUserName.getText().toString().length() <= 9) {
+        } else if (userName.length() <= 9) {
             txtWarning.setText("\"Số điện thoại\" không hợp lệ");
-        } else if (txtPassword.getText().toString().isEmpty()) {
+        } else if (password.isEmpty()) {
             txtWarning.setText("Vui lòng nhập \"Mật khẩu\"");
+        } else if (password.length() < 8) {
+            txtWarning.setText("Mật khẩu không đủ 8 ký tự");
         } else if (taiKhoanID.equals("-1")) {
             txtWarning.setText("Không tìm thông tin tài khoản");
         } else {

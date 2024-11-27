@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,13 +15,15 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.jpyou.MyDatabaseHelper;
+import com.example.jpyou.WarningAccount;
 import com.example.myapplication.R;
 
 public class UserSignUp extends AppCompatActivity {
     private Button btnAddUser;
-    private EditText txtPassword, txtName, txtDayOfBirth, txtPhone, txtEmail;
+    private EditText txtPassword, txtPasswordConfirm, txtName, txtDayOfBirth, txtPhone, txtEmail;
     private MyDatabaseHelper db;
     private RadioButton rdMale;
+    private TextView txtWarning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,18 +36,21 @@ public class UserSignUp extends AppCompatActivity {
             return insets;
         });
 
+
         db = new MyDatabaseHelper(this);
 
-        txtPassword = findViewById(R.id.txtPassword_UserSignUp);
         txtName = findViewById(R.id.txtName_UserSignUp);
         txtDayOfBirth = findViewById(R.id.txtDayOfBirth_UserSignUp);
-        txtPhone = findViewById(R.id.txtPhone_UserSignUp);
-        txtEmail = findViewById(R.id.txtEmail_UserSignUp);
         rdMale = findViewById(R.id.rdMale_UserSignUp);
+        txtEmail = findViewById(R.id.txtEmail_UserSignUp);
+
+        txtPhone = findViewById(R.id.txtPhone_UserSignUp);
+        txtWarning = findViewById(R.id.textViewWarning_UserSignUp);
+        txtPassword = findViewById(R.id.txtPassword_UserSignUp);
+        txtPasswordConfirm = findViewById(R.id.txtComfirmPassword_UserSignUp);
 
 
         btnAddUser = findViewById(R.id.btnAdd_UserSignUp);
-
         btnAddUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,11 +60,23 @@ public class UserSignUp extends AppCompatActivity {
                 String dayOfBirth = txtDayOfBirth.getText().toString();
                 String phone = txtPhone.getText().toString();
                 String email = txtEmail.getText().toString();
-                if(password.isEmpty() || name.isEmpty() || dayOfBirth.isEmpty() || phone.isEmpty() || email.isEmpty())
-                    return;
-                db.addUser(phone, password, name,gender, dayOfBirth, phone, email);
-                Intent intent = new Intent(UserSignUp.this, UserSignIn.class);
-                startActivity(intent);
+
+                if (name.isEmpty() || dayOfBirth.isEmpty() || email.isEmpty()) {
+                    txtWarning.setText("Vui lòng kiểm tra lại thông tin");
+                } else {
+                    WarningAccount warningAccount = new WarningAccount(txtPhone, txtPassword, txtWarning);
+                    if (warningAccount.checkAccount()) {
+                        if (txtPasswordConfirm.getText().toString().isEmpty()){
+                            txtWarning.setText("Vui lòng nhập lại mật khẩu");
+                        } else if (!txtPasswordConfirm.getText().toString().equals(password)) {
+                            txtWarning.setText("Mật khẩu nhập lại không trùng khớp");
+                        } else {
+                            db.addUser(phone, password, name, gender, dayOfBirth, phone, email);
+                            Intent intent = new Intent(UserSignUp.this, UserSignIn.class);
+                            startActivity(intent);
+                        }
+                    }
+                }
             }
         });
 
