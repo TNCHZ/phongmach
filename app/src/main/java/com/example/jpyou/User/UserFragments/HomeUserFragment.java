@@ -43,7 +43,6 @@ public class HomeUserFragment extends Fragment {
             btnRegis.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                     FragmentTransaction transaction = fragmentManager.beginTransaction();
                     RegisterForExaminationUserFragment anotherFragment = new RegisterForExaminationUserFragment();

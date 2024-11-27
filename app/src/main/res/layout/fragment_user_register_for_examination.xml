@@ -196,7 +196,7 @@
                 android:layout_height="match_parent">
 
                 <EditText
-                    android:id="@+id/editTextDate_RegisterForExaminonUserFragment"
+                    android:id="@+id/txtDate_RegisterForExaminonUserFragment"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:ems="10"

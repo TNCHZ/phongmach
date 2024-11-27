@@ -19,7 +19,7 @@
             android:name="com.example.jpyou.User.UserInterface"
             android:exported="false" />
         <activity
-            android:name="com.example.jpyou.User.UserSignIn"
+            android:name="com.example.jpyou.Employee.Nurse.NurseInterface"
             android:exported="false" />
         <activity
             android:name="com.example.jpyou.UpdateInformation"
@@ -28,7 +28,7 @@
             android:name="com.example.jpyou.User.UserSignUp"
             android:exported="false" />
         <activity
-            android:name="com.example.jpyou.Employee.Nurse.NurseInterface"
+            android:name="com.example.jpyou.User.UserSignIn"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

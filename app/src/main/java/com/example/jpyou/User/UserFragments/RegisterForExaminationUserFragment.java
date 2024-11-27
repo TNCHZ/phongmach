@@ -1,10 +1,14 @@
 package com.example.jpyou.User.UserFragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +23,8 @@ import com.example.jpyou.MyDatabaseHelper;
 import com.example.jpyou.PersonInformation;
 import com.example.myapplication.R;
 
+import java.util.Date;
+
 
 public class RegisterForExaminationUserFragment extends Fragment {
     private PersonInformation ps;
@@ -30,6 +36,7 @@ public class RegisterForExaminationUserFragment extends Fragment {
     private String[] itemsDepartment;
     private Spinner spinner;
     private Context context;
+    private EditText txtDate;
 
 
     @Override
@@ -39,6 +46,7 @@ public class RegisterForExaminationUserFragment extends Fragment {
         userID = sharedPreferences.getString("TaiKhoanID", null);
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,12 +55,21 @@ public class RegisterForExaminationUserFragment extends Fragment {
         {
             init(view);
             setUpSpinnerDepartment(view);
+            txtDate = view.findViewById(R.id.txtDate_RegisterForExaminonUserFragment);
 
             btnRegis = view.findViewById(R.id.btnUpdate_RegisterForExaminonUserFragment);
             btnRegis.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    db.registerExamination(db.getPatientID(userID), txtDayRegis.getText().toString(), selectedItem);
+                    if (txtDate.getText().toString().isEmpty()) {
+                        db.registerExamination(db.getPatientID(userID), txtDayRegis.getText().toString(), selectedItem);
+                    }
+                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                    @SuppressLint("CommitTransaction") FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    HomeUserFragment anotherFragment = new HomeUserFragment();
+                    transaction.replace(R.id.fragment_container_home, anotherFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                 }
             });
         }
@@ -69,7 +86,7 @@ public class RegisterForExaminationUserFragment extends Fragment {
         txtEmail = view.findViewById(R.id.txtEmail_RegisterForExaminonUserFragment);
         rdMale = view.findViewById(R.id.rdMale_RegisterForExaminonUserFragment);
         rdFemale = view.findViewById(R.id.rdFemale_RegisterForExaminonUserFragment);
-        txtDayRegis = view.findViewById(R.id.editTextDate_RegisterForExaminonUserFragment);
+        txtDayRegis = view.findViewById(R.id.txtDate_RegisterForExaminonUserFragment);
 
         txtName.setText(ps.getHoTen());
         txtDayOfBirth.setText(ps.getNgaySinh());
