@@ -12,7 +12,6 @@ public class WarningAccount {
     private Boolean check = false;
 
 
-
     public WarningAccount(EditText txtUserName, EditText txtPassword, String taiKhoanID, TextView txtWarning) {
         this.txtUserName = txtUserName;
         this.txtPassword = txtPassword;
@@ -22,12 +21,12 @@ public class WarningAccount {
     }
 
     public Boolean checkAccount() {
-        if (txtUserName.getText().toString().isEmpty() && txtPassword.getText().toString().isEmpty()){
+        if (txtUserName.getText().toString().isEmpty() && txtPassword.getText().toString().isEmpty()) {
             txtWarning.setText("Vui lòng nhập \"Số điện thoại\" và \"Mật khẩu\"");
-        } else if (txtUserName.getText().toString().length() <= 9) {
-            txtWarning.setText("\"Số điện thoại\" không hợp lệ");
         } else if (txtUserName.getText().toString().isEmpty()) {
             txtWarning.setText("Vui lòng nhập \"Số điện thoại\"");
+        } else if (txtUserName.getText().toString().length() <= 9) {
+            txtWarning.setText("\"Số điện thoại\" không hợp lệ");
         } else if (txtPassword.getText().toString().isEmpty()) {
             txtWarning.setText("Vui lòng nhập \"Mật khẩu\"");
         } else if (taiKhoanID.equals("-1")) {
