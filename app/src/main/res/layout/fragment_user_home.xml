@@ -101,6 +101,22 @@
                     app:backgroundTint="@null" />
             </TableRow>
 
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <Button
+                    android:id="@+id/btnCancel_FragmentUserHome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_button"
+                    android:text="Hủy lịch khám"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
+
+            </TableRow>
+
         </TableLayout>
 
     </LinearLayout>

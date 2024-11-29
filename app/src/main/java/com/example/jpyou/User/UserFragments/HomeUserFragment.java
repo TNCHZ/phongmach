@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
 import com.example.jpyou.MyDatabaseHelper;
 import com.example.myapplication.R;
@@ -20,7 +19,7 @@ import com.example.myapplication.R;
 public class HomeUserFragment extends Fragment {
     private String userID;
     private MyDatabaseHelper db;
-
+    private Button btnRegisTreatMent, btnRegisVaccinate;
 
     public HomeUserFragment() {
         // Required empty public constructor
@@ -39,8 +38,8 @@ public class HomeUserFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_home, container, false);
         {
-            Button btnRegis = view.findViewById(R.id.btnTreatment_FragmentUserHome);
-            btnRegis.setOnClickListener(new View.OnClickListener() {
+            btnRegisTreatMent = view.findViewById(R.id.btnTreatment_FragmentUserHome);
+            btnRegisTreatMent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
@@ -52,15 +51,19 @@ public class HomeUserFragment extends Fragment {
                 }
             });
 
-
-
-
+            btnRegisVaccinate = view.findViewById(R.id.btnVaccination_FragmentUserHome);
+            btnRegisVaccinate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    RegisterForVaccinateUserFragment anotherFragment = new RegisterForVaccinateUserFragment();
+                    transaction.replace(R.id.fragment_container_home, anotherFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+            });
         }
         return view;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
     }
 }

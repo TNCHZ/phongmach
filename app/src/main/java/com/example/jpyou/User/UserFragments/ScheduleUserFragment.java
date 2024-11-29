@@ -1,5 +1,7 @@
 package com.example.jpyou.User.UserFragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,64 +9,75 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.CalendarView;
+import android.widget.ListView;
 
+import com.example.jpyou.MyDatabaseHelper;
 import com.example.myapplication.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ScheduleUserFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+
+
 public class ScheduleUserFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String userID;
+    private CalendarView cldView;
+    private ListView lv;
+    private MyDatabaseHelper db;
+    private List<String> schedules;
 
     public ScheduleUserFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ScheduleUserFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ScheduleUserFragment newInstance(String param1, String param2) {
-        ScheduleUserFragment fragment = new ScheduleUserFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
+        userID = sharedPreferences.getString("TaiKhoanID", null);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_schedule, container, false);
-        {
-            //aaaaaaa
 
-        }
+        db = new MyDatabaseHelper(getActivity());
+        schedules = new ArrayList<>();
+
+        cldView = view.findViewById(R.id.calendar_ScheduleUserFragment);
+        lv = view.findViewById(R.id.listSchedule_ScheduleUserFragment);
+
+        schedules = db.getDaySchedule(db.getPatientID(userID));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                getActivity(), // Context
+                android.R.layout.simple_list_item_1, // Layout mặc định cho mỗi mục
+                schedules // Dữ liệu
+        );
+        lv.setAdapter(adapter);
+
+        cldView.setOnDateChangeListener((calendarView, year, month, dayOfMonth) -> {
+            // Chuyển đổi ngày được chọn thành định dạng "dd/MM/yyyy"
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, month, dayOfMonth);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            String selectedDate = sdf.format(calendar.getTime());
+
+            schedules = db.getScheduleAtDay(db.getPatientID(userID), selectedDate);
+            ArrayAdapter<String> adapter2 = new ArrayAdapter<>(
+                    getActivity(), // Context
+                    android.R.layout.simple_list_item_1, // Layout mặc định cho mỗi mục
+                    schedules // Dữ liệu
+            );
+            lv.setAdapter(adapter2);
+        });
+
         return view;
     }
 }

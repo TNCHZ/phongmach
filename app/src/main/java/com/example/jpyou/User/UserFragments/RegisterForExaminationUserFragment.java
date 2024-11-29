@@ -28,15 +28,12 @@ import java.util.Date;
 
 public class RegisterForExaminationUserFragment extends Fragment {
     private PersonInformation ps;
-    private String userID, selectedItem;
+    private String userID;
     private EditText txtName, txtDayOfBirth, txtPhone, txtEmail, txtDayRegis;
     private MyDatabaseHelper db;
     private RadioButton rdMale, rdFemale;
     private Button btnRegis;
-    private String[] itemsDepartment;
-    private Spinner spinner;
-    private Context context;
-    private EditText txtDate;
+    private EditText txtDate, txtSymptom;
 
 
     @Override
@@ -52,27 +49,26 @@ public class RegisterForExaminationUserFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_register_for_examination, container, false);
-        {
-            init(view);
-            setUpSpinnerDepartment(view);
-            txtDate = view.findViewById(R.id.txtDate_RegisterForExaminonUserFragment);
+        init(view);
 
-            btnRegis = view.findViewById(R.id.btnUpdate_RegisterForExaminonUserFragment);
-            btnRegis.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (txtDate.getText().toString().isEmpty()) {
-                        db.registerExamination(db.getPatientID(userID), txtDayRegis.getText().toString(), selectedItem);
-                    }
-                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                    @SuppressLint("CommitTransaction") FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    HomeUserFragment anotherFragment = new HomeUserFragment();
-                    transaction.replace(R.id.fragment_container_home, anotherFragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
+        txtDate = view.findViewById(R.id.txtDate_RegisterForExaminonUserFragment);
+        txtSymptom = view.findViewById(R.id.txtSymptom_RegisterForExaminonUserFragment);
+
+        btnRegis = view.findViewById(R.id.btnUpdate_RegisterForExaminonUserFragment);
+        btnRegis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!txtDate.getText().toString().isEmpty() && !txtSymptom.getText().toString().isEmpty()) {
+                    db.registerExamination(db.getPatientID(userID), txtDayRegis.getText().toString(), txtSymptom.getText().toString());
                 }
-            });
-        }
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                @SuppressLint("CommitTransaction") FragmentTransaction transaction = fragmentManager.beginTransaction();
+                HomeUserFragment anotherFragment = new HomeUserFragment();
+                transaction.replace(R.id.fragment_container_home, anotherFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
         return view;
     }
 
@@ -100,25 +96,5 @@ public class RegisterForExaminationUserFragment extends Fragment {
         }
     }
 
-    private void setUpSpinnerDepartment(View view) {
-        spinner = view.findViewById(R.id.spinnerDepartment_RegisterForExaminonUserFragment);
-        itemsDepartment = new String[]{"Khoa 1", "Khoa 2", "Khoa 3"};
-        context = view.getContext();
-        ArrayAdapter adapter = new ArrayAdapter(context, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, itemsDepartment);
-        spinner.setAdapter(adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedItem = adapterView.getItemAtPosition(i).toString();
-                // Xử lý lựa chọn của người dùng
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                // Xử lý khi không có gì được chọn
-            }
-        });
-    }
 
 }

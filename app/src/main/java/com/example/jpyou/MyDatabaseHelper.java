@@ -63,9 +63,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
 
         // Tạo bảng YTa
-        String createYTaTable = "CREATE TABLE Yta (" +
-                "YtaID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "KhoaPhuTrach TEXT NOT NULL, " +
+        String createYTaTable = "CREATE TABLE YTa (" +
+                "YTaID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "TaiKhoanID INTEGER, " +
                 "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
 
@@ -78,26 +77,29 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         // Tạo bảng LichHen
         String createLichHenTable = "CREATE TABLE LichHen (" +
                 "LichhenID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "BacSiID INTEGER, " +
-                "BenhNhanID INTEGER, " +
-                "YtaID INTEGER, " +
+                "TenLichHen TEXT NOT NULL, " +
+                "TrieuChung TEXT, " +
+                "GioDatKham TEXT, " +
                 "NgayKham TEXT NOT NULL, " +
                 "SoThuTuKham INTEGER, " +
-                "TinhTrangHen INTEGER," +
-                "Khoa TEXT NOT NULL," +
+                "TinhTrangHen INTEGER, " +
+                "Khoa TEXT," +
+                "BacSiID INTEGER, " +
+                "BenhNhanID INTEGER, " +
+                "YTaID INTEGER, " +
                 "FOREIGN KEY(BacSiID) REFERENCES BacSi(BacSiID), " +
                 "FOREIGN KEY(BenhNhanID) REFERENCES BenhNhan(BenhNhanID), " +
-                "FOREIGN KEY(YtaID) REFERENCES Yta(YtaID));";
+                "FOREIGN KEY(YTaID) REFERENCES YTa(YTaID));";
 
         // Tạo bảng ketQuaChuanDoan
         String createKetQuaChuanDoanTable = "CREATE TABLE KetQuaChuanDoan (" +
                 "KetQuaChuanDoanID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "TenKetQuaChuanDoan TEXT NOT NULL, " +
-                "TrieuChung TEXT, " +
-                "NgayKeToa TEXT, " +
                 "BacSiID INTEGER, " +
                 "BenhNhanID INTEGER, " +
+                "ToaThuocID INTEGER, " +
                 "FOREIGN KEY(BacSiID) REFERENCES BacSi(BacSiID), " +
+                "FOREIGN KEY(ToaThuocID) REFERENCES ToaThuoc(ToaThuocID), " +
                 "FOREIGN KEY(BenhNhanID) REFERENCES BenhNhan(BenhNhanID));";
 
 
@@ -109,16 +111,15 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         // Tạo bảng ToaThuoc
         String createToaThuocTable = "CREATE TABLE ToaThuoc (" +
                 "ToathuocID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "KetQuaChuanDoanID INTEGER, " +
-                "FOREIGN KEY(KetquachuandoanID) REFERENCES KetQuaChuanDoan(KetQuaChuanDoanID));";
+                "NgayKeToa TEXT);";
 
         // Tạo bảng ToaThuoc_Thuoc
         String createToaThuocThuocTable = "CREATE TABLE ToaThuoc_Thuoc (" +
-                "ThuocID INTEGER, " +
-                "ToaThuocID INTEGER, " +
+                "ToaThuocThuocID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "LieuDung TEXT, " +
                 "HuongDanSuDung TEXT, " +
-                "PRIMARY KEY(ThuocID, ToaThuocID), " +
+                "ThuocID INTEGER, " +
+                "ToaThuocID INTEGER, " +
                 "FOREIGN KEY(ThuocID) REFERENCES Thuoc(ThuocID), " +
                 "FOREIGN KEY(ToaThuocID) REFERENCES ToaThuoc(ToaThuocID));";
 
@@ -182,7 +183,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             ContentValues account = new ContentValues();
             account.put("TaiKhoan", username);
             account.put("MatKhau", password);
-            account.put("NgayThamGia", Setting.getCurrentDate());
+            account.put("NgayThamGia", init.getCurrentDate());
             account.put("HoatDong", 1);
             long addAccount = db.insert("TaiKhoan", null, account);
 
@@ -279,13 +280,52 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.close(); // Đóng kết nối với cơ sở dữ liệu
     }
 
-    public void registerExamination(String id, String dayRegis, String department){
+    public int getOrderNumber(String ngayKham) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        int orderNumber = 0;
+
+        try {
+            String query = "SELECT COUNT(*) AS SoBenhNhan FROM LichHen WHERE NgayKham = ?";
+            cursor = db.rawQuery(query, new String[]{ngayKham});
+
+            if (cursor.moveToFirst()) {
+                orderNumber = cursor.getInt(cursor.getColumnIndexOrThrow("SoBenhNhan")) + 1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Đóng con trỏ và cơ sở dữ liệu
+            if (cursor != null) cursor.close();
+            db.close();
+        }
+
+        return orderNumber;
+    }
+
+    public void registerExamination(String id, String dayRegis, String symptom) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues regis = new ContentValues();
         regis.put("BenhNhanID", id);
+        regis.put("TenLichHen", "Khám bệnh");
         regis.put("NgayKham", dayRegis);
-        regis.put("Khoa", department);
+        regis.put("GioDatKham", init.getCurrentTime());
+        regis.put("TrieuChungBenhNhan", symptom);
+        regis.put("TinhTrangHen", 0);
+        long addRegis = db.insert("LichHen", null, regis);
+
+        db.close();
+    }
+
+    public void registerVaccinate(String id, String dayRegis, String symptom) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues regis = new ContentValues();
+        regis.put("BenhNhanID", id);
+        regis.put("TenLichHen", "Vaccine" + symptom);
+        regis.put("GioDatKham", init.getCurrentTime());
+        regis.put("NgayKham", dayRegis);
         regis.put("TinhTrangHen", 0);
         long addRegis = db.insert("LichHen", null, regis);
 
@@ -320,8 +360,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return ls;
     }
 
-    public String getPatientID(String id)
-    {
+    public String getPatientID(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT BenhNhan.BenhNhanID " +
                 "FROM BenhNhan " +
@@ -344,5 +383,74 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return patientID;
     }
 
+    public List<String> getDaySchedule(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<String> ls = new ArrayList<>();
+        Cursor cursor = null;
+
+        try {
+            // Truy vấn dữ liệu
+            String query = "SELECT TenLichHen, NgayKham, SoThuTuKham " +
+                    "FROM LichHen " +
+                    "WHERE BenhNhanID = ?";
+            cursor = db.rawQuery(query, new String[]{id});
+
+            // Duyệt qua kết quả
+            if (cursor.moveToFirst()) {
+                do {
+                    String tenLichHen = cursor.getString(cursor.getColumnIndexOrThrow("TenLichHen"));
+                    String ngayKham = cursor.getString(cursor.getColumnIndexOrThrow("NgayKham"));
+                    String soThuTuKham = cursor.getString(cursor.getColumnIndexOrThrow("SoThuTuKham"));
+
+                    // Ghép thông tin
+                    String lichHen = tenLichHen + " - " + ngayKham + " - STT: " + soThuTuKham;
+                    ls.add(lichHen);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Đóng Cursor và cơ sở dữ liệu
+            if (cursor != null) cursor.close();
+            db.close();
+        }
+
+        return ls;
+    }
+
+    public List<String> getScheduleAtDay(String id, String day) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<String> ls = new ArrayList<>();
+        Cursor cursor = null;
+
+        try {
+            // Truy vấn dữ liệu
+            String query = "SELECT TenLichHen, NgayKham, SoThuTuKham " +
+                    "FROM LichHen " +
+                    "WHERE BenhNhanID = ? AND NgayKham = ?";
+            cursor = db.rawQuery(query, new String[]{id, day});
+
+            // Duyệt qua kết quả
+            if (cursor.moveToFirst()) {
+                do {
+                    String tenLichHen = cursor.getString(cursor.getColumnIndexOrThrow("TenLichHen"));
+                    String ngayKham = cursor.getString(cursor.getColumnIndexOrThrow("NgayKham"));
+                    String soThuTuKham = cursor.getString(cursor.getColumnIndexOrThrow("SoThuTuKham"));
+
+                    // Ghép thông tin
+                    String lichHen = tenLichHen + " - " + ngayKham + " - STT: " + soThuTuKham;
+                    ls.add(lichHen);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Đóng Cursor và cơ sở dữ liệu
+            if (cursor != null) cursor.close();
+            db.close();
+        }
+
+        return ls;
+    }
 
 }

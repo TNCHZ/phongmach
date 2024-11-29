@@ -82,13 +82,17 @@
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:checked="true"
-                        android:text="Nam" />
+                        android:text="Nam"
+                        android:enabled="false"
+                        />
 
                     <RadioButton
                         android:id="@+id/rdFemale_RegisterForExaminonUserFragment"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="Nữ" />
+                        android:text="Nữ"
+                        android:enabled="false"
+                        />
 
                 </RadioGroup>
             </TableRow>
@@ -183,7 +187,7 @@
                     android:id="@+id/textViewDepartment_RegisterForExaminonUserFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Chọn khoa khám"
+                    android:text="Triệu chứng"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="24sp"
@@ -203,10 +207,13 @@
                     android:inputType="date" />
 
 
-                <Spinner
-                    android:id="@+id/spinnerDepartment_RegisterForExaminonUserFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                <EditText
+                    android:id="@+id/txtSymptom_RegisterForExaminonUserFragment"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="text" />
+
             </TableRow>
 
             <TableRow
