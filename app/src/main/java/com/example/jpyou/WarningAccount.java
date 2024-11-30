@@ -41,7 +41,7 @@ public class WarningAccount {
             txtWarning.setText("Vui lòng nhập \"Mật khẩu\"");
         } else if (password.length() < 8) {
             txtWarning.setText("Mật khẩu không đủ 8 ký tự");
-            //this.check = true;
+            this.check = true;
         } else if (taiKhoanID.equals("-1")) {
             txtWarning.setText("Không tìm thông tin tài khoản");
         } else {

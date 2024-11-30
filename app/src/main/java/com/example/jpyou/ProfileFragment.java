@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import com.example.jpyou.User.UserInterface;
 import com.example.myapplication.R;
@@ -28,43 +31,79 @@ public class ProfileFragment extends Fragment {
         userID = sharedPreferences.getString("TaiKhoanID", null);
     }
 
+
+    private Switch swicthNightMode;
+    private Boolean isNightMode;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    private Button btnUpdateInformation, btnChangePassword, btnLogOut;
+
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        db = new MyDatabaseHelper(getActivity());
-        Button btnUpdateInformation = view.findViewById(R.id.btnUpdateInformation_FragmentProfile);
-        Button btnChangePassword = view.findViewById(R.id.btnChangePassword_FragmentProfile);
-        Button btnLogOut = view.findViewById(R.id.btnLogOut_FragmentProfile);
+        {
+            nightMode(view);
 
-        btnUpdateInformation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), UpdateInformation.class);
-                intent.putExtra("PersonInformation", db.getInformation(userID));
-                startActivity(intent);
-            }
-        });
+            db = new MyDatabaseHelper(getActivity());
+            btnUpdateInformation = view.findViewById(R.id.btnUpdateInformation_FragmentProfile);
+            btnChangePassword = view.findViewById(R.id.btnChangePassword_FragmentProfile);
+            btnLogOut = view.findViewById(R.id.btnLogOut_FragmentProfile);
 
-        btnChangePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), UpdateInformation.class);
-                intent.putExtra("NamePerson", userID);
-                startActivity(intent);
-            }
-        });
+            btnUpdateInformation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), UpdateInformation.class);
+                    intent.putExtra("PersonInformation", db.getInformation(userID));
+                    startActivity(intent);
+                }
+            });
 
-        btnLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), UserInterface.class);
-                startActivity(intent);
-            }
-        });
+            btnChangePassword.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), UpdateInformation.class);
+                    intent.putExtra("NamePerson", userID);
+                    startActivity(intent);
+                }
+            });
 
+            btnLogOut.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), UserInterface.class);
+                    startActivity(intent);
+                }
+            });
+        }
         return view;
+    }
+
+    private void nightMode(View view) {
+        swicthNightMode = view.findViewById(R.id.switchNightMode_ProfileFragment);
+        //Dùng sharedPreferences để lưu mode  nếu khi thoát app và trả lại vẫn còn
+        sharedPreferences = view.getContext().getSharedPreferences("MODE", Context.MODE_PRIVATE);
+        isNightMode = sharedPreferences.getBoolean("night", false); // light mode is the default mode
+
+        swicthNightMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                isNightMode = b;
+                if (isNightMode){
+                    swicthNightMode.setText("Tắt chế độ ban đêm");
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    editor = sharedPreferences.edit();
+                    editor.putBoolean("night", true);
+                } else {
+                    swicthNightMode.setText("Bật chế độ ban đêm");
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    editor = sharedPreferences.edit();
+                    editor.putBoolean("night", false);
+                }
+                editor.apply();
+            }
+        });
     }
 }

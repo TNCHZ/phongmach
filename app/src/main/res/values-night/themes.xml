@@ -4,5 +4,22 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
-    <style name="AppTheme" parent="Theme.AppCompat.DayNight"/> <!-- hỗ trợ giao diện tối -->
+
+
+
+    <!-- Night Mode -->
+    <!--background-->
+    <style name="SCREEN">
+        <item name="android:background">@color/black</item>
+    </style>
+    <!--text-->
+    <style name="TEXT">
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <!--button-->
+    <style name="BUTTON">
+        <item name="android:background">@drawable/custom_button_night_mode</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 </resources>

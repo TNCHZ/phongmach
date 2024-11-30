@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    style="@style/SCREEN"
     android:layout_height="match_parent"
     tools:context="com.example.jpyou.ProfileFragment">
 
@@ -9,29 +10,59 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="UseSwitchCompatOrMaterialXml">
 
         <Button
             android:id="@+id/btnUpdateInformation_FragmentProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/custom_button_empty"
+            android:layout_marginBottom="20dp"
             android:text="Cập nhật thông tin cá nhân"
             android:textAlignment="viewStart"
-            android:textColor="@color/black"
+            style="@style/BUTTON"
             android:textSize="16sp"
             app:backgroundTint="@null" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textViewSetting_ProfileFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
             android:layout_margin="5dp"
             android:text="Cài đặt"
-            android:textColor="@color/black"
+            style="@style/TEXT"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Switch
+            android:id="@+id/switchNightMode_ProfileFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            style="@style/BUTTON"
+            android:text="Bật chế độ ban đêm"
+            android:textAlignment="viewStart"
+            android:padding="15dp" />
+
+        <Button
+            android:id="@+id/btnChangePassword_FragmentProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="Đổi mật khẩu"
+            style="@style/BUTTON"
+            android:textAlignment="viewStart"
+            app:backgroundTint="@null" />
+
+        <TextView
+            android:id="@+id/textView3"
+            style="@style/TEXT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Hỗ trợ"
+            android:textAlignment="viewStart"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -40,10 +71,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/custom_button_empty"
             android:text="Thông tin hỗ trợ"
             android:textAlignment="viewStart"
-            android:textColor="@color/black"
+            style="@style/BUTTON"
             app:backgroundTint="@null" />
 
         <Button
@@ -51,32 +81,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/custom_button_empty"
             android:text="Liên hệ hỗ trợ"
             android:textAlignment="viewStart"
-            android:textColor="@color/black"
-            app:backgroundTint="@null" />
-
-        <Button
-            android:id="@+id/btnChangePassword_FragmentProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/custom_button_empty"
-            android:text="Đổi mật khẩu"
-            android:textAlignment="viewStart"
-            android:textColor="@color/black"
+            style="@style/BUTTON"
             app:backgroundTint="@null" />
 
         <Button
             android:id="@+id/btnLogOut_FragmentProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/custom_button_empty"
+            android:layout_marginTop="30dp"
             android:text="Đăng xuất"
             android:textAlignment="viewStart"
-            android:textColor="@color/black"
+            style="@style/BUTTON"
             app:backgroundTint="@null" />
     </LinearLayout>
 
