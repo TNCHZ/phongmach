@@ -14,7 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.SeekBar;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.example.jpyou.User.UserInterface;
 import com.example.myapplication.R;
@@ -30,8 +32,9 @@ public class ProfileFragment extends Fragment {
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
         userID = sharedPreferences.getString("TaiKhoanID", null);
     }
-
-
+    private int fontSize;
+    private TextView textView;
+    private SeekBar sBFontSize;
     private Switch swicthNightMode;
     private Boolean isNightMode;
     SharedPreferences sharedPreferences;
@@ -46,6 +49,29 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         {
             nightMode(view);
+
+            sBFontSize = view.findViewById(R.id.seekBarFontSize_ProfileFragment);
+            textView = view.findViewById(R.id.textViewFontSize_ProfileFragment);
+            sBFontSize.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                    if (i <= 14){
+                        i = 14;
+                    }
+                    fontSize = i;
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    textView.setTextSize(fontSize);
+                }
+            });
+
 
             db = new MyDatabaseHelper(getActivity());
             btnUpdateInformation = view.findViewById(R.id.btnUpdateInformation_FragmentProfile);
