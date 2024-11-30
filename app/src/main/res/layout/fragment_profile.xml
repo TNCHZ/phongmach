@@ -45,6 +45,33 @@
             android:textAlignment="viewStart"
             android:padding="15dp" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/BUTTON"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView4"
+                style="@style/TEXT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Cỡ chữ"
+                android:textAlignment="viewStart"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <SeekBar
+                android:id="@+id/seekBar3"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:max="2"
+                android:progress="1" />
+        </LinearLayout>
+
         <Button
             android:id="@+id/btnChangePassword_FragmentProfile"
             android:layout_width="match_parent"
