@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.jpyou.Employee.SchedulePatientAdapter;
+import com.example.jpyou.Adapter.SchedulePatientAdapter;
 import com.example.jpyou.MyDatabaseHelper;
 import com.example.jpyou.User.UserInformation;
 import com.example.myapplication.R;

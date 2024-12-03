@@ -223,6 +223,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                         "JOIN BenhNhan ON TaiKhoan.TaiKhoanID = BenhNhan.TaiKhoanID " +
                         "WHERE TaiKhoan.TaiKhoan = ? AND TaiKhoan.HoatDong = 1";
                 break;
+            case "Y tá":
+                query = "SELECT TaiKhoan.MatKhau, TaiKhoan.TaiKhoanID, TaiKhoan.HoatDong " +
+                        "FROM TaiKhoan " +
+                        "JOIN YTa ON TaiKhoan.TaiKhoanID = YTa.TaiKhoanID " +
+                        "WHERE TaiKhoan.TaiKhoan = ? AND TaiKhoan.HoatDong = 1";
         }
         Cursor cursor = db.rawQuery(query, new String[]{username});
 
@@ -311,7 +316,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         regis.put("TenLichHen", "Khám bệnh");
         regis.put("NgayKham", dayRegis);
         regis.put("GioDatKham", init.getCurrentTime());
-        regis.put("TrieuChungBenhNhan", symptom);
+        regis.put("TrieuChung", symptom);
         regis.put("TinhTrangHen", 0);
         long addRegis = db.insert("LichHen", null, regis);
 
@@ -323,7 +328,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues regis = new ContentValues();
         regis.put("BenhNhanID", id);
-        regis.put("TenLichHen", "Vaccine" + symptom);
+        regis.put("TenLichHen", "Vaccine");
+        regis.put("TrieuChung", symptom);
         regis.put("GioDatKham", init.getCurrentTime());
         regis.put("NgayKham", dayRegis);
         regis.put("TinhTrangHen", 0);
@@ -383,9 +389,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return patientID;
     }
 
-    public List<String> getDaySchedule(String id) {
+    public List<UserInformation> getDaySchedule(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        List<String> ls = new ArrayList<>();
+        List<UserInformation> ls = new ArrayList<>();
         Cursor cursor = null;
 
         try {
@@ -400,11 +406,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 do {
                     String tenLichHen = cursor.getString(cursor.getColumnIndexOrThrow("TenLichHen"));
                     String ngayKham = cursor.getString(cursor.getColumnIndexOrThrow("NgayKham"));
-                    String soThuTuKham = cursor.getString(cursor.getColumnIndexOrThrow("SoThuTuKham"));
-
-                    // Ghép thông tin
-                    String lichHen = tenLichHen + " - " + ngayKham + " - STT: " + soThuTuKham;
-                    ls.add(lichHen);
+                    UserInformation userInformation = new UserInformation(ngayKham, tenLichHen);
+                    ls.add(userInformation);
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
@@ -418,9 +421,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return ls;
     }
 
-    public List<String> getScheduleAtDay(String id, String day) {
+    public List<UserInformation> getScheduleAtDay(String id, String day) {
         SQLiteDatabase db = this.getReadableDatabase();
-        List<String> ls = new ArrayList<>();
+        List<UserInformation> ls = new ArrayList<>();
         Cursor cursor = null;
 
         try {
@@ -435,11 +438,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 do {
                     String tenLichHen = cursor.getString(cursor.getColumnIndexOrThrow("TenLichHen"));
                     String ngayKham = cursor.getString(cursor.getColumnIndexOrThrow("NgayKham"));
-                    String soThuTuKham = cursor.getString(cursor.getColumnIndexOrThrow("SoThuTuKham"));
 
                     // Ghép thông tin
-                    String lichHen = tenLichHen + " - " + ngayKham + " - STT: " + soThuTuKham;
-                    ls.add(lichHen);
+                    UserInformation userInformation = new UserInformation(ngayKham, tenLichHen);
+                    ls.add(userInformation);
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {

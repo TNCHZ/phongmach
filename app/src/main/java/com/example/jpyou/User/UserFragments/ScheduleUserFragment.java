@@ -9,11 +9,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
 
+import com.example.jpyou.Adapter.ShowSchduleAndCancel;
 import com.example.jpyou.MyDatabaseHelper;
+import com.example.jpyou.User.UserInformation;
 import com.example.myapplication.R;
 
 import java.text.SimpleDateFormat;
@@ -29,7 +30,8 @@ public class ScheduleUserFragment extends Fragment {
     private CalendarView cldView;
     private ListView lv;
     private MyDatabaseHelper db;
-    private List<String> schedules;
+    private List<UserInformation> schedules;
+    private Context context;
 
     public ScheduleUserFragment() {
         // Required empty public constructor
@@ -47,7 +49,7 @@ public class ScheduleUserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_schedule, container, false);
-
+        context = view.getContext();
         db = new MyDatabaseHelper(getActivity());
         schedules = new ArrayList<>();
 
@@ -55,11 +57,7 @@ public class ScheduleUserFragment extends Fragment {
         lv = view.findViewById(R.id.listSchedule_ScheduleUserFragment);
 
         schedules = db.getDaySchedule(db.getPatientID(userID));
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                getActivity(), // Context
-                android.R.layout.simple_list_item_1, // Layout mặc định cho mỗi mục
-                schedules // Dữ liệu
-        );
+        ShowSchduleAndCancel adapter = new ShowSchduleAndCancel(context, R.layout.row_show_schedule_and_cancel, schedules);
         lv.setAdapter(adapter);
 
         cldView.setOnDateChangeListener((calendarView, year, month, dayOfMonth) -> {
@@ -70,12 +68,9 @@ public class ScheduleUserFragment extends Fragment {
             String selectedDate = sdf.format(calendar.getTime());
 
             schedules = db.getScheduleAtDay(db.getPatientID(userID), selectedDate);
-            ArrayAdapter<String> adapter2 = new ArrayAdapter<>(
-                    getActivity(), // Context
-                    android.R.layout.simple_list_item_1, // Layout mặc định cho mỗi mục
-                    schedules // Dữ liệu
-            );
+            ShowSchduleAndCancel adapter2 = new ShowSchduleAndCancel(context, R.layout.row_show_schedule_and_cancel, schedules);
             lv.setAdapter(adapter2);
+
         });
 
         return view;

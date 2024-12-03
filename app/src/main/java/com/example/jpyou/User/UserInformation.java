@@ -2,17 +2,21 @@ package com.example.jpyou.User;
 
 import com.example.jpyou.PersonInformation;
 
-import java.util.List;
-
 public class UserInformation extends PersonInformation {
-    private List<String> appointDay;
+    private String appointDay;
     private String txtDescribe;
+    private String  nameAppoint;
     private Integer imgAvatar;
     private Boolean blConfirmed;
 
 
     public UserInformation(String hoTen) {
         super(hoTen);
+    }
+
+    public UserInformation(String appointDay, String nameAppoint) {
+        this.appointDay = appointDay;
+        this.nameAppoint = nameAppoint;
     }
 
     public UserInformation(int id, String hoTen, String gioiTinh, String ngaySinh, String soDT, String email) {
@@ -49,11 +53,19 @@ public class UserInformation extends PersonInformation {
         this.txtDescribe = txtDescribe;
     }
 
-    public List<String> getAppointDay() {
+    public String getAppointDay() {
         return appointDay;
     }
 
-    public void setAppointDay(List<String> appointDay) {
+    public void setAppointDay(String appointDay) {
         this.appointDay = appointDay;
+    }
+
+    public String getNameAppoint() {
+        return nameAppoint;
+    }
+
+    public void setNameAppoint(String nameAppoint) {
+        this.nameAppoint = nameAppoint;
     }
 }
