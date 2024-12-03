@@ -1,6 +1,8 @@
 package com.example.jpyou.User.UserFragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -9,12 +11,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.example.jpyou.Adapter.ShowSchduleAndCancel;
 import com.example.jpyou.MyDatabaseHelper;
 import com.example.jpyou.User.UserInformation;
+import com.example.jpyou.User.UserSignIn;
 import com.example.myapplication.R;
 
 import java.text.SimpleDateFormat;
@@ -31,12 +37,11 @@ public class ScheduleUserFragment extends Fragment {
     private ListView lv;
     private MyDatabaseHelper db;
     private List<UserInformation> schedules;
-    private Context context;
+
 
     public ScheduleUserFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,34 +50,54 @@ public class ScheduleUserFragment extends Fragment {
         userID = sharedPreferences.getString("TaiKhoanID", null);
     }
 
+    private Button btnCheck;
+    private LinearLayout layoutChecked, layoutNotChecked;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_schedule, container, false);
-        context = view.getContext();
-        db = new MyDatabaseHelper(getActivity());
-        schedules = new ArrayList<>();
+        {
+            layoutChecked = view.findViewById(R.id.linearLayoutChecked_ScheduleUserFragment);
+            layoutNotChecked = view.findViewById(R.id.linearLayoutNotChecked_ScheduleUserFragment);
+            if (userID== null) {
+                layoutNotChecked.setVisibility(View.VISIBLE);
+                btnCheck = view.findViewById(R.id.btnChecked_ScheduleUserFragment);
+                btnCheck.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), UserSignIn.class);
+                        startActivity(intent);
+                    }
+                });
+            } else {
+                layoutNotChecked.setVisibility(View.INVISIBLE);
+                layoutChecked.setVisibility(View.VISIBLE);
 
-        cldView = view.findViewById(R.id.calendar_ScheduleUserFragment);
-        lv = view.findViewById(R.id.listSchedule_ScheduleUserFragment);
+                db = new MyDatabaseHelper(getActivity());
+                schedules = new ArrayList<>();
+                cldView = view.findViewById(R.id.calendar_ScheduleUserFragment);
+                lv = view.findViewById(R.id.listSchedule_ScheduleUserFragment);
+                schedules = db.getDaySchedule(db.getPatientID(userID));
 
-        schedules = db.getDaySchedule(db.getPatientID(userID));
-        ShowSchduleAndCancel adapter = new ShowSchduleAndCancel(context, R.layout.row_show_schedule_and_cancel, schedules);
-        lv.setAdapter(adapter);
+                ShowSchduleAndCancel adapter = new ShowSchduleAndCancel(getActivity(), R.layout.row_show_schedule_and_cancel, schedules);
+                lv.setAdapter(adapter);
 
-        cldView.setOnDateChangeListener((calendarView, year, month, dayOfMonth) -> {
-            // Chuyển đổi ngày được chọn thành định dạng "dd/MM/yyyy"
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(year, month, dayOfMonth);
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-            String selectedDate = sdf.format(calendar.getTime());
 
-            schedules = db.getScheduleAtDay(db.getPatientID(userID), selectedDate);
-            ShowSchduleAndCancel adapter2 = new ShowSchduleAndCancel(context, R.layout.row_show_schedule_and_cancel, schedules);
-            lv.setAdapter(adapter2);
+                cldView.setOnDateChangeListener((calendarView, year, month, dayOfMonth) -> {
+                    // Chuyển đổi ngày được chọn thành định dạng "dd/MM/yyyy"
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(year, month, dayOfMonth);
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                    String selectedDate = sdf.format(calendar.getTime());
 
-        });
-
+                    schedules = db.getScheduleAtDay(db.getPatientID(userID), selectedDate);
+                    ShowSchduleAndCancel adapter2 = new ShowSchduleAndCancel(getActivity(), R.layout.row_show_schedule_and_cancel, schedules);
+                    lv.setAdapter(adapter2);
+                });
+            }
+        }
         return view;
     }
 }
