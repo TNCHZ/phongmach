@@ -1,6 +1,7 @@
 package com.example.jpyou.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,24 +11,30 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.jpyou.Employee.Doctor.DoctorFragments.MedicalRecordDoctorFragment;
 import com.example.jpyou.User.UserInformation;
 import com.example.myapplication.R;
 
 import java.util.List;
 
-public class SchedulePatientAdapter extends BaseAdapter {
+public class MedicalRecordAdapter extends BaseAdapter {
+
     private Context context;
     private Integer layout;
     private List<UserInformation> userInformation;
+    private Fragment fragment;
+    private FragmentTransaction fragmentTransaction;
+    private int Ridfragment;
 
-    public SchedulePatientAdapter(Context context, Integer layout, List<UserInformation> userInformation) {
+    public MedicalRecordAdapter(Context context, Integer layout, List<UserInformation> userInformation, FragmentTransaction fragmentTransaction, Fragment fragment, int ridfragment) {
         this.context = context;
         this.layout = layout;
         this.userInformation = userInformation;
+        this.fragmentTransaction = fragmentTransaction;
+        this.fragment = fragment;
+        Ridfragment = ridfragment;
     }
 
     //Lớp ViewHolder giúp tránh ánh xạ lặp đi lặp lại khi lướt lên xuống
@@ -39,32 +46,26 @@ public class SchedulePatientAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-        return userInformation.size();
-    } //Hiển thị mỗi phần từ trong List
-
+    public int getCount() {return userInformation.size();}
     @Override
-    public Object getItem(int i) {return null; } //Trả ra đối tượng SchedulePatient
-
+    public Object getItem(int i) {return null;}
     @Override
-    public long getItemId(int i) {return 0; } //Trả ra id của mỗi dòng listview
-
+    public long getItemId(int i) {return 0;}
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) { //Trả về mỗi dòng trên item của ListView
-        ViewHolder holder;
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        MedicalRecordAdapter.ViewHolder holder;
         if (view == null){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE); //Khai báo của hệ thống
             view = inflater.inflate(layout, null); //Lấy layout NurseRowSchedule
-            holder = new ViewHolder();
+            holder = new MedicalRecordAdapter.ViewHolder();
             //Ánh xạ "id" từ view
             holder.txtName = (TextView) view.findViewById(R.id.textViewName_RowSchedule);
             holder.txtDescribe = (TextView) view.findViewById(R.id.textViewDescribe_RowSchedule);
             holder.btnComfirm = (Button) view.findViewById(R.id.btnConfirm_RowSchedule);
             view.setTag(holder);//Truyền trạng thái ánh xạ
         }else {
-            holder = (ViewHolder) view.getTag();
+            holder = (MedicalRecordAdapter.ViewHolder) view.getTag();
         }
-
         //Gán giá trị
         UserInformation ps = userInformation.get(i);
         holder.txtName.setText(ps.getHoTen());
@@ -72,10 +73,18 @@ public class SchedulePatientAdapter extends BaseAdapter {
         holder.btnComfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!ps.getBlConfirmed()){
-                    ps.setBlConfirmed(true);
-                    Toast.makeText(context.getApplicationContext(), "True",Toast.LENGTH_SHORT).show();
+                if (fragment == null || fragment.isRemoving()) {
+
+                    fragmentTransaction
+                            .add(Ridfragment, fragment)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .addToBackStack(null)
+                            .commit();
+                    Log.e("Abstract", "DONE");
                 }
+//                fragmentTransaction.replace(Ridfragment, fragment);
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
             }
         });
         return view;

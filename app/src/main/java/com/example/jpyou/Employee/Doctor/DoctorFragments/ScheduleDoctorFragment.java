@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.jpyou.Adapter.MedicalRecordAdapter;
 import com.example.jpyou.Adapter.SchedulePatientAdapter;
 import com.example.jpyou.User.UserInformation;
 import com.example.myapplication.R;
@@ -72,7 +73,7 @@ public class ScheduleDoctorFragment extends Fragment {
     //====================================================================
     private ListView listView;
     private ArrayList<UserInformation> arrayList;
-    private SchedulePatientAdapter adapter;
+    private MedicalRecordAdapter adapter;
     private Context context;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -92,24 +93,29 @@ public class ScheduleDoctorFragment extends Fragment {
             arrayList.add(p2);
 
             context = view.getContext();
-            adapter = new SchedulePatientAdapter(context, R.layout.row_list_patient, arrayList);
+
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            MedicalRecordDoctorFragment fragment = new MedicalRecordDoctorFragment();
+            int Ridfragment = R.id.fragment_medical_records;
+
+            adapter = new MedicalRecordAdapter(context, R.layout.row_list_patient, arrayList, fragmentTransaction, fragment, Ridfragment);
             listView.setAdapter(adapter);
 
-            //Button button = adapter.getItem()
 
+//            listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                @Override
+//                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+//                    adapter.MedicalRecord(fragmentManager);
+//                }
+//
+//                @Override
+//                public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//                }
+//            });
 
-
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    MedicalRecordDoctorFragment fragment = new MedicalRecordDoctorFragment();
-                    transaction.replace(R.id.fragment_medical_records, fragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                }
-            });
         }
         return view;
     }
