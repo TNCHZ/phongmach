@@ -55,10 +55,9 @@ public class SchedulePatientAdapter extends BaseAdapter {
             view = inflater.inflate(layout, null); //Lấy layout NurseRowSchedule
             holder = new ViewHolder();
             //Ánh xạ "id" từ view
-            holder.txtName = (TextView) view.findViewById(R.id.textViewName_NurseRowSchedule);
-            holder.txtDescribe = (TextView) view.findViewById(R.id.textViewDescribe_NurseRowSchedule);
-            holder.btnComfirm = (Button) view.findViewById(R.id.btnConfirm_NurseRowSchedule);
-            //holder.btnCancel = (Button) view.findViewById(R.id.btnCancel_NurseRowSchedule);
+            holder.txtName = (TextView) view.findViewById(R.id.textViewName_RowSchedule);
+            holder.txtDescribe = (TextView) view.findViewById(R.id.textViewDescribe_RowSchedule);
+            holder.btnComfirm = (Button) view.findViewById(R.id.btnConfirm_RowSchedule);
             view.setTag(holder);//Truyền trạng thái ánh xạ
         }else {
             holder = (ViewHolder) view.getTag();
@@ -77,16 +76,6 @@ public class SchedulePatientAdapter extends BaseAdapter {
                 }
             }
         });
-
-//        holder.btnCancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (ps.getBlConfirmed()){
-//                    ps.setBlConfirmed(false);
-//                    Toast.makeText(context.getApplicationContext(), "False", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
         return view;
     }
 }

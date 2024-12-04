@@ -7,7 +7,7 @@
     android:background="@drawable/custom_button_rim" >
 
     <ImageView
-        android:id="@+id/imgAvatar_NurseRowSchedule"
+        android:id="@+id/imgAvatar_RowSchedule"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_margin="10dp"
@@ -16,30 +16,30 @@
         app:srcCompat="@drawable/ic_person" />
 
     <TextView
-        android:id="@+id/textViewName_NurseRowSchedule"
+        android:id="@+id/textViewName_RowSchedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_toLeftOf="@id/btnConfirm_NurseRowSchedule"
-        android:layout_toRightOf="@id/imgAvatar_NurseRowSchedule"
+        android:layout_toLeftOf="@id/btnConfirm_RowSchedule"
+        android:layout_toRightOf="@id/imgAvatar_RowSchedule"
         android:text="Name"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textViewDescribe_NurseRowSchedule"
+        android:id="@+id/textViewDescribe_RowSchedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewName_NurseRowSchedule"
-        android:layout_toLeftOf="@id/btnConfirm_NurseRowSchedule"
-        android:layout_toRightOf="@id/imgAvatar_NurseRowSchedule"
+        android:layout_below="@id/textViewName_RowSchedule"
+        android:layout_toLeftOf="@id/btnConfirm_RowSchedule"
+        android:layout_toRightOf="@id/imgAvatar_RowSchedule"
         android:text="Describe"
         android:textColor="@color/black"
         android:textSize="18sp" />
 
     <Button
-        android:id="@+id/btnConfirm_NurseRowSchedule"
+        android:id="@+id/btnConfirm_RowSchedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

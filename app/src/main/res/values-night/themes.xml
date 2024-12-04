@@ -14,12 +14,12 @@
     </style>
     <!--text-->
     <style name="TEXT">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/lam</item>
     </style>
     <!--button-->
     <style name="BUTTON">
         <item name="android:background">@drawable/custom_button_night_mode</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/lam</item>
     </style>
 
 </resources>
