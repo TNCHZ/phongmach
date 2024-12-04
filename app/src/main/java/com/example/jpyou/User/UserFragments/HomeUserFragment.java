@@ -1,6 +1,7 @@
 package com.example.jpyou.User.UserFragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.jpyou.MyDatabaseHelper;
+import com.example.jpyou.User.UserSignIn;
 import com.example.myapplication.R;
 
 public class HomeUserFragment extends Fragment {
@@ -38,31 +40,42 @@ public class HomeUserFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_home, container, false);
         {
+            Intent intent = new Intent(getActivity(), UserSignIn.class);
             btnRegisTreatMent = view.findViewById(R.id.btnTreatment_FragmentUserHome);
+            btnRegisVaccinate = view.findViewById(R.id.btnVaccination_FragmentUserHome);
+
             btnRegisTreatMent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    RegisterForExaminationUserFragment anotherFragment = new RegisterForExaminationUserFragment();
-                    transaction.replace(R.id.fragment_container_home, anotherFragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
+                    if (userID == null){
+                        startActivity(intent);
+                    } else {
+                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                        RegisterForExaminationUserFragment anotherFragment = new RegisterForExaminationUserFragment();
+                        transaction.replace(R.id.fragment_container_home, anotherFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
                 }
             });
 
-            btnRegisVaccinate = view.findViewById(R.id.btnVaccination_FragmentUserHome);
             btnRegisVaccinate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    RegisterForVaccinateUserFragment anotherFragment = new RegisterForVaccinateUserFragment();
-                    transaction.replace(R.id.fragment_container_home, anotherFragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
+                    if (userID == null){
+                        startActivity(intent);
+                    } else {
+                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                        RegisterForVaccinateUserFragment anotherFragment = new RegisterForVaccinateUserFragment();
+                        transaction.replace(R.id.fragment_container_home, anotherFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
                 }
             });
+
         }
         return view;
     }
