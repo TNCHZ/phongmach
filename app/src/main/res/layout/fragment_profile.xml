@@ -14,7 +14,7 @@
         tools:ignore="UseSwitchCompatOrMaterialXml">
 
         <Button
-            android:id="@+id/btnUpdateInformation_FragmentProfile"
+            android:id="@+id/btnUpdateInformation_ProfileFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
@@ -71,7 +71,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnChangePassword_FragmentProfile"
+            android:id="@+id/btnChangePassword_ProfileFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -81,7 +81,7 @@
             app:backgroundTint="@null" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textViewSupport_ProfileFragment"
             style="@style/TEXT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -120,6 +120,15 @@
             android:textAlignment="viewStart"
             style="@style/BUTTON"
             app:backgroundTint="@null" />
+
+        <Button
+            android:id="@+id/btnLogIn_ProfileFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@null"
+            style="@style/TEXT"
+            android:background="@drawable/custom_button"
+            android:text="Đăng nhập" />
     </LinearLayout>
 
 </FrameLayout>

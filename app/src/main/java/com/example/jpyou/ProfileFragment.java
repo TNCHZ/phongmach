@@ -19,6 +19,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.jpyou.User.UserInterface;
+import com.example.jpyou.User.UserSignIn;
 import com.example.myapplication.R;
 
 
@@ -39,7 +40,7 @@ public class ProfileFragment extends Fragment {
     private Boolean isNightMode;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    private Button btnUpdateInformation, btnChangePassword, btnLogOut;
+    private Button btnUpdateInformation, btnChangePassword, btnLogOut, btnLogIn;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -72,41 +73,56 @@ public class ProfileFragment extends Fragment {
                 }
             });
 
-
-            db = new MyDatabaseHelper(getActivity());
-            btnUpdateInformation = view.findViewById(R.id.btnUpdateInformation_FragmentProfile);
-            btnChangePassword = view.findViewById(R.id.btnChangePassword_FragmentProfile);
             btnLogOut = view.findViewById(R.id.btnLogOut_FragmentProfile);
+            btnLogIn = view.findViewById(R.id.btnLogIn_ProfileFragment);
+            if (userID == null){
+                btnLogOut.setVisibility(View.INVISIBLE);
+                btnLogIn.setVisibility(View.VISIBLE);
+                btnLogIn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), UserSignIn.class);
+                        startActivity(intent);
+                    }
+                });
+            } else {
+                btnLogIn.setVisibility(View.INVISIBLE);
+                btnLogOut.setVisibility(View.VISIBLE);
 
-            btnUpdateInformation.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), UpdateInformation.class);
-                    intent.putExtra("PersonInformation", db.getInformation(userID));
-                    startActivity(intent);
-                }
-            });
+                db = new MyDatabaseHelper(getActivity());
+                btnUpdateInformation = view.findViewById(R.id.btnUpdateInformation_ProfileFragment);
+                btnChangePassword = view.findViewById(R.id.btnChangePassword_ProfileFragment);
 
-            btnChangePassword.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), UpdateInformation.class);
-                    intent.putExtra("NamePerson", userID);
-                    startActivity(intent);
-                }
-            });
 
-            btnLogOut.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), UserInterface.class);
-                    startActivity(intent);
-                }
-            });
+                btnUpdateInformation.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), UpdateInformation.class);
+                        intent.putExtra("PersonInformation", db.getInformation(userID));
+                        startActivity(intent);
+                    }
+                });
+
+                btnChangePassword.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), UpdateInformation.class);
+                        intent.putExtra("NamePerson", userID);
+                        startActivity(intent);
+                    }
+                });
+
+                btnLogOut.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), UserInterface.class);
+                        startActivity(intent);
+                    }
+                });
+            }
         }
         return view;
     }
-
     private void nightMode(View view) {
         swicthNightMode = view.findViewById(R.id.switchNightMode_ProfileFragment);
         //Dùng sharedPreferences để lưu mode  nếu khi thoát app và trả lại vẫn còn
