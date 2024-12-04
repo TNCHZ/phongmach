@@ -6,10 +6,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -22,7 +20,7 @@ import com.example.jpyou.Employee.Nurse.NurseInterface;
 import com.example.jpyou.MyDatabaseHelper;
 import com.example.myapplication.R;
 
-public class EmployeeLogin extends AppCompatActivity {
+public class EmployeeSignIn extends AppCompatActivity {
     private Button btnSignIn;
     private EditText txtUsername, txtPassword;
     private MyDatabaseHelper db;
@@ -40,6 +38,8 @@ public class EmployeeLogin extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
         db = new MyDatabaseHelper(this);
         txtUsername = findViewById(R.id.txtUserName_EmployeeSignIn);
         txtPassword = findViewById(R.id.txtPasswork_EmployeeSignIn);
@@ -69,11 +69,10 @@ public class EmployeeLogin extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String taiKhoanID = db.verifyPassword(txtUsername.getText().toString(), txtPassword.getText().toString(), roleChoose);
-
                 switch (roleChoose) {
                     case "Y tá":
                     if (!taiKhoanID.equals("-1")) {
-                        Intent intent = new Intent(EmployeeLogin.this, NurseInterface.class);
+                        Intent intent = new Intent(EmployeeSignIn.this, NurseInterface.class);
                         intent.putExtra("TaiKhoanID", taiKhoanID);
                         startActivity(intent);
                     }
