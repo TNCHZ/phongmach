@@ -25,15 +25,13 @@
             android:name="com.example.jpyou.User.UserSignUp"
             android:exported="false" />
         <activity
-            android:name="com.example.jpyou.Employee.Doctor.DoctorInterface"
+            android:name="com.example.jpyou.User.UserInterface"
             android:exported="false" />
         <activity
-            android:name="com.example.jpyou.User.UserInterface"
-
+            android:name="com.example.jpyou.Employee.Doctor.DoctorInterface"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

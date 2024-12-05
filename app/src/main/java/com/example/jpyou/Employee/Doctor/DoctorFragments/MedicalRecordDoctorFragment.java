@@ -82,18 +82,17 @@ public class MedicalRecordDoctorFragment extends Fragment {
         {
             spinner = view.findViewById(R.id.spinnerPrescriptions_MedicalRecordDoctorFragment);
             listView = view.findViewById(R.id.listPrescriptions_MedicalRecordDoctorFragment);
-            MedicineAdapter adapter = new MedicineAdapter(view.getContext(), R.layout.row_medicine, getListMedicine());
-            spinner.setAdapter(adapter);
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    Toast.makeText(getContext().getApplicationContext(), adapter.getItem(i).getName(), Toast.LENGTH_SHORT).show();
-
-                }
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {}
-            });
-
+//            MedicineAdapter adapter = new MedicineAdapter(view.getContext(), R.layout.row_medicine, getListMedicine());
+//            spinner.setAdapter(adapter);
+//            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                @Override
+//                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                    Toast.makeText(getContext().getApplicationContext(), adapter.getItem(i).getName(), Toast.LENGTH_SHORT).show();
+//
+//                }
+//                @Override
+//                public void onNothingSelected(AdapterView<?> adapterView) {}
+//            });
 
         }
         return view;

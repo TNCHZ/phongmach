@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.example.jpyou.MyDatabaseHelper;
 import com.example.jpyou.User.UserFragments.RegisterForExaminationUserFragment;
@@ -24,6 +25,7 @@ public class HomeFragment extends Fragment {
     private String userID;
     private MyDatabaseHelper db;
     private Button btnRegisTreatMent, btnChooseDoctor, btnResults;
+    private ListView listView;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -43,6 +45,9 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         {
+            listView = view.findViewById(R.id.listViewDSBS_HomeFragment);
+
+
             Intent intent = new Intent(getActivity(), SignIn.class);
             btnRegisTreatMent = view.findViewById(R.id.btnTreatment_HomeFragment);
             btnChooseDoctor = view.findViewById(R.id.btnChooseDoctor_HomeFragment);
@@ -52,7 +57,9 @@ public class HomeFragment extends Fragment {
                 btnRegisTreatMent.setVisibility(View.INVISIBLE);
                 btnChooseDoctor.setVisibility(View.INVISIBLE);
                 btnResults.setVisibility(View.INVISIBLE);
-            } else if (db.getRole(userID).equals("Benh nhan") ){
+            } else
+                //if (db.getRole(userID).equals("Benh nhan") )
+                {
                 btnRegisTreatMent.setVisibility(View.VISIBLE);
                 btnChooseDoctor.setVisibility(View.VISIBLE);
                 btnResults.setVisibility(View.VISIBLE);

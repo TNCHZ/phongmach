@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    style="@style/SCREEN"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageViewAvatar_rowListDoctor"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:srcCompat="@drawable/ic_person"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/textViewName_rowListDoctor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TEXT"
+        android:layout_toRightOf="@id/imageViewAvatar_rowListDoctor"
+        android:text="Name" />
+
+    <TextView
+        android:id="@+id/textViewDistriction_rowListDoctor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TEXT"
+        android:layout_toRightOf="@id/imageViewAvatar_rowListDoctor"
+        android:layout_below="@id/textViewName_rowListDoctor"
+        android:text="Distriction" />
+</RelativeLayout>

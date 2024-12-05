@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_home"
+    style="@style/SCREEN"
     tools:context="com.example.jpyou.Fragments.HomeFragment"
     >
 
@@ -48,14 +49,15 @@
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
 
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp"
             android:stretchColumns="*">
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent">
 
                 <Button
                     android:id="@+id/btnTreatment_HomeFragment"
@@ -99,6 +101,21 @@
                 android:layout_height="match_parent" />
 
         </TableLayout>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Danh sách bác sĩ:"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            style="@style/TEXT"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/listViewDSBS_HomeFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
