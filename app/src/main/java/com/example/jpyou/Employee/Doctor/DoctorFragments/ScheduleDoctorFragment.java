@@ -11,9 +11,13 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.jpyou.Adapter.MedicalRecordAdapter;
+import com.example.jpyou.Adapter.SchedulePatientAdapter;
+import com.example.jpyou.Fragments.HomeFragment;
 import com.example.jpyou.User.UserInformation;
 import com.example.myapplication.R;
 
@@ -72,6 +76,7 @@ public class ScheduleDoctorFragment extends Fragment {
     private ArrayList<UserInformation> arrayList;
     private MedicalRecordAdapter adapter;
     private Context context;
+
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,13 +96,21 @@ public class ScheduleDoctorFragment extends Fragment {
 
             context = view.getContext();
 
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            MedicalRecordDoctorFragment fragment = new MedicalRecordDoctorFragment();
-            int Ridfragment = R.id.fragment_doctor_medical_records;
 
-            adapter = new MedicalRecordAdapter(context, R.layout.row_list_patient, arrayList, fragmentTransaction, fragment, Ridfragment);
+            adapter = new MedicalRecordAdapter(context, R.layout.row_list_patient, arrayList);
             listView.setAdapter(adapter);
+            adapter.setOnConfirmClickListener(new MedicalRecordAdapter.OnConfirmClickListener() {
+                @Override
+                public void onConfirmClicked(UserInformation user) {
+                    // Chuyển sang fragment khác khi nút Confirm được nhấn
+                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    MedicalRecordDoctorFragment fragment = new MedicalRecordDoctorFragment();
+                    fragmentTransaction.replace(R.id.fragment_doctor_schedule, fragment); // Đảm bảo R.id.fragment_container tồn tại trong layout của activity
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            });
 
 
 //            listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

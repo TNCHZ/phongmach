@@ -55,7 +55,6 @@ public class SignIn extends AppCompatActivity {
             public void onClick(View view) {
                 String taiKhoanID = db.verifyPassword(txtUsername.getText().toString(), txtPassword.getText().toString());
                 String role = db.getRole(taiKhoanID);
-                Log.d("jhg", role);
                 WarningAccount warningAccount = new WarningAccount(txtUsername, txtPassword, taiKhoanID, txtWarning);
                 if (warningAccount.checkAccount() && role.equals("Benh nhan")) {
                     Intent intent = new Intent(SignIn.this, UserInterface.class);
