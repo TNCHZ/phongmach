@@ -1,5 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_user_register_for_examination"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context="com.example.jpyou.User.UserFragments.RegisterForExaminationUserFragment">
@@ -82,17 +83,15 @@
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:checked="true"
-                        android:text="Nam"
                         android:enabled="false"
-                        />
+                        android:text="Nam" />
 
                     <RadioButton
                         android:id="@+id/rdFemale_RegisterForExaminonUserFragment"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="Nữ"
                         android:enabled="false"
-                        />
+                        android:text="Nữ" />
 
                 </RadioGroup>
             </TableRow>
@@ -117,8 +116,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_span="2"
-                    android:enabled="false"
                     android:ems="10"
+                    android:enabled="false"
                     android:inputType="phone" />
             </TableRow>
 
@@ -142,8 +141,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_span="2"
-                    android:enabled="false"
                     android:ems="10"
+                    android:enabled="false"
                     android:inputType="textEmailAddress" />
             </TableRow>
         </TableLayout>
@@ -218,7 +217,7 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent">
 
                 <Button
                     android:id="@+id/btnUpdate_RegisterForExaminonUserFragment"
