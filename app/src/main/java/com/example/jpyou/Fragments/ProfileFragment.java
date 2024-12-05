@@ -1,4 +1,4 @@
-package com.example.jpyou;
+package com.example.jpyou.Fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -18,6 +18,8 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.example.jpyou.MyDatabaseHelper;
+import com.example.jpyou.UpdateInformation;
 import com.example.jpyou.User.UserInterface;
 import com.example.jpyou.User.UserSignIn;
 import com.example.myapplication.R;

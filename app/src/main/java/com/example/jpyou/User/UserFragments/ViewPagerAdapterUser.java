@@ -5,7 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.jpyou.ProfileFragment;
+import com.example.jpyou.Fragments.HomeFragment;
+import com.example.jpyou.Fragments.ProfileFragment;
 
 public class ViewPagerAdapterUser extends FragmentStateAdapter {
     public ViewPagerAdapterUser(@NonNull FragmentActivity fragmentActivity) {
@@ -18,7 +19,7 @@ public class ViewPagerAdapterUser extends FragmentStateAdapter {
         switch (position){
             case 1: return new ScheduleUserFragment();
             case 2: return new ProfileFragment();
-            default: return new HomeUserFragment();
+            default: return new HomeFragment();
         }
     }
 

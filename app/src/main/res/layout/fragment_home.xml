@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_container_home"
-    tools:context="com.example.jpyou.User.UserFragments.HomeUserFragment"
+    android:id="@+id/fragment_home"
+    tools:context="com.example.jpyou.Fragments.HomeFragment"
     >
 
     <!-- TODO: Update blank fragment layout -->
@@ -57,7 +57,7 @@
                 android:layout_height="match_parent" >
 
                 <Button
-                    android:id="@+id/btnTreatment_FragmentUserHome"
+                    android:id="@+id/btnTreatment_HomeFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/custom_button"
@@ -67,7 +67,7 @@
                     app:backgroundTint="@null" />
 
                 <Button
-                    android:id="@+id/btnVaccination_FragmentUserHome"
+                    android:id="@+id/btnVaccination_HomeFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Đặt lịch tiêm chủng"
@@ -83,7 +83,7 @@
                 android:layout_marginTop="50dp">
 
                 <Button
-                    android:id="@+id/btnTest_FragmentUserHome"
+                    android:id="@+id/btnTest_HomeFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Đặt lịch xét nghiệm"
@@ -93,7 +93,7 @@
                     app:backgroundTint="@null" />
 
                 <Button
-                    android:id="@+id/btnResults_FragmentUserHome"
+                    android:id="@+id/btnResults_HomeFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/custom_button"

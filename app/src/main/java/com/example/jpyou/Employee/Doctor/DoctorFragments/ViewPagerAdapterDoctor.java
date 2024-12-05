@@ -5,7 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.jpyou.ProfileFragment;
+import com.example.jpyou.Fragments.ProfileFragment;
+import com.example.jpyou.Fragments.HomeFragment;
 
 public class ViewPagerAdapterDoctor extends FragmentStateAdapter {
     public ViewPagerAdapterDoctor(@NonNull FragmentActivity fragmentActivity) {
@@ -16,10 +17,10 @@ public class ViewPagerAdapterDoctor extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position){
-            case 0: return new HomeDoctorFragment();
+            case 0: return new HomeFragment();
             case 1: return new ScheduleDoctorFragment();
             case 2: return new ProfileFragment();
-            default: return new HomeDoctorFragment();
+            default: return new HomeFragment();
         }
     }
 

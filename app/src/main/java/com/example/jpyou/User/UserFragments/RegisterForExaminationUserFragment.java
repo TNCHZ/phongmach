@@ -12,18 +12,14 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.Spinner;
 
+import com.example.jpyou.Fragments.HomeFragment;
 import com.example.jpyou.MyDatabaseHelper;
 import com.example.jpyou.PersonInformation;
 import com.example.myapplication.R;
-
-import java.util.Date;
 
 
 public class RegisterForExaminationUserFragment extends Fragment {
@@ -63,8 +59,8 @@ public class RegisterForExaminationUserFragment extends Fragment {
                 }
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                 @SuppressLint("CommitTransaction") FragmentTransaction transaction = fragmentManager.beginTransaction();
-                HomeUserFragment anotherFragment = new HomeUserFragment();
-                transaction.replace(R.id.fragment_container_home, anotherFragment);
+                HomeFragment anotherFragment = new HomeFragment();
+                transaction.replace(R.id.fragment_home, anotherFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
             }

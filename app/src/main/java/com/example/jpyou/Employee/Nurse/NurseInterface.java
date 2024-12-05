@@ -45,12 +45,14 @@ public class NurseInterface extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if (id == R.id.navConfirmPatient_Nurse) {
+                if (id == R.id.navHome_Nurse) {
                     viewPager.setCurrentItem(0);
-                } else if (id == R.id.navCancelPatient_Nurse) {
+                } else if (id == R.id.navConfirmPatient_Nurse) {
                     viewPager.setCurrentItem(1);
-                } else if (id == R.id.navProfile_Nurse) {
+                } else if (id == R.id.navCancelPatient_Nurse) {
                     viewPager.setCurrentItem(2);
+                } else if (id == R.id.navProfile_Nurse) {
+                    viewPager.setCurrentItem(3);
                 }
                 txtHeader.setText(item.getTitle());
                 return true;
@@ -63,13 +65,16 @@ public class NurseInterface extends AppCompatActivity {
                 super.onPageSelected(position);
                 switch (position) {
                     case 1:
-                        bottomNavigationView.getMenu().findItem(R.id.navCancelPatient_Nurse).setChecked(true);
+                        bottomNavigationView.getMenu().findItem(R.id.navConfirmPatient_Nurse).setChecked(true);
                         break;
                     case 2:
+                        bottomNavigationView.getMenu().findItem(R.id.navCancelPatient_Nurse).setChecked(true);
+                        break;
+                    case 3:
                         bottomNavigationView.getMenu().findItem(R.id.navProfile_Nurse).setChecked(true);
                         break;
                     default:
-                        bottomNavigationView.getMenu().findItem(R.id.navConfirmPatient_Nurse).setChecked(true);
+                        bottomNavigationView.getMenu().findItem(R.id.navHome_Nurse).setChecked(true);
                         break;
                 }
             }

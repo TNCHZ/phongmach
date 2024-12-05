@@ -11,12 +11,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.jpyou.Adapter.MedicalRecordAdapter;
-import com.example.jpyou.Adapter.SchedulePatientAdapter;
 import com.example.jpyou.User.UserInformation;
 import com.example.myapplication.R;
 
@@ -97,7 +94,7 @@ public class ScheduleDoctorFragment extends Fragment {
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             MedicalRecordDoctorFragment fragment = new MedicalRecordDoctorFragment();
-            int Ridfragment = R.id.fragment_medical_records;
+            int Ridfragment = R.id.fragment_doctor_medical_records;
 
             adapter = new MedicalRecordAdapter(context, R.layout.row_list_patient, arrayList, fragmentTransaction, fragment, Ridfragment);
             listView.setAdapter(adapter);
