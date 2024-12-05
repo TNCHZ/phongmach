@@ -31,7 +31,6 @@ public class UserInterface extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private TextView txtHeader;
     private ImageButton imgbtnAvatarUserInterface;
-    private LinearLayout linearLayout;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -54,10 +53,6 @@ public class UserInterface extends AppCompatActivity {
         editor.apply();
 
         setUpBottomNavigation();
-
-
-//        linearLayout = findViewById(R.id.linearLayoutTop_UserInterface);
-//        linearLayout.setVisibility(View.GONE);
     }
 
     private void setUpBottomNavigation() {

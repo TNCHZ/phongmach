@@ -13,7 +13,7 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
-            android:name="com.example.jpyou.User.UserInterface"
+            android:name="com.example.jpyou.User.UserSignIn"
             android:exported="false" />
         <activity
             android:name="com.example.jpyou.Employee.Nurse.NurseInterface"
@@ -28,7 +28,8 @@
             android:name="com.example.jpyou.Employee.Doctor.DoctorInterface"
             android:exported="false" />
         <activity
-            android:name="com.example.jpyou.User.UserSignIn"
+            android:name="com.example.jpyou.User.UserInterface"
+
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
