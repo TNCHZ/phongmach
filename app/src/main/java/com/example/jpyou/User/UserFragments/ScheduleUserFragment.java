@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.LinearLayout;
@@ -20,7 +19,7 @@ import android.widget.ListView;
 import com.example.jpyou.Adapter.ShowSchduleAndCancel;
 import com.example.jpyou.MyDatabaseHelper;
 import com.example.jpyou.User.UserInformation;
-import com.example.jpyou.User.UserSignIn;
+import com.example.jpyou.SignIn;
 import com.example.myapplication.R;
 
 import java.text.SimpleDateFormat;
@@ -67,7 +66,7 @@ public class ScheduleUserFragment extends Fragment {
                 btnCheck.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), UserSignIn.class);
+                        Intent intent = new Intent(getActivity(), SignIn.class);
                         startActivity(intent);
                     }
                 });

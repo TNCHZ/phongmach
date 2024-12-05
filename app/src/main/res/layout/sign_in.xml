@@ -5,10 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jpyou.User.UserSignIn">
+    tools:context="com.example.jpyou.SignIn">
 
     <ImageView
-        android:id="@+id/imgBackground_UserSignIn"
+        android:id="@+id/imgBackground_SignIn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
@@ -25,7 +25,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textViewHeader_UserSignIn"
+            android:id="@+id/textViewHeader_SignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -37,7 +37,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/txtUserName_UserSignIn"
+            android:id="@+id/txtUserName_SignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/custome_edit_text"
@@ -48,7 +48,7 @@
             app:backgroundTint="@null" />
 
         <TextView
-            android:id="@+id/textViewWarning_UserSignIn"
+            android:id="@+id/textViewWarning_SignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/red"
@@ -56,7 +56,7 @@
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/txtPasswork_UserSignIn"
+            android:id="@+id/txtPasswork_SignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/custome_edit_text"
@@ -66,7 +66,7 @@
             app:backgroundTint="@null" />
 
         <CheckBox
-            android:id="@+id/ckbShow_UserSignIn"
+            android:id="@+id/ckbShow_SignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -75,7 +75,7 @@
             android:textSize="14dp" />
 
         <Button
-            android:id="@+id/btnSignIn_UserSignIn"
+            android:id="@+id/btnSignIn_SignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_button"
@@ -87,7 +87,7 @@
             app:backgroundTint="@null" />
 
         <Button
-            android:id="@+id/btnSignUp_UserSignIn"
+            android:id="@+id/btnSignUp_SignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

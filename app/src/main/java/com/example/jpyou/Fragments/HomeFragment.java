@@ -1,5 +1,6 @@
 package com.example.jpyou.Fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,14 +17,13 @@ import android.widget.Button;
 
 import com.example.jpyou.MyDatabaseHelper;
 import com.example.jpyou.User.UserFragments.RegisterForExaminationUserFragment;
-import com.example.jpyou.User.UserFragments.RegisterForVaccinateUserFragment;
-import com.example.jpyou.User.UserSignIn;
+import com.example.jpyou.SignIn;
 import com.example.myapplication.R;
 
 public class HomeFragment extends Fragment {
     private String userID;
     private MyDatabaseHelper db;
-    private Button btnRegisTreatMent, btnRegisVaccinate;
+    private Button btnRegisTreatMent, btnChooseDoctor, btnResults;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -36,47 +36,45 @@ public class HomeFragment extends Fragment {
         userID = sharedPreferences.getString("TaiKhoanID", null);
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         {
-            Intent intent = new Intent(getActivity(), UserSignIn.class);
+            Intent intent = new Intent(getActivity(), SignIn.class);
             btnRegisTreatMent = view.findViewById(R.id.btnTreatment_HomeFragment);
-            btnRegisVaccinate = view.findViewById(R.id.btnVaccination_HomeFragment);
+            btnChooseDoctor = view.findViewById(R.id.btnChooseDoctor_HomeFragment);
+            btnResults = view.findViewById(R.id.btnResults_HomeFragment);
 
-            btnRegisTreatMent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (userID == null){
-                        startActivity(intent);
-                    } else {
-                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                        FragmentTransaction transaction = fragmentManager.beginTransaction();
-                        RegisterForExaminationUserFragment anotherFragment = new RegisterForExaminationUserFragment();
-                        transaction.replace(R.id.fragment_home, anotherFragment);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
-                    }
-                }
-            });
+            if (userID == null) {
+                btnRegisTreatMent.setVisibility(View.INVISIBLE);
+                btnChooseDoctor.setVisibility(View.INVISIBLE);
+                btnResults.setVisibility(View.INVISIBLE);
+            } else if (db.getRole(userID).equals("Benh nhan") ){
+                btnRegisTreatMent.setVisibility(View.VISIBLE);
+                btnChooseDoctor.setVisibility(View.VISIBLE);
+                btnResults.setVisibility(View.VISIBLE);
 
-            btnRegisVaccinate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (userID == null){
-                        startActivity(intent);
-                    } else {
-                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                        FragmentTransaction transaction = fragmentManager.beginTransaction();
-                        RegisterForVaccinateUserFragment anotherFragment = new RegisterForVaccinateUserFragment();
-                        transaction.replace(R.id.fragment_home, anotherFragment);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
+                btnRegisTreatMent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (userID == null){
+                            startActivity(intent);
+                        } else {
+                            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                            FragmentTransaction transaction = fragmentManager.beginTransaction();
+                            RegisterForExaminationUserFragment anotherFragment = new RegisterForExaminationUserFragment();
+                            transaction.replace(R.id.fragment_home, anotherFragment);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                        }
                     }
-                }
-            });
+                });
+            }
+
+
 
         }
         return view;

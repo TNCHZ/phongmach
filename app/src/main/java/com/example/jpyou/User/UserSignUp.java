@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.jpyou.MyDatabaseHelper;
+import com.example.jpyou.SignIn;
 import com.example.jpyou.WarningAccount;
 import com.example.myapplication.R;
 
@@ -72,7 +73,7 @@ public class UserSignUp extends AppCompatActivity {
                             txtWarning.setText("Mật khẩu nhập lại không trùng khớp");
                         } else {
                             db.addUser(phone, password, name, gender, dayOfBirth, phone, email);
-                            Intent intent = new Intent(UserSignUp.this, UserSignIn.class);
+                            Intent intent = new Intent(UserSignUp.this, SignIn.class);
                             startActivity(intent);
                         }
                     }

@@ -1,4 +1,4 @@
-package com.example.jpyou.User;
+package com.example.jpyou;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,11 +17,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.jpyou.MyDatabaseHelper;
-import com.example.jpyou.WarningAccount;
+import com.example.jpyou.User.UserInterface;
+import com.example.jpyou.User.UserSignUp;
 import com.example.myapplication.R;
 
-public class UserSignIn extends AppCompatActivity {
+public class SignIn extends AppCompatActivity {
     private Button btnSignIn, btnSignUp;
     private EditText txtUsername, txtPassword;
     private TextView txtWarning;
@@ -32,7 +32,7 @@ public class UserSignIn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.user_sign_in);
+        setContentView(R.layout.sign_in);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -42,13 +42,13 @@ public class UserSignIn extends AppCompatActivity {
 
 
         db = new MyDatabaseHelper(this);
-        txtUsername = findViewById(R.id.txtUserName_UserSignIn);
-        txtPassword = findViewById(R.id.txtPasswork_UserSignIn);
-        txtWarning = findViewById(R.id.textViewWarning_UserSignIn);
+        txtUsername = findViewById(R.id.txtUserName_SignIn);
+        txtPassword = findViewById(R.id.txtPasswork_SignIn);
+        txtWarning = findViewById(R.id.textViewWarning_SignIn);
         showPasswork();
 
-        btnSignUp = findViewById(R.id.btnSignUp_UserSignIn);
-        btnSignIn = findViewById(R.id.btnSignIn_UserSignIn);
+        btnSignUp = findViewById(R.id.btnSignUp_SignIn);
+        btnSignIn = findViewById(R.id.btnSignIn_SignIn);
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +58,7 @@ public class UserSignIn extends AppCompatActivity {
                 Log.d("jhg", role);
                 WarningAccount warningAccount = new WarningAccount(txtUsername, txtPassword, taiKhoanID, txtWarning);
                 if (warningAccount.checkAccount() && role.equals("Benh nhan")) {
-                    Intent intent = new Intent(UserSignIn.this, UserInterface.class);
+                    Intent intent = new Intent(SignIn.this, UserInterface.class);
                     intent.putExtra("TaiKhoanID", taiKhoanID);
                     startActivity(intent);
                 }
@@ -67,14 +67,14 @@ public class UserSignIn extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(UserSignIn.this, UserSignUp.class);
+                Intent intent = new Intent(SignIn.this, UserSignUp.class);
                 startActivity(intent);
             }
         });
     }
     private void showPasswork() {
-        ckbShowPasswork = findViewById(R.id.ckbShow_UserSignIn);
-        txtPassword = findViewById(R.id.txtPasswork_UserSignIn);
+        ckbShowPasswork = findViewById(R.id.ckbShow_SignIn);
+        txtPassword = findViewById(R.id.txtPasswork_SignIn);
 
         ckbShowPasswork.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

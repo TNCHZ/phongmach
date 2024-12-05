@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.example.jpyou.MyDatabaseHelper;
 import com.example.jpyou.UpdateInformation;
 import com.example.jpyou.User.UserInterface;
-import com.example.jpyou.User.UserSignIn;
+import com.example.jpyou.SignIn;
 import com.example.myapplication.R;
 
 
@@ -83,7 +83,7 @@ public class ProfileFragment extends Fragment {
                 btnLogIn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), UserSignIn.class);
+                        Intent intent = new Intent(getActivity(), SignIn.class);
                         startActivity(intent);
                     }
                 });
