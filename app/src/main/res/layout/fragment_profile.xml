@@ -1,8 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:id="@+id/fragment_profile"
     style="@style/SCREEN"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.jpyou.Fragments.ProfileFragment">
 
@@ -15,40 +16,40 @@
 
         <Button
             android:id="@+id/btnUpdateInformation_ProfileFragment"
+            style="@style/BUTTON"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="20dp"
             android:text="Cập nhật thông tin cá nhân"
             android:textAlignment="viewStart"
-            style="@style/BUTTON"
             android:textSize="16sp"
             app:backgroundTint="@null" />
 
         <TextView
             android:id="@+id/textViewSetting_ProfileFragment"
+            style="@style/TEXT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:text="Cài đặt"
-            style="@style/TEXT"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <Switch
             android:id="@+id/switchNightMode_ProfileFragment"
+            style="@style/BUTTON"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            style="@style/BUTTON"
+            android:padding="15dp"
             android:text="Bật chế độ ban đêm"
-            android:textAlignment="viewStart"
-            android:padding="15dp" />
+            android:textAlignment="viewStart" />
 
         <LinearLayout
+            style="@style/BUTTON"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/BUTTON"
             android:orientation="vertical">
 
             <TextView
@@ -72,11 +73,11 @@
 
         <Button
             android:id="@+id/btnChangePassword_ProfileFragment"
+            style="@style/BUTTON"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:text="Đổi mật khẩu"
-            style="@style/BUTTON"
             android:textAlignment="viewStart"
             app:backgroundTint="@null" />
 
@@ -93,42 +94,42 @@
 
         <Button
             android:id="@+id/button3"
+            style="@style/BUTTON"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:text="Thông tin hỗ trợ"
             android:textAlignment="viewStart"
-            style="@style/BUTTON"
             app:backgroundTint="@null" />
 
         <Button
             android:id="@+id/button4"
+            style="@style/BUTTON"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:text="Liên hệ hỗ trợ"
             android:textAlignment="viewStart"
-            style="@style/BUTTON"
             app:backgroundTint="@null" />
 
         <Button
             android:id="@+id/btnLogOut_FragmentProfile"
+            style="@style/BUTTON"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="Đăng xuất"
             android:textAlignment="viewStart"
-            style="@style/BUTTON"
             app:backgroundTint="@null" />
 
         <Button
             android:id="@+id/btnLogIn_ProfileFragment"
+            style="@style/TEXT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:backgroundTint="@null"
-            style="@style/TEXT"
             android:background="@drawable/custom_button"
-            android:text="Đăng nhập" />
+            android:text="Đăng nhập"
+            app:backgroundTint="@null" />
     </LinearLayout>
 
 </FrameLayout>
