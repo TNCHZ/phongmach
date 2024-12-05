@@ -1,7 +1,6 @@
 package com.example.jpyou.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.jpyou.User.UserInformation;
 import com.example.myapplication.R;
@@ -72,18 +67,6 @@ public class MedicalRecordAdapter extends BaseAdapter {
                 if (listener != null) {
                     listener.onConfirmClicked(ps); // Gọi callback với dữ liệu
                 }
-//                if (fragment == null || fragment.isRemoving()) {
-
-//                    fragmentTransaction
-//                            .add(Ridfragment, fragment)
-//                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-//                            .addToBackStack(null)
-//                            .commit();
-//                    Log.e("Abstract", "DONE");
-//                }
-//                fragmentTransaction.replace(Ridfragment, fragment);
-//                fragmentTransaction.addToBackStack(null);
-//                fragmentTransaction.commit();
             }
         });
         return view;

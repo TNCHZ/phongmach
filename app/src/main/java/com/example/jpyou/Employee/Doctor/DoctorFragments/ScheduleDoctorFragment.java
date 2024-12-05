@@ -111,21 +111,6 @@ public class ScheduleDoctorFragment extends Fragment {
                     fragmentTransaction.commit();
                 }
             });
-
-
-//            listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//                @Override
-//                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-//                    adapter.MedicalRecord(fragmentManager);
-//                }
-//
-//                @Override
-//                public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//                }
-//            });
-
         }
         return view;
     }
