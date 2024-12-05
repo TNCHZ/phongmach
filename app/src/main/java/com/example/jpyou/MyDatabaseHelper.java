@@ -212,23 +212,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
 
     @SuppressLint("Range")
-    public String verifyPassword(String username, String plainPassword, String vaiTro) {
+    public String verifyPassword(String username, String plainPassword) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = null;
 
-        switch (vaiTro) {
-            case "Bệnh nhân":
-                query = "SELECT TaiKhoan.MatKhau, TaiKhoan.TaiKhoanID, TaiKhoan.HoatDong " +
-                        "FROM TaiKhoan " +
-                        "JOIN BenhNhan ON TaiKhoan.TaiKhoanID = BenhNhan.TaiKhoanID " +
-                        "WHERE TaiKhoan.TaiKhoan = ? AND TaiKhoan.HoatDong = 1";
-                break;
-            case "Y tá":
-                query = "SELECT TaiKhoan.MatKhau, TaiKhoan.TaiKhoanID, TaiKhoan.HoatDong " +
-                        "FROM TaiKhoan " +
-                        "JOIN YTa ON TaiKhoan.TaiKhoanID = YTa.TaiKhoanID " +
-                        "WHERE TaiKhoan.TaiKhoan = ? AND TaiKhoan.HoatDong = 1";
-        }
+        query = "SELECT MatKhau, TaiKhoanID, HoatDong " +
+                "FROM TaiKhoan " +
+                "WHERE TaiKhoan = ? AND HoatDong = 1";
+
         Cursor cursor = db.rawQuery(query, new String[]{username});
 
         String taiKhoanID = "-1";
@@ -246,6 +237,40 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return taiKhoanID;
+    }
+
+    public String getRole(String id)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // SQL queries for checking role in respective tables
+        String queryDoctor = "SELECT TaiKhoanID FROM BacSi WHERE TaiKhoanID = ?";
+        String queryPatient = "SELECT TaiKhoanID FROM BenhNhan WHERE TaiKhoanID = ?";
+        String queryNurse = "SELECT TaiKhoanID FROM YTa WHERE TaiKhoanID = ?";
+
+        // Execute query for Patient role
+        Cursor cursorPatient = db.rawQuery(queryPatient, new String[]{id});
+        if (cursorPatient != null && cursorPatient.getCount() > 0) {
+            cursorPatient.close();
+            return "Benh nhan"; // Patient role found
+        }
+
+        // Execute query for Doctor role
+        Cursor cursorDoctor = db.rawQuery(queryDoctor, new String[]{id});
+        if (cursorDoctor != null && cursorDoctor.getCount() > 0) {
+            cursorDoctor.close();
+            return "Bac si"; // Doctor role found
+        }
+
+        // Execute query for Nurse role
+        Cursor cursorNurse = db.rawQuery(queryNurse, new String[]{id});
+        if (cursorNurse != null && cursorNurse.getCount() > 0) {
+            cursorNurse.close();
+            return "Y ta"; // Nurse role found
+        }
+
+        // If no matching role is found
+        return "Unknown";
     }
 
     @SuppressLint("Range")

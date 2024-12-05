@@ -3,6 +3,7 @@ package com.example.jpyou.User;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -52,10 +53,11 @@ public class UserSignIn extends AppCompatActivity {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String taiKhoanID = db.verifyPassword(txtUsername.getText().toString(), txtPassword.getText().toString(), "Bệnh nhân");
-
+                String taiKhoanID = db.verifyPassword(txtUsername.getText().toString(), txtPassword.getText().toString());
+                String role = db.getRole(taiKhoanID);
+                Log.d("jhg", role);
                 WarningAccount warningAccount = new WarningAccount(txtUsername, txtPassword, taiKhoanID, txtWarning);
-                if (warningAccount.checkAccount()) {
+                if (warningAccount.checkAccount() && role.equals("Benh nhan")) {
                     Intent intent = new Intent(UserSignIn.this, UserInterface.class);
                     intent.putExtra("TaiKhoanID", taiKhoanID);
                     startActivity(intent);
