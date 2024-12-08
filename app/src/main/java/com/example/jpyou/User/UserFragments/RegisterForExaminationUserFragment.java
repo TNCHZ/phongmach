@@ -16,9 +16,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
-import com.example.jpyou.Fragments.HomeFragment;
+import com.example.jpyou.BottomNavigator.HomeFragment;
 import com.example.jpyou.MyDatabaseHelper;
-import com.example.jpyou.PersonInformation;
+import com.example.jpyou.Model.PersonInformation;
 import com.example.myapplication.R;
 
 

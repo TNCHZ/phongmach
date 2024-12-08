@@ -16,7 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.jpyou.MyDatabaseHelper;
 import com.example.jpyou.SignIn;
-import com.example.jpyou.WarningAccount;
+import com.example.jpyou.Model.WarningAccount;
 import com.example.myapplication.R;
 
 public class UserSignUp extends AppCompatActivity {

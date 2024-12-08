@@ -5,7 +5,7 @@
     style="@style/SCREEN"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jpyou.Fragments.ProfileFragment">
+    tools:context="com.example.jpyou.BottomNavigator.ProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout

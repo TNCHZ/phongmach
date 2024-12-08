@@ -1,17 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/SCREEN">
+    app:backgroundTint="@null"
+    android:background="@drawable/custom_button_rim" >
 
     <TextView
-        android:id="@+id/textViewName_Row_Medicine"
-        style="@style/TEXT"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="2dp"
-        android:paddingLeft="5dp"
-        android:text="TextView"
-        android:textSize="16sp"
+        android:id="@+id/textViewName_DoctorRowMedicine"
+        android:layout_width="218dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="-1dp"
+        android:layout_toLeftOf="@id/btnAddMedicine_DoctorRowMedicine"
+        android:text="Name"
+        android:textColor="@color/black"
+        android:textSize="22sp"
         android:textStyle="bold" />
-</LinearLayout>
+
+
+    <Button
+        android:id="@+id/btnAddMedicine_DoctorRowMedicine"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/custom_button"
+        android:text="Thêm thuốc"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:backgroundTint="@null" />
+
+
+</RelativeLayout>

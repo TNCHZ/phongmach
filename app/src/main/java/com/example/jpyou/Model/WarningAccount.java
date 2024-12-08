@@ -1,4 +1,4 @@
-package com.example.jpyou;
+package com.example.jpyou.Model;
 
 import android.widget.EditText;
 import android.widget.TextView;

@@ -11,7 +11,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.example.jpyou.User.UserInformation;
+import com.example.jpyou.Model.Doctor;
+import com.example.jpyou.Model.PersonInformation;
+import com.example.jpyou.Model.UserInformation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +60,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         // Tạo bảng BacSi
         String createBacSiTable = "CREATE TABLE BacSi (" +
                 "BacSiID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "ChuyenKhoa TEXT NOT NULL, " +
+                "KinhNghiem TEXT NOT NULL, " +
                 "TaiKhoanID INTEGER, " +
                 "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
 
@@ -83,7 +85,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 "NgayKham TEXT NOT NULL, " +
                 "SoThuTuKham INTEGER, " +
                 "TinhTrangHen INTEGER, " +
-                "Khoa TEXT," +
+                "isKham INTEGER," +
                 "BacSiID INTEGER, " +
                 "BenhNhanID INTEGER, " +
                 "YTaID INTEGER, " +
@@ -116,7 +118,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         // Tạo bảng ToaThuoc_Thuoc
         String createToaThuocThuocTable = "CREATE TABLE ToaThuoc_Thuoc (" +
                 "ToaThuocThuocID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "LieuDung TEXT, " +
+                "DonVi TEXT, " +
+                "SoLuong TEXT, " +
                 "HuongDanSuDung TEXT, " +
                 "ThuocID INTEGER, " +
                 "ToaThuocID INTEGER, " +
@@ -225,8 +228,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         String taiKhoanID = "-1";
         if (cursor.moveToFirst()) {
 
-            String storedPassword = cursor.getString(cursor.getColumnIndex("MatKhau"));
-            String storedId = cursor.getString(cursor.getColumnIndex("TaiKhoanID"));
+            String storedPassword = cursor.getString(cursor.getColumnIndexOrThrow("MatKhau"));
+            String storedId = cursor.getString(cursor.getColumnIndexOrThrow("TaiKhoanID"));
 
             if (storedPassword != null && storedPassword.equals(plainPassword)) {
                 taiKhoanID = storedId;
@@ -250,21 +253,21 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         // Execute query for Patient role
         Cursor cursorPatient = db.rawQuery(queryPatient, new String[]{id});
-        if (cursorPatient != null && cursorPatient.getCount() > 0) {
+        if (cursorPatient != null && cursorPatient.getCount() == 1) {
             cursorPatient.close();
             return "Benh nhan"; // Patient role found
         }
 
         // Execute query for Doctor role
         Cursor cursorDoctor = db.rawQuery(queryDoctor, new String[]{id});
-        if (cursorDoctor != null && cursorDoctor.getCount() > 0) {
+        if (cursorDoctor != null && cursorDoctor.getCount() == 1) {
             cursorDoctor.close();
             return "Bac si"; // Doctor role found
         }
 
         // Execute query for Nurse role
         Cursor cursorNurse = db.rawQuery(queryNurse, new String[]{id});
-        if (cursorNurse != null && cursorNurse.getCount() > 0) {
+        if (cursorNurse != null && cursorNurse.getCount() == 1) {
             cursorNurse.close();
             return "Y ta"; // Nurse role found
         }
@@ -342,21 +345,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         regis.put("NgayKham", dayRegis);
         regis.put("GioDatKham", init.getCurrentTime());
         regis.put("TrieuChung", symptom);
-        regis.put("TinhTrangHen", 0);
-        long addRegis = db.insert("LichHen", null, regis);
-
-        db.close();
-    }
-
-    public void registerVaccinate(String id, String dayRegis, String symptom) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues regis = new ContentValues();
-        regis.put("BenhNhanID", id);
-        regis.put("TenLichHen", "Vaccine");
-        regis.put("TrieuChung", symptom);
-        regis.put("GioDatKham", init.getCurrentTime());
-        regis.put("NgayKham", dayRegis);
         regis.put("TinhTrangHen", 0);
         long addRegis = db.insert("LichHen", null, regis);
 
@@ -480,4 +468,35 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return ls;
     }
 
+    public List<Doctor> getDoctors()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Doctor> ls = new ArrayList<>();
+
+        // Query lấy dữ liệu từ hai bảng
+        String query = "SELECT NguoiDung.HoTen, BacSi.KinhNghiem " +
+                "FROM NguoiDung " +
+                "INNER JOIN BacSi ON NguoiDung.TaiKhoanID = BacSi.TaiKhoanID";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        // Duyệt qua kết quả trả về
+        if (cursor.moveToFirst()) {
+            do {
+                // Lấy từng cột từ Cursor
+                String hoTen = cursor.getString(cursor.getColumnIndexOrThrow("HoTen"));
+                String kinhNghiem = cursor.getString(cursor.getColumnIndexOrThrow("KinhNghiem"));
+
+                // Tạo đối tượng Doctor và thêm vào danh sách
+                Doctor doctor = new Doctor(hoTen, kinhNghiem);
+                ls.add(doctor);
+            } while (cursor.moveToNext());
+        }
+
+        // Đóng cursor và database
+        cursor.close();
+        db.close();
+
+        return ls;
+    }
 }

@@ -16,9 +16,9 @@ import android.widget.CalendarView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.example.jpyou.Adapter.ShowSchduleAndCancel;
+import com.example.jpyou.ListViewEdit.ShowSchduleAndCancel;
 import com.example.jpyou.MyDatabaseHelper;
-import com.example.jpyou.User.UserInformation;
+import com.example.jpyou.Model.UserInformation;
 import com.example.jpyou.SignIn;
 import com.example.myapplication.R;
 

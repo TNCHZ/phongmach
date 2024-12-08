@@ -8,13 +8,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.example.jpyou.Employee.Doctor.Medicine;
-import com.example.jpyou.Employee.Doctor.MedicineAdapter;
+import com.example.jpyou.Model.Medicine;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
@@ -80,7 +77,6 @@ public class MedicalRecordDoctorFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_doctor_medical_record, container, false);
         {
-            spinner = view.findViewById(R.id.spinnerPrescriptions_MedicalRecordDoctorFragment);
             listView = view.findViewById(R.id.listPrescriptions_MedicalRecordDoctorFragment);
 //            MedicineAdapter adapter = new MedicineAdapter(view.getContext(), R.layout.row_medicine, getListMedicine());
 //            spinner.setAdapter(adapter);
@@ -96,13 +92,5 @@ public class MedicalRecordDoctorFragment extends Fragment {
 
         }
         return view;
-    }
-    private List<Medicine> getListMedicine(){
-        List<Medicine> list = new ArrayList<>();
-        list.add(new Medicine("Thuoc A"));
-        list.add(new Medicine("Thuoc B"));
-        list.add(new Medicine("Thuoc C"));
-
-        return list;
     }
 }

@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.jpyou.Fragments.HomeFragment;
-import com.example.jpyou.Fragments.ProfileFragment;
+import com.example.jpyou.BottomNavigator.HomeFragment;
+import com.example.jpyou.BottomNavigator.ProfileFragment;
 
 public class ViewPagerAdapterUser extends FragmentStateAdapter {
     public ViewPagerAdapterUser(@NonNull FragmentActivity fragmentActivity) {

@@ -1,6 +1,4 @@
-package com.example.jpyou.User;
-
-import com.example.jpyou.PersonInformation;
+package com.example.jpyou.Model;
 
 public class UserInformation extends PersonInformation {
     private String appointDay;

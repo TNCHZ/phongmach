@@ -1,7 +1,6 @@
-package com.example.jpyou.Adapter;
+package com.example.jpyou.ListViewEdit;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-import com.example.jpyou.User.UserInformation;
+import com.example.jpyou.Model.UserInformation;
 
 import com.example.jpyou.init;
 import com.example.myapplication.R;

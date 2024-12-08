@@ -1,4 +1,4 @@
-package com.example.jpyou;
+package com.example.jpyou.Model;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;

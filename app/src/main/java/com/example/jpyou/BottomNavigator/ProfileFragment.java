@@ -1,4 +1,4 @@
-package com.example.jpyou.Fragments;
+package com.example.jpyou.BottomNavigator;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

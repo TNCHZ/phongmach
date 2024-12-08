@@ -143,7 +143,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViewResults_MedicalRecordDoctorFragment"
                 android:ems="10"
-                android:hint="kết luận"
+                android:hint="Kết luận"
                 style="@style/TEXT"
                 android:inputType="text" />
 
@@ -159,33 +159,44 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/spinnerPrescriptions_MedicalRecordDoctorFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/BUTTON"
-                android:layout_below="@id/textViewPrescriptions_MedicalRecordDoctorFragment" />
 
             <ListView
                 android:id="@+id/listPrescriptions_MedicalRecordDoctorFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TEXT"
-                android:layout_above="@id/btnFinish_MedicalRecordDoctorFragment"
-                android:layout_below="@id/spinnerPrescriptions_MedicalRecordDoctorFragment" />
+                android:layout_above="@id/linearLayoutBottom_MedicalRecordDoctorFragment"
+                android:layout_below="@id/textViewPrescriptions_MedicalRecordDoctorFragment" />
 
-            <Button
-                android:id="@+id/btnFinish_MedicalRecordDoctorFragment"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
+                android:id="@+id/linearLayoutBottom_MedicalRecordDoctorFragment"
                 android:layout_marginTop="30dp"
-                style="@style/TEXT"
-                android:background="@drawable/custom_button"
-                android:text="Xác Nhận"
-                app:backgroundTint="@null" />
+                android:gravity="center"
+                android:orientation="horizontal">
 
+                <Button
+                    android:id="@+id/btnFinish_MedicalRecordDoctorFragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    style="@style/TEXT"
+                    android:background="@drawable/custom_button"
+                    android:text="Xác Nhận"
+                    app:backgroundTint="@null" />
+
+                <Button
+                    android:id="@+id/btnAddMedicine_MedicalRecordDoctorFragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    style="@style/TEXT"
+                    android:background="@drawable/custom_button"
+                    android:text="Thêm thuốc"
+                    app:backgroundTint="@null" />
+            </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
 

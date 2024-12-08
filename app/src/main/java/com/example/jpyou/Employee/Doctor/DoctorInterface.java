@@ -1,5 +1,6 @@
 package com.example.jpyou.Employee.Doctor;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -32,6 +33,11 @@ public class DoctorInterface extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("TaiKhoanID", getIntent().getStringExtra("TaiKhoanID"));
+        editor.apply();
 
         txtHeader = findViewById(R.id.textViewHeader_DoctorInterface);
         txtHeader.setText("Trang chủ");

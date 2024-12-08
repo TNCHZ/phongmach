@@ -1,0 +1,86 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:backgroundTint="@null"
+    android:background="@drawable/custom_button_rim" >
+
+    <!-- TextView hiển thị tên -->
+    <TextView
+        android:id="@+id/textViewName_DoctorRowMedicineChosen"
+        android:layout_width="244dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toStartOf="@id/btnCancel_DoctorRowMedicineChosen"
+        android:text="Name"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <!-- LinearLayout chứa các TextView thay thế EditText -->
+    <LinearLayout
+        android:id="@+id/linearLayoutInputs"
+        android:layout_width="253dp"
+        android:layout_height="44dp"
+        android:layout_below="@id/textViewName_DoctorRowMedicineChosen"
+        android:layout_marginTop="10dp"
+        android:layout_toStartOf="@id/btnCancel_DoctorRowMedicineChosen"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <!-- TextView cho số lượng thuốc -->
+        <TextView
+            android:id="@+id/textViewQuantity_DoctorRowMedicineChosen"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Quantity"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <!-- TextView cho đơn vị thuốc -->
+        <TextView
+            android:id="@+id/textViewUnit_DoctorRowMedicineChosen"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Unit"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- TextView cho hướng dẫn sử dụng thuốc -->
+    <TextView
+        android:id="@+id/textViewUsageInstruction_DoctorRowMedicineChosen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearLayoutInputs"
+        android:layout_toStartOf="@id/btnCancel_DoctorRowMedicineChosen"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="Usage instructions"
+        android:gravity="top|start"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <!-- Button thay đổi thành Hủy -->
+    <Button
+        android:id="@+id/btnCancel_DoctorRowMedicineChosen"
+        android:layout_width="138dp"
+        android:layout_height="70dp"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/custom_button"
+        android:text="Hủy"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:backgroundTint="@null" />
+</RelativeLayout>

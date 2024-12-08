@@ -1,6 +1,7 @@
-package com.example.jpyou.Adapter;
+package com.example.jpyou.ListViewEdit;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.jpyou.Employee.Doctor.DoctorFragments.MedicalRecordDoctorFragment;
-import com.example.jpyou.User.UserInformation;
+import com.example.jpyou.Model.UserInformation;
 import com.example.myapplication.R;
 
 import java.util.List;
@@ -34,7 +34,6 @@ public class SchedulePatientAdapter extends BaseAdapter {
     private class ViewHolder{
         TextView txtName;
         TextView txtDescribe;
-        ImageView imgAvatar;
         Button btnComfirm;
     }
 
@@ -72,10 +71,18 @@ public class SchedulePatientAdapter extends BaseAdapter {
         holder.btnComfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!ps.getBlConfirmed()){
-                    ps.setBlConfirmed(true);
-                    Toast.makeText(context.getApplicationContext(), "True",Toast.LENGTH_SHORT).show();
-                }
+                Bundle bundle = new Bundle();
+                bundle.putInt("patient_id", ps.getId());
+
+                MedicalRecordDoctorFragment fragment = MedicalRecordDoctorFragment.newInstance("", "");
+                fragment.setArguments(bundle);
+
+                // Thay đổi Fragment
+                ((FragmentActivity) context).getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_home, fragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
         return view;

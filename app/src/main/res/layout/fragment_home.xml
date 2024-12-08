@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_home"
     style="@style/SCREEN"
-    tools:context="com.example.jpyou.Fragments.HomeFragment"
+    tools:context="com.example.jpyou.BottomNavigator.HomeFragment"
     >
 
     <!-- TODO: Update blank fragment layout -->
@@ -19,6 +19,7 @@
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/scrollview_HomeFragment"
             android:layout_margin="5dp">
 
             <LinearLayout
@@ -104,7 +105,7 @@
         </TableLayout>
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textViewChange_HomeFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Danh sách bác sĩ:"
