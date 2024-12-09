@@ -1,7 +1,5 @@
 package com.example.jpyou.Model;
 
-import androidx.annotation.NonNull;
-
 public class Medicine {
     private String id, name, unit;
     private String Usage, Quantity;
@@ -61,9 +59,5 @@ public class Medicine {
         this.unit = unit;
     }
 
-    @NonNull
-    @Override
-    public String toString() {
-        return this.name +" " + this.unit;
-    }
+
 }

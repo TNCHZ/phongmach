@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/fragment_doctor_add_medicines"
+    style="@style/SCREEN"
     tools:context="com.example.jpyou.Employee.Doctor.DoctorFragments.AddMedicineDoctorFragment">
 
     <LinearLayout
@@ -34,7 +36,7 @@
         <ListView
             android:id="@+id/listMedicine_AddMedicineDoctorFragment"
             android:layout_width="match_parent"
-            android:layout_height="334dp">
+            android:layout_height="215dp">
 
         </ListView>
 
@@ -51,7 +53,13 @@
         <ListView
             android:id="@+id/listMedicineChosen_AddMedicineDoctorFragment"
             android:layout_width="match_parent"
-            android:layout_height="289dp" />
+            android:layout_height="230dp" />
+
+        <Button
+            android:id="@+id/btnConfirm_AddMedicineDoctorFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Xác nhận" />
 
     </LinearLayout>
 

@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -42,9 +41,9 @@ public class AddMedicineDoctorFragment extends Fragment {
     }
 
     private ListView lvMedicine, lvMedicineChosen;
-    private Button btnBack;
+    private Button btnBack, brnConfirm;
     private SearchView sv;
-    private List<Medicine> medicines, chosenMedicines;
+    private List<Medicine> medicines, saveMedicines;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -58,8 +57,10 @@ public class AddMedicineDoctorFragment extends Fragment {
             lvMedicineChosen = view.findViewById(R.id.listMedicineChosen_AddMedicineDoctorFragment);
             btnBack = view.findViewById(R.id.btnBack_AddMedicineDoctorFragment);
             sv = view.findViewById(R.id.searchView_AddMedicineDoctorFragment);
+            brnConfirm = view.findViewById(R.id.btnConfirm_AddMedicineDoctorFragment);
 
             List<String> chosenMedicines = new ArrayList<>();
+            saveMedicines = new ArrayList<>();
             medicines = new ArrayList<>();
             medicines = db.getMedicines();
             ShowMedicine adapter = new ShowMedicine(getActivity(), R.layout.row_medicine, medicines);
@@ -120,8 +121,11 @@ public class AddMedicineDoctorFragment extends Fragment {
                                 // Parse quantity as integer and set usage as string
                                 int quantity = Integer.parseInt(quantityText); // Convert quantity to integer
                                 selectedMedicine.setUsage(usageText);
-                                selectedMedicine.setQuantity(quantityText);  // Assuming setQuantity accepts int, not String
-                                chosenMedicines.add(selectedMedicine.getName());  // Add medicine name to chosenMedicines list
+                                selectedMedicine.setQuantity(quantityText);
+
+                                chosenMedicines.add(selectedMedicine.getName());
+
+                                saveMedicines.add(selectedMedicine);
 
                                 // Update the list view with the new data
                                 ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, chosenMedicines);
@@ -148,11 +152,29 @@ public class AddMedicineDoctorFragment extends Fragment {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Go back to the previous fragment (pop from the fragment stack)
-                requireActivity().getSupportFragmentManager().popBackStack();
+                MedicalRecordDoctorFragment back = new MedicalRecordDoctorFragment();
+
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_doctor_add_medicines, back)
+                        .commit();
             }
         });
+        brnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MedicalRecordDoctorFragment back = new MedicalRecordDoctorFragment();
 
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("chosen_medicines", (ArrayList<Medicine>) saveMedicines);
+
+                // Tạo fragment cũ mà bạn muốn quay lại
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_doctor_add_medicines, back)
+                        .commit();
+            }
+        });
         return view;
     }
 
@@ -168,6 +190,7 @@ public class AddMedicineDoctorFragment extends Fragment {
         ShowMedicine filteredAdapter = new ShowMedicine(getActivity(), R.layout.row_medicine, filteredList);
         lvMedicine.setAdapter(filteredAdapter); // Update the ListView with the filtered results
     }
+
 
 
 }
