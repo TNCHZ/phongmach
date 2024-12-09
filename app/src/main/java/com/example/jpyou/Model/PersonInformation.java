@@ -4,12 +4,18 @@ import androidx.annotation.NonNull;
 import java.io.Serializable;
 
 public class PersonInformation implements Serializable {
-    private int id;
+    private String id;
     private String hoTen;
     private String gioiTinh;
     private String ngaySinh;
     private String soDT;
     private String email;
+    private byte[] imgAvatar;
+
+    public PersonInformation(String id, String hoTen) {
+        this.id = id;
+        this.hoTen = hoTen;
+    }
 
     public PersonInformation() {
     }
@@ -18,7 +24,12 @@ public class PersonInformation implements Serializable {
         this.hoTen = hoTen;
     }
 
-    public PersonInformation(int id, String hoTen, String gioiTinh, String ngaySinh, String soDT, String email) {
+    public PersonInformation(String hoTen, byte[] ava) {
+        this.hoTen = hoTen;
+        this.imgAvatar = ava;
+    }
+
+    public PersonInformation(String id, String hoTen, String gioiTinh, String ngaySinh, String soDT, String email) {
         this.id = id;
         this.hoTen = hoTen;
         this.gioiTinh = gioiTinh;
@@ -27,10 +38,17 @@ public class PersonInformation implements Serializable {
         this.email = email;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
+    public byte[] getImgAvatar() {
+        return imgAvatar;
+    }
+
+    public void setImgAvatar(byte[] imgAvatar) {
+        this.imgAvatar = imgAvatar;
+    }
 
     public String getHoTen() {
         return hoTen;

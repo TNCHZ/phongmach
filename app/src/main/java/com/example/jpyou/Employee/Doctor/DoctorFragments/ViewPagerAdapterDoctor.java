@@ -18,7 +18,7 @@ public class ViewPagerAdapterDoctor extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0: return new HomeFragment();
-            case 1: return new MedicalRecordDoctorFragment();
+            case 1: return new ProfileFragment();
             case 2: return new ProfileFragment();
             default: return new HomeFragment();
         }

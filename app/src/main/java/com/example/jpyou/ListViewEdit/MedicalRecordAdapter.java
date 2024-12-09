@@ -6,11 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.jpyou.Model.Medicine;
-import com.example.jpyou.Model.UserInformation;
 import com.example.myapplication.R;
 
 import java.util.List;

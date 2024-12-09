@@ -78,14 +78,12 @@ public class ScheduleUserFragment extends Fragment {
                 schedules = new ArrayList<>();
                 cldView = view.findViewById(R.id.calendar_ScheduleUserFragment);
                 lv = view.findViewById(R.id.listSchedule_ScheduleUserFragment);
-                schedules = db.getDaySchedule(db.getPatientID(userID));
 
+                schedules = db.getDaySchedule(db.getPatientID(userID));
                 ShowSchduleAndCancel adapter = new ShowSchduleAndCancel(getActivity(), R.layout.row_show_schedule_and_cancel, schedules);
                 lv.setAdapter(adapter);
 
-
                 cldView.setOnDateChangeListener((calendarView, year, month, dayOfMonth) -> {
-                    // Chuyển đổi ngày được chọn thành định dạng "dd/MM/yyyy"
                     Calendar calendar = Calendar.getInstance();
                     calendar.set(year, month, dayOfMonth);
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());

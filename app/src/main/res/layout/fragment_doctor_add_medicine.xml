@@ -10,10 +10,26 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <SearchView
-            android:id="@+id/searchView_AddMedicineDoctorFragment"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="32dp" />
+            android:layout_height="42dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnBack_AddMedicineDoctorFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@android:drawable/ic_menu_revert"
+            />
+
+            <SearchView
+                android:id="@+id/searchView_AddMedicineDoctorFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
 
         <ListView
             android:id="@+id/listMedicine_AddMedicineDoctorFragment"
@@ -21,36 +37,6 @@
             android:layout_height="334dp">
 
         </ListView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/editTextUnit_AddMedicineDoctorFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="text"
-                android:text="Đơn vị" />
-
-            <EditText
-                android:id="@+id/editTextQuantity_AddMedicineDoctorFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="text"
-                android:text="Số lượng" />
-
-            <EditText
-                android:id="@+id/editTextUsage_AddMedicineDoctorFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="text"
-                android:text="Hướng dẫn sử dụng" />
-        </LinearLayout>
 
         <TextView
             android:id="@+id/textViewListMedicine_AddMedicineDoctorFragment"
@@ -66,26 +52,6 @@
             android:id="@+id/listMedicineChosen_AddMedicineDoctorFragment"
             android:layout_width="match_parent"
             android:layout_height="289dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="67dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnBack_AddMedicineDoctorFragment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Quay lại" />
-
-            <Button
-                android:id="@+id/btnAdd_AddMedicineDoctorFragment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Thêm thuốc" />
-        </LinearLayout>
 
     </LinearLayout>
 

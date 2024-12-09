@@ -3,15 +3,12 @@ package com.example.jpyou.Model;
 public class Doctor extends PersonInformation{
     private String kinhNghiem;
 
-    public Doctor() {
-    }
-
     public Doctor(String hoTen, String kinhNghiem) {
         super(hoTen);
         this.kinhNghiem = kinhNghiem;
     }
 
-    public Doctor(int id, String hoTen, String gioiTinh, String ngaySinh, String soDT, String email) {
+    public Doctor(String id, String hoTen, String gioiTinh, String ngaySinh, String soDT, String email) {
         super(id, hoTen, gioiTinh, ngaySinh, soDT, email);
     }
 

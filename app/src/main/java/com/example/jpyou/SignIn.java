@@ -16,6 +16,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.jpyou.Employee.Doctor.DoctorInterface;
+import com.example.jpyou.Employee.Nurse.NurseInterface;
 import com.example.jpyou.Model.WarningAccount;
 import com.example.jpyou.User.UserInterface;
 import com.example.jpyou.User.UserSignUp;
@@ -40,7 +42,6 @@ public class SignIn extends AppCompatActivity {
         });
 
 
-
         db = new MyDatabaseHelper(this);
         txtUsername = findViewById(R.id.txtUserName_SignIn);
         txtPassword = findViewById(R.id.txtPasswork_SignIn);
@@ -56,10 +57,20 @@ public class SignIn extends AppCompatActivity {
                 String taiKhoanID = db.verifyPassword(txtUsername.getText().toString(), txtPassword.getText().toString());
                 String role = db.getRole(taiKhoanID);
                 WarningAccount warningAccount = new WarningAccount(txtUsername, txtPassword, taiKhoanID, txtWarning);
-                if (warningAccount.checkAccount() && role.equals("Benh nhan")) {
-                    Intent intent = new Intent(SignIn.this, UserInterface.class);
-                    intent.putExtra("TaiKhoanID", taiKhoanID);
-                    startActivity(intent);
+                if (warningAccount.checkAccount()) {
+                    if (role.equals("Benh nhan")) {
+                        Intent intent = new Intent(SignIn.this, UserInterface.class);
+                        intent.putExtra("TaiKhoanID", taiKhoanID);
+                        startActivity(intent);
+                    } else if (role.equals("Bac si")) {
+                        Intent intent = new Intent(SignIn.this, DoctorInterface.class);
+                        intent.putExtra("TaiKhoanID", taiKhoanID);
+                        startActivity(intent);
+                    }else{
+                        Intent intent = new Intent(SignIn.this, NurseInterface.class);
+                        intent.putExtra("TaiKhoanID", taiKhoanID);
+                        startActivity(intent);
+                    }
                 }
             }
         });
@@ -71,6 +82,7 @@ public class SignIn extends AppCompatActivity {
             }
         });
     }
+
     private void showPasswork() {
         ckbShowPasswork = findViewById(R.id.ckbShow_SignIn);
         txtPassword = findViewById(R.id.txtPasswork_SignIn);
@@ -78,9 +90,9 @@ public class SignIn extends AppCompatActivity {
         ckbShowPasswork.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     txtPassword.setTransformationMethod(null);
-                }else {
+                } else {
                     txtPassword.setTransformationMethod(new PasswordTransformationMethod());
                     txtPassword.setSelection(txtPassword.getText().length());
                 }

@@ -63,14 +63,14 @@ public class UpdateInformation extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                int id = ps.getId();
+                String id = ps.getId();
                 String name = txtName.getText().toString();
                 String gender = rdMale.isChecked() ? "Nam" : "Nữ";
                 String dayOfBirth = txtDayOfBirth.getText().toString();
                 String phone = txtPhone.getText().toString();
                 String email = txtEmail.getText().toString();
 
-                db.updateInformation(String.valueOf(id), name, gender, dayOfBirth, phone, email);
+                db.updateInformation(id, name, gender, dayOfBirth, phone, email);
 
                 Intent intent = new Intent(UpdateInformation.this, UserInterface.class);
                 startActivity(intent);

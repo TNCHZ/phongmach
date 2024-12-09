@@ -4,12 +4,15 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +31,7 @@ import com.example.jpyou.User.UserFragments.RegisterForExaminationUserFragment;
 import com.example.jpyou.SignIn;
 import com.example.myapplication.R;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,13 +57,15 @@ public class HomeFragment extends Fragment {
         userID = sharedPreferences.getString("TaiKhoanID", null);
     }
 
-    @SuppressLint({"MissingInflatedId", "WrongViewCast"})
+    @SuppressLint("WrongThread")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         {
+
+
             db = new MyDatabaseHelper(getActivity());
             Intent intent = new Intent(getActivity(), SignIn.class);
             scrview = view.findViewById(R.id.scrollview_HomeFragment);
@@ -96,9 +102,10 @@ public class HomeFragment extends Fragment {
                     });
                 } else if(db.getRole(userID).equals("Bac si")){
                     scrview.setVisibility(View.GONE);
+                    layout.setVisibility(View.VISIBLE);
                     patients = new ArrayList<>();
                     patients = db.showPatient();
-                    SchedulePatientAdapter adapterPatient = new SchedulePatientAdapter(getActivity(), R.layout.row_list_patient, patients);
+                    SchedulePatientAdapter adapterPatient = new SchedulePatientAdapter(getActivity(), R.layout.row_list_patient, patients, userID);
                     lv.setAdapter(adapterPatient);
                     tv.setText("Danh sách bệnh nhân");
                 }else

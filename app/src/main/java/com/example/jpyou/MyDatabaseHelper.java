@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.example.jpyou.Model.Doctor;
+import com.example.jpyou.Model.Medicine;
 import com.example.jpyou.Model.PersonInformation;
 import com.example.jpyou.Model.UserInformation;
 
@@ -47,6 +48,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 "NgaySinh TEXT, " +
                 "SoDT TEXT UNIQUE, " +
                 "Email TEXT UNIQUE, " +
+                "HinhAnh BLOB, " +
                 "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
 
 
@@ -108,7 +110,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         // Tạo bảng Thuoc
         String createThuocTable = "CREATE TABLE Thuoc (" +
                 "ThuocID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "TenThuoc TEXT NOT NULL);";
+                "TenThuoc TEXT NOT NULL, " +
+                "DonVi TEXT);";
 
         // Tạo bảng ToaThuoc
         String createToaThuocTable = "CREATE TABLE ToaThuoc (" +
@@ -118,7 +121,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         // Tạo bảng ToaThuoc_Thuoc
         String createToaThuocThuocTable = "CREATE TABLE ToaThuoc_Thuoc (" +
                 "ToaThuocThuocID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "DonVi TEXT, " +
                 "SoLuong TEXT, " +
                 "HuongDanSuDung TEXT, " +
                 "ThuocID INTEGER, " +
@@ -156,6 +158,48 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL(insertAdmin1);
         db.execSQL(insertAdmin2);
+
+        ContentValues values = new ContentValues();
+
+        values.put("TenThuoc", "Paracetamol");
+        values.put("DonVi", "Viên");
+        db.insert("Thuoc", null, values);
+
+        values.put("TenThuoc", "Aspirin");
+        values.put("DonVi", "Viên");
+        db.insert("Thuoc", null, values);
+
+        values.put("TenThuoc", "Amoxicillin");
+        values.put("DonVi", "Viên");
+        db.insert("Thuoc", null, values);
+
+        values.put("TenThuoc", "Ibuprofen");
+        values.put("DonVi", "Viên");
+        db.insert("Thuoc", null, values);
+
+        values.put("TenThuoc", "Vitamin C");
+        values.put("DonVi", "Viên");
+        db.insert("Thuoc", null, values);
+
+        values.put("TenThuoc", "Loratadine");
+        values.put("DonVi", "Viên");
+        db.insert("Thuoc", null, values);
+
+        values.put("TenThuoc", "Omeprazole");
+        values.put("DonVi", "Viên");
+        db.insert("Thuoc", null, values);
+
+        values.put("TenThuoc", "Cetirizine");
+        values.put("DonVi", "Viên");
+        db.insert("Thuoc", null, values);
+
+        values.put("TenThuoc", "Diphenhydramine");
+        values.put("DonVi", "Viên");
+        db.insert("Thuoc", null, values);
+
+        values.put("TenThuoc", "Metformin");
+        values.put("DonVi", "Viên");
+        db.insert("Thuoc", null, values);
     }
 
 
@@ -242,8 +286,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return taiKhoanID;
     }
 
-    public String getRole(String id)
-    {
+    public String getRole(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // SQL queries for checking role in respective tables
@@ -251,30 +294,38 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         String queryPatient = "SELECT TaiKhoanID FROM BenhNhan WHERE TaiKhoanID = ?";
         String queryNurse = "SELECT TaiKhoanID FROM YTa WHERE TaiKhoanID = ?";
 
-        // Execute query for Patient role
-        Cursor cursorPatient = db.rawQuery(queryPatient, new String[]{id});
-        if (cursorPatient != null && cursorPatient.getCount() == 1) {
-            cursorPatient.close();
-            return "Benh nhan"; // Patient role found
+        Cursor cursor = null; // Declare a single Cursor to reuse
+
+        try {
+            // Check Patient role
+            cursor = db.rawQuery(queryPatient, new String[]{id});
+            if (cursor != null && cursor.getCount() == 1) {
+                return "Benh nhan"; // Patient role found
+            }
+
+            // Check Doctor role
+            if (cursor != null) cursor.close(); // Close previous Cursor
+            cursor = db.rawQuery(queryDoctor, new String[]{id});
+            if (cursor != null && cursor.getCount() == 1) {
+                return "Bac si"; // Doctor role found
+            }
+
+            // Check Nurse role
+            if (cursor != null) cursor.close(); // Close previous Cursor
+            cursor = db.rawQuery(queryNurse, new String[]{id});
+            if (cursor != null && cursor.getCount() == 1) {
+                return "Y ta"; // Nurse role found
+            }
+        } catch (Exception e) {
+            Log.e("getRole", "Error while getting role", e);
+        } finally {
+            // Ensure Cursor is closed
+            if (cursor != null) cursor.close();
         }
 
-        // Execute query for Doctor role
-        Cursor cursorDoctor = db.rawQuery(queryDoctor, new String[]{id});
-        if (cursorDoctor != null && cursorDoctor.getCount() == 1) {
-            cursorDoctor.close();
-            return "Bac si"; // Doctor role found
-        }
-
-        // Execute query for Nurse role
-        Cursor cursorNurse = db.rawQuery(queryNurse, new String[]{id});
-        if (cursorNurse != null && cursorNurse.getCount() == 1) {
-            cursorNurse.close();
-            return "Y ta"; // Nurse role found
-        }
-
-        // If no matching role is found
-        return "Unknown";
+        return "Unknown"; // Default role if none found
     }
+
 
     @SuppressLint("Range")
     public PersonInformation getInformation(String id) {
@@ -288,7 +339,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             // Lấy dữ liệu từ Cursor và tạo đối tượng PersonInformation
-            int userID = cursor.getInt(cursor.getColumnIndex("TaiKhoanID"));
+            String userID = cursor.getString(cursor.getColumnIndex("TaiKhoanID"));
             String name = cursor.getString(cursor.getColumnIndex("HoTen"));
             String gender = cursor.getString(cursor.getColumnIndex("GioiTinh"));
             String dayOfBirth = cursor.getString(cursor.getColumnIndex("NgaySinh"));
@@ -356,7 +407,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         List<UserInformation> ls = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT NguoiDung.HoTen " +
+        String query = "SELECT NguoiDung.HoTen, NguoiDung.TaiKhoanID, LichHen.TrieuChung " +
                 "FROM LichHen " +
                 "JOIN BenhNhan ON LichHen.BenhNhanID = BenhNhan.BenhNhanID " +
                 "INNER JOIN NguoiDung ON BenhNhan.TaiKhoanID = NguoiDung.TaiKhoanID " +
@@ -366,10 +417,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         if (cursor != null) {
             try {
                 while (cursor.moveToNext()) {
-                    // Assuming UserInformation has a constructor that takes HoTen as a parameter
+                    String id = cursor.getString(cursor.getColumnIndexOrThrow("TaiKhoanID"));
                     String hoTen = cursor.getString(cursor.getColumnIndexOrThrow("HoTen"));
-                    Log.d("alo", hoTen);
-                    ls.add(new UserInformation(hoTen));
+                    String trieuChung = cursor.getString(cursor.getColumnIndexOrThrow("TrieuChung"));
+                    ls.add(new UserInformation(id, hoTen, trieuChung));
                 }
             } finally {
                 cursor.close(); // Ensure the Cursor is closed to prevent resource leaks
@@ -468,13 +519,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return ls;
     }
 
-    public List<Doctor> getDoctors()
-    {
+    public List<Doctor> getDoctors() {
         SQLiteDatabase db = this.getReadableDatabase();
         List<Doctor> ls = new ArrayList<>();
 
         // Query lấy dữ liệu từ hai bảng
-        String query = "SELECT NguoiDung.HoTen, BacSi.KinhNghiem " +
+        String query = "SELECT NguoiDung.HoTen, BacSi.KinhNghiem, NguoiDung.HinhAnh " +
                 "FROM NguoiDung " +
                 "INNER JOIN BacSi ON NguoiDung.TaiKhoanID = BacSi.TaiKhoanID";
 
@@ -486,6 +536,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 // Lấy từng cột từ Cursor
                 String hoTen = cursor.getString(cursor.getColumnIndexOrThrow("HoTen"));
                 String kinhNghiem = cursor.getString(cursor.getColumnIndexOrThrow("KinhNghiem"));
+                byte[] image = cursor.getBlob(cursor.getColumnIndexOrThrow("HinhAnh")); // Lấy dữ liệu ảnh dạng BLOB
 
                 // Tạo đối tượng Doctor và thêm vào danh sách
                 Doctor doctor = new Doctor(hoTen, kinhNghiem);
@@ -499,4 +550,35 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         return ls;
     }
+
+    public List<Medicine> getMedicines() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Medicine> ls = new ArrayList<>();
+
+        // Query lấy dữ liệu từ bảng Thuoc
+        String query = "SELECT ThuocID, TenThuoc, DonVi FROM Thuoc";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        // Duyệt qua kết quả trả về
+        if (cursor.moveToFirst()) {
+            do {
+                // Lấy từng cột từ Cursor
+                String thuocID = cursor.getString(cursor.getColumnIndexOrThrow("ThuocID"));
+                String tenThuoc = cursor.getString(cursor.getColumnIndexOrThrow("TenThuoc"));
+                String donVi = cursor.getString(cursor.getColumnIndexOrThrow("DonVi"));
+
+                // Tạo đối tượng Thuoc và thêm vào danh sách
+                Medicine thuoc = new Medicine(thuocID, tenThuoc, donVi);
+                ls.add(thuoc);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return ls;
+    }
+
+
 }

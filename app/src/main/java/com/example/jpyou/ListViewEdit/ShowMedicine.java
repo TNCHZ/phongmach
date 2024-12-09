@@ -1,39 +1,37 @@
 package com.example.jpyou.ListViewEdit;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.jpyou.Model.Doctor;
+import com.example.jpyou.Model.Medicine;
 import com.example.myapplication.R;
 
 import java.util.List;
 
-public class ShowDoctor extends BaseAdapter {
+public class ShowMedicine extends BaseAdapter {
     private Context context;
     private Integer layout;
-    private List<Doctor> doctors;
+    private List<Medicine> medicines;
 
-    public ShowDoctor(Context context, Integer layout, List<Doctor> doctors) {
+    public ShowMedicine(Context context, Integer layout, List<Medicine> medicines) {
         this.context = context;
         this.layout = layout;
-        this.doctors = doctors;
+        this.medicines = medicines;
     }
 
     private class ViewHolder{
-        TextView txtName;
-        TextView txtDescribe;
-        ImageView imgView;
+        TextView txtName, txtUnit;
     }
 
 
     @Override
     public int getCount() {
-        return doctors.size();
+        return medicines.size();
     }
 
     @Override
@@ -54,18 +52,16 @@ public class ShowDoctor extends BaseAdapter {
             view = inflater.inflate(layout, null); //Lấy layout NurseRowSchedule
             holder = new ViewHolder();
             //Ánh xạ "id" từ view
-            holder.txtName = (TextView) view.findViewById(R.id.textViewName_rowListDoctor);
-            holder.txtDescribe = (TextView) view.findViewById(R.id.textViewDistriction_rowListDoctor);
-            holder.imgView = (ImageView) view.findViewById(R.id.imageViewAvatar_rowListDoctor);
+            holder.txtName = (TextView) view.findViewById(R.id.textViewName_DoctorRowMedicine);
+            holder.txtUnit = (TextView) view.findViewById(R.id.textViewUnit_DoctorRowMedicine);
             view.setTag(holder);//Truyền trạng thái ánh xạ
         }else {
             holder = (ViewHolder) view.getTag();
         }
 
-        Doctor ps = doctors.get(i);
-        holder.txtName.setText(ps.getHoTen());
-        holder.txtDescribe.setText(ps.getKinhNghiem());
-        holder.imgView.setImageResource(R.drawable.ic_person);
+        Medicine mc = medicines.get(i);
+        holder.txtName.setText(mc.getName());
+        holder.txtUnit.setText(mc.getUnit());
         return view;
     }
 }
