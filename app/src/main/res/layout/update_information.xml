@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/SCREEN"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main">
 
@@ -31,7 +32,8 @@
             android:layout_margin="5dp"
             android:ems="10"
             android:hint="Họ và Tên"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textSize="18sp" />
 
         <TableLayout
             android:layout_width="match_parent"
@@ -73,7 +75,8 @@
                     android:layout_margin="5dp"
                     android:ems="10"
                     android:hint="Ngày Sinh"
-                    android:inputType="date" />
+                    android:inputType="date"
+                    android:textSize="18sp" />
 
                 <RadioGroup
                     style="@style/EDITTEXT"
@@ -120,7 +123,8 @@
             android:hint="Số Điện Thoại"
             android:inputType="phone"
             android:maxLength="10"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/textViewEmail_UpdateInformation"
@@ -139,7 +143,8 @@
             android:layout_margin="5dp"
             android:ems="10"
             android:hint="_Email_@gmail.com"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btnUpdate_UpdateInformation"

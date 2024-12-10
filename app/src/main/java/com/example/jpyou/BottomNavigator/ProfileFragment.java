@@ -51,6 +51,16 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         {
+            sharedPreferences = view.getContext().getSharedPreferences("MODE", Context.MODE_PRIVATE);
+            isNightMode = sharedPreferences.getBoolean("night", false); // light mode is the default mode
+
+            if (isNightMode){
+                swicthNightMode.setText("Tắt chế độ ban đêm");
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                swicthNightMode.setText("Bật chế độ ban đêm");
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
             nightMode(view);
 
             sBFontSize = view.findViewById(R.id.seekBarFontSize_ProfileFragment);
@@ -129,24 +139,23 @@ public class ProfileFragment extends Fragment {
         swicthNightMode = view.findViewById(R.id.switchNightMode_ProfileFragment);
         //Dùng sharedPreferences để lưu mode  nếu khi thoát app và trả lại vẫn còn
         sharedPreferences = view.getContext().getSharedPreferences("MODE", Context.MODE_PRIVATE);
-        isNightMode = sharedPreferences.getBoolean("night", false); // light mode is the default mode
+        //isNightMode = sharedPreferences.getBoolean("night", false); // light mode is the default mode
 
         swicthNightMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 isNightMode = b;
+                editor = sharedPreferences.edit();
                 if (isNightMode){
                     swicthNightMode.setText("Tắt chế độ ban đêm");
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    editor = sharedPreferences.edit();
                     editor.putBoolean("night", true);
                 } else {
                     swicthNightMode.setText("Bật chế độ ban đêm");
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    editor = sharedPreferences.edit();
                     editor.putBoolean("night", false);
                 }
-                editor.apply();
+                editor.commit();
             }
         });
     }
