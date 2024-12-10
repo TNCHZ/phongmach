@@ -57,11 +57,9 @@ public class ProfileFragment extends Fragment {
             isNightMode = sharedPreferences.getBoolean("night", false); // light mode is the default mode
             if (isNightMode){
                 swicthNightMode.setText("Tắt chế độ ban đêm");
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 swicthNightMode.setChecked(true);
             } else {
                 swicthNightMode.setText("Bật chế độ ban đêm");
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
             swicthNightMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override

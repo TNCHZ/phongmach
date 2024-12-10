@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -31,7 +32,9 @@ public class UserInterface extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private TextView txtHeader;
     private ImageButton imgbtnAvatarUserInterface;
-
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    private boolean isNightMode;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,15 @@ public class UserInterface extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        sharedPreferences = getSharedPreferences("MODE", MODE_PRIVATE);
+        isNightMode = sharedPreferences.getBoolean("night", false);
+        if (isNightMode){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
 
         txtHeader = findViewById(R.id.textViewHeader_UserInterface);
         txtHeader.setText("Trang chủ");
