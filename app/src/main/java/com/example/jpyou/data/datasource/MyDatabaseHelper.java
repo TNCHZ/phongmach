@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.example.jpyou.data.model.CalendarEdit;
 import com.example.jpyou.data.model.Doctor;
 import com.example.jpyou.data.model.Medicine;
 import com.example.jpyou.data.model.PersonInformation;
@@ -784,6 +786,34 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         db.close();
         return result != -1;
+    }
+
+    public List<CalendarEdit> getDayDoctorWork() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        List<CalendarEdit> lv = new ArrayList<>();
+
+        // Corrected query
+        String query = "SELECT LichLamViec.NgayLamViec, NguoiDung.HoTen, BacSi.BacSiID " +
+                "FROM LichLamViec " +
+                "JOIN BacSi ON LichLamViec.BacSiID = BacSi.BacSiID " +
+                "JOIN NguoiDung ON BacSi.TaiKhoanID = NguoiDung.TaiKhoanID";
+
+        Cursor cursor = db.rawQuery(query, null); // No parameters needed
+        if (cursor != null) {
+            try {
+                while (cursor.moveToNext()) {
+                    // Fetching data
+                    String id = cursor.getString(cursor.getColumnIndexOrThrow("BacSiID"));
+                    String hoTen = cursor.getString(cursor.getColumnIndexOrThrow("HoTen"));
+                    String ngayLam = cursor.getString(cursor.getColumnIndexOrThrow("NgayLamViec"));
+                    lv.add(new CalendarEdit(ngayLam, new Doctor(id, hoTen)));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+
+        return lv;
     }
 
 }

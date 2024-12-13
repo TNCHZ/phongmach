@@ -1,6 +1,4 @@
-package com.example.jpyou.ui.view.activity;
-
-import com.example.jpyou.data.model.Doctor;
+package com.example.jpyou.data.model;
 
 public class CalendarEdit {
     private String day;

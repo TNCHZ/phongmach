@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -21,6 +22,9 @@ import com.google.android.material.navigation.NavigationBarView;
 public class DoctorInterface extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView bottomNavigationView;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    private boolean isNightMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +36,20 @@ public class DoctorInterface extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        sharedPreferences = getSharedPreferences("MODE", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        isNightMode = sharedPreferences.getBoolean("night", false);
+        if (isNightMode){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
+
+        sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         editor.putString("TaiKhoanID", getIntent().getStringExtra("TaiKhoanID"));
         editor.apply();
-
 
         viewPager = findViewById(R.id.viewPager_DoctorInterface);
         bottomNavigationView = findViewById(R.id.bottomNavigation_DoctorInterface);

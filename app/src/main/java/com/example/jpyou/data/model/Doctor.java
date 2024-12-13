@@ -11,6 +11,10 @@ public class Doctor extends PersonInformation{
         this.kinhNghiem = kinhNghiem;
     }
 
+    public Doctor(String id, String hoTen) {
+        super(id, hoTen);
+    }
+
     public Doctor(String id, String hoTen, String kinhNghiem, List<String> ngayLam) {
         super(id, hoTen);
         this.kinhNghiem = kinhNghiem;
