@@ -15,4 +15,9 @@ public class utils {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         return sdf.format(new Date());
     }
+
+    public static final String getCurrentMonth() {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM", Locale.getDefault());
+        return sdf.format(new Date());
+    }
 }

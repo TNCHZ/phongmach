@@ -22,7 +22,6 @@ import android.widget.SearchView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.example.jpyou.ui.adapter.DoctorWorkDayAdapter;
 import com.example.jpyou.ui.adapter.SchedulePatientAdapter;
 import com.example.jpyou.ui.adapter.ShowDoctorAdapter;
 import com.example.jpyou.data.model.Doctor;
