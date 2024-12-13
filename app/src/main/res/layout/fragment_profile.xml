@@ -89,8 +89,10 @@
                 android:id="@+id/seekBarFontSize_ProfileFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
                 android:layout_margin="5dp"
-                android:max="25" />
+                android:max="2"
+                android:progress="1"/>
         </LinearLayout>
 
         <Button

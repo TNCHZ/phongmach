@@ -40,7 +40,6 @@ public class AddMedicineDoctorFragment extends Fragment {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
         userID = sharedPreferences.getString("TaiKhoanID", null);
-
     }
 
     private ListView lvMedicine, lvMedicineChosen;

@@ -22,8 +22,8 @@ public class PersonInformation implements Serializable {
     public PersonInformation() {
     }
 
-    public PersonInformation(String hoTen) {
-        this.hoTen = hoTen;
+    public PersonInformation(String id) {
+        this.id = id;
     }
 
 

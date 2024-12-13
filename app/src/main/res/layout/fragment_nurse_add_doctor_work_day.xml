@@ -1,0 +1,54 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/SCREEN"
+    tools:context="com.example.jpyou.ui.view.fragment.AddDoctorWorkDayNurseFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="52dp"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:text="Danh sách ngày làm" />
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/spinnerMonth_AddDoctorWorkDayNurseFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ListView
+            android:id="@+id/listView_AddDoctorWorkDayNurseFragment"
+            android:layout_width="match_parent"
+            android:layout_height="539dp">
+
+        </ListView>
+
+        <Button
+            android:id="@+id/btnConfirm_AddDoctorWorkDayNurseFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Xác nhận" />
+    </LinearLayout>
+
+</FrameLayout>

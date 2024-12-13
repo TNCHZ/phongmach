@@ -11,13 +11,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.jpyou.ui.adapter.SchedulePatientAdapter;
 import com.example.jpyou.data.datasource.MyDatabaseHelper;
-import com.example.jpyou.data.model.UserInformation;
+import com.example.jpyou.data.model.Patient;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ public class ConfirmPatientNurseFragment extends Fragment {
 
     //====================================================================
     private ListView listView;
-    private List<UserInformation> arrayList;
+    private List<Patient> arrayList;
     private SchedulePatientAdapter adapter;
     private Context context;
     private MyDatabaseHelper db;
@@ -59,8 +58,8 @@ public class ConfirmPatientNurseFragment extends Fragment {
             listView.setAdapter(adapter);
             adapter.setOnConfirmClickListener(new SchedulePatientAdapter.OnConfirmClickListener() {
                 @Override
-                public void onConfirmClick(UserInformation userInformation, View view) {
-                    if (db.confirmExam(userInformation.getId(), userInformation.getAppointDay())) {
+                public void onConfirmClick(Patient patient, View view) {
+                    if (db.confirmExam(patient.getId(), patient.getAppointDay())) {
                         Toast.makeText(context, "Đặt lịch thành công", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(context, "Đặt lịch thất bại", Toast.LENGTH_SHORT).show();

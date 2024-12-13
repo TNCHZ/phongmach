@@ -3,6 +3,7 @@ package com.example.jpyou.ui.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -63,7 +64,7 @@ public class SignIn extends AppCompatActivity {
                         Intent intent = new Intent(SignIn.this, DoctorInterface.class);
                         intent.putExtra("TaiKhoanID", taiKhoanID);
                         startActivity(intent);
-                    }else{
+                    } else if (role.equals("Y ta")) {
                         Intent intent = new Intent(SignIn.this, NurseInterface.class);
                         intent.putExtra("TaiKhoanID", taiKhoanID);
                         startActivity(intent);

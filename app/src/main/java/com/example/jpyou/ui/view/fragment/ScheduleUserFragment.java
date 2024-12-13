@@ -15,11 +15,10 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.jpyou.ui.adapter.ShowSchduleAndCancelAdapter;
 import com.example.jpyou.data.datasource.MyDatabaseHelper;
-import com.example.jpyou.data.model.UserInformation;
+import com.example.jpyou.data.model.Patient;
 import com.example.jpyou.ui.view.activity.SignIn;
 import com.example.myapplication.R;
 
@@ -36,7 +35,7 @@ public class ScheduleUserFragment extends Fragment {
     private CalendarView cldView;
     private ListView lv;
     private MyDatabaseHelper db;
-    private List<UserInformation> schedules;
+    private List<Patient> schedules;
 
 
     public ScheduleUserFragment() {

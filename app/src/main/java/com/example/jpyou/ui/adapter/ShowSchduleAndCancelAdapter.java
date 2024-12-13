@@ -1,7 +1,6 @@
 package com.example.jpyou.ui.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +11,10 @@ import android.widget.TextView;
 
 
 import com.example.jpyou.data.datasource.MyDatabaseHelper;
-import com.example.jpyou.data.model.UserInformation;
+import com.example.jpyou.data.model.Patient;
 
 import com.example.jpyou.utils;
 import com.example.myapplication.R;
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -25,26 +23,26 @@ import java.util.List;
 public class ShowSchduleAndCancelAdapter extends BaseAdapter {
     private Context context;
     private Integer layout;
-    private List<UserInformation> userInformation;
+    private List<Patient> patient;
     private MyDatabaseHelper db;
 
-    public ShowSchduleAndCancelAdapter(Context context, Integer layout, List<UserInformation> userInformation) {
+    public ShowSchduleAndCancelAdapter(Context context, Integer layout, List<Patient> patient) {
         this.context = context;
         this.layout = layout;
-        this.userInformation = userInformation;
+        this.patient = patient;
     }
 
     //Lớp ViewHolder giúp tránh ánh xạ lặp đi lặp lại khi lướt lên xuống
     private class ViewHolder {
         TextView txtNameAppoint;
-        TextView txtDay, confirm;
+        TextView txtDay;
         Button btnCancel;
         Button btnShow;
     }
 
     @Override
     public int getCount() {
-        return userInformation.size();
+        return patient.size();
     } //Hiển thị mỗi phần từ trong List
 
     @Override
@@ -80,8 +78,7 @@ public class ShowSchduleAndCancelAdapter extends BaseAdapter {
 
 
         //Gán giá trị
-        UserInformation ps = userInformation.get(i);
-        holder.confirm.setText(db.confirm(ps.getId(), ps.getAppointDay()));
+        Patient ps = patient.get(i);
         holder.txtNameAppoint.setText(ps.getNameAppoint());
         holder.txtDay.setText(ps.getAppointDay());
         String today = utils.getCurrentDate();
@@ -99,6 +96,12 @@ public class ShowSchduleAndCancelAdapter extends BaseAdapter {
                 });
             }
         }
+        holder.btnShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
 
         return view;

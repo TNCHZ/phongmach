@@ -1,5 +1,6 @@
 package com.example.jpyou.ui.view.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -33,6 +34,10 @@ public class NurseInterface extends AppCompatActivity {
             return insets;
         });
 
+        SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("TaiKhoanID", getIntent().getStringExtra("TaiKhoanID"));
+        editor.apply();
 
         viewPager = findViewById(R.id.viewPager_NurseInterface);
         bottomNavigationView = findViewById(R.id.bottomNavigation_NurseInterface);

@@ -54,12 +54,9 @@ public class ProfileFragment extends Fragment {
             swicthNightMode = view.findViewById(R.id.switchNightMode_ProfileFragment);
             //Dùng sharedPreferences để lưu mode  nếu khi thoát app và trả lại vẫn còn
             sharedPreferences = view.getContext().getSharedPreferences("MODE", Context.MODE_PRIVATE);
-            isNightMode = sharedPreferences.getBoolean("night", false); // light mode is the default mode
-            if (isNightMode){
-                swicthNightMode.setText("Tắt chế độ ban đêm");
+            isNightMode = sharedPreferences.getBoolean("night", false);
+            if (isNightMode) {
                 swicthNightMode.setChecked(true);
-            } else {
-                swicthNightMode.setText("Bật chế độ ban đêm");
             }
             swicthNightMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -80,27 +77,38 @@ public class ProfileFragment extends Fragment {
             });
 
 
-            sBFontSize = view.findViewById(R.id.seekBarFontSize_ProfileFragment);
-            textView = view.findViewById(R.id.textViewFontSize_ProfileFragment);
-            sBFontSize.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                    if (i <= 14){
-                        i = 14;
-                    }
-                    fontSize = i;
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-
-                }
-
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-                    textView.setTextSize(fontSize);
-                }
-            });
+//            sBFontSize = view.findViewById(R.id.seekBarFontSize_ProfileFragment);
+//            textView = view.findViewById(R.id.textViewFontSize_ProfileFragment);
+//            sBFontSize.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//                @Override
+//                public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+//                    switch (i){
+//                        case 1:
+//                            fontSize = i + 17;
+//                            break;
+//                        case 2:
+//                            fontSize = i + 19;
+//                            break;
+//                        default:
+//                            fontSize = i + 15;
+//                            break;
+//                    }
+//                    sharedPreferences = view.getContext().getSharedPreferences("FONT", Context.MODE_PRIVATE);
+//                    editor = sharedPreferences.edit();
+//                    editor.putInt("fontText", i);
+//                    editor.commit();
+//                }
+//
+//                @Override
+//                public void onStartTrackingTouch(SeekBar seekBar) {
+//
+//                }
+//
+//                @Override
+//                public void onStopTrackingTouch(SeekBar seekBar) {
+//                    textView.setTextSize(fontSize);
+//                }
+//            });
 
             btnLogOut = view.findViewById(R.id.btnLogOut_FragmentProfile);
             btnLogIn = view.findViewById(R.id.btnLogIn_ProfileFragment);

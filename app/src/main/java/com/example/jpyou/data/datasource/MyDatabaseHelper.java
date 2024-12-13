@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import com.example.jpyou.data.model.Doctor;
 import com.example.jpyou.data.model.Medicine;
 import com.example.jpyou.data.model.PersonInformation;
-import com.example.jpyou.data.model.UserInformation;
+import com.example.jpyou.data.model.Patient;
 import com.example.jpyou.utils;
 
 import java.time.LocalDate;
@@ -433,15 +433,15 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
 
     @SuppressLint("Recycle")
-    public List<UserInformation> showPatientForDoctor(String doctorID) {
-        List<UserInformation> ls = new ArrayList<>();
+    public List<Patient> showPatientForDoctor(String doctorID) {
+        List<Patient> ls = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "SELECT NguoiDung.HoTen, NguoiDung.TaiKhoanID, LichHen.TrieuChung " +
                 "FROM LichHen " +
                 "JOIN BenhNhan ON LichHen.BenhNhanID = BenhNhan.BenhNhanID " +
                 "INNER JOIN NguoiDung ON BenhNhan.TaiKhoanID = NguoiDung.TaiKhoanID " +
-                "WHERE LichHen.isHen = 0 AND LichHen.isKham = 0 AND LichHen.BacSiID = ? AND LichHen.NgayKham =?";
+                "WHERE LichHen.isHen = 1 AND LichHen.isKham = 0 AND LichHen.BacSiID = ? AND LichHen.NgayKham =?";
 
         Cursor cursor = db.rawQuery(query, new String[]{doctorID, utils.getCurrentDate()});
         if (cursor != null) {
@@ -450,7 +450,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                     String id = cursor.getString(cursor.getColumnIndexOrThrow("TaiKhoanID"));
                     String hoTen = cursor.getString(cursor.getColumnIndexOrThrow("HoTen"));
                     String trieuChung = cursor.getString(cursor.getColumnIndexOrThrow("TrieuChung"));
-                    ls.add(new UserInformation(id, hoTen, trieuChung));
+                    ls.add(new Patient(id, hoTen, trieuChung));
                 }
             } finally {
                 cursor.close(); // Ensure the Cursor is closed to prevent resource leaks
@@ -483,9 +483,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return patientID;
     }
 
-    public List<UserInformation> getDaySchedule(String id) {
+    public List<Patient> getDaySchedule(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        List<UserInformation> ls = new ArrayList<>();
+        List<Patient> ls = new ArrayList<>();
         Cursor cursor = null;
 
         try {
@@ -500,8 +500,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 do {
                     String tenLichHen = cursor.getString(cursor.getColumnIndexOrThrow("TenLichHen"));
                     String ngayKham = cursor.getString(cursor.getColumnIndexOrThrow("NgayKham"));
-                    UserInformation userInformation = new UserInformation(ngayKham, tenLichHen);
-                    ls.add(userInformation);
+                    Patient patient = new Patient(Integer.parseInt(id), ngayKham, tenLichHen);
+                    ls.add(patient);
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
@@ -515,9 +515,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return ls;
     }
 
-    public List<UserInformation> getScheduleAtDay(String id, String day) {
+    public List<Patient> getScheduleAtDay(String id, String day) {
         SQLiteDatabase db = this.getReadableDatabase();
-        List<UserInformation> ls = new ArrayList<>();
+        List<Patient> ls = new ArrayList<>();
         Cursor cursor = null;
 
         try {
@@ -534,8 +534,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                     String ngayKham = cursor.getString(cursor.getColumnIndexOrThrow("NgayKham"));
 
                     // Ghép thông tin
-                    UserInformation userInformation = new UserInformation(ngayKham, tenLichHen);
-                    ls.add(userInformation);
+                    Patient patient = new Patient(ngayKham, tenLichHen);
+                    ls.add(patient);
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
@@ -554,7 +554,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         List<Doctor> ls = new ArrayList<>();
 
         // Query lấy dữ liệu từ hai bảng
-        String query = "SELECT NguoiDung.HoTen, BacSi.KinhNghiem " +
+        String query = "SELECT BacSi.BacSiID, NguoiDung.HoTen, BacSi.KinhNghiem " +
                 "FROM NguoiDung " +
                 "INNER JOIN BacSi ON NguoiDung.TaiKhoanID = BacSi.TaiKhoanID";
 
@@ -562,10 +562,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
+                String id = cursor.getString(cursor.getColumnIndexOrThrow("BacSiID"));
                 String hoTen = cursor.getString(cursor.getColumnIndexOrThrow("HoTen"));
                 String kinhNghiem = cursor.getString(cursor.getColumnIndexOrThrow("KinhNghiem"));
 
-                Doctor doctor = new Doctor(hoTen, kinhNghiem);
+                Doctor doctor = new Doctor(id, hoTen, kinhNghiem);
                 ls.add(doctor);
             } while (cursor.moveToNext());
         }
@@ -608,7 +609,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void addMedicine(String patientID, String doctorID, String symp, List<Medicine> medicines) {
         SQLiteDatabase db = this.getWritableDatabase();  // Mở cơ sở dữ liệu ở chế độ ghi
 
-        // Bắt đầu giao dịch để chèn nhiều bản ghi cùng lúc
         db.beginTransaction();
 
         try {
@@ -623,25 +623,39 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 med.put("HuongDanSuDung", medicine.getUsage());
                 med.put("ThuocID", medicine.getId());
                 med.put("ToaThuocID", toaThuocID);
+
+                Log.d("MedicineInsert", "SoLuong: " + medicine.getQuantity());
+                Log.d("MedicineInsert", "HuongDanSuDung: " + medicine.getUsage());
+                Log.d("MedicineInsert", "ThuocID: " + medicine.getId());
+                Log.d("MedicineInsert", "ToaThuocID: " + toaThuocID);
+
                 db.insert("ToaThuoc_Thuoc", null, med);
             }
 
             ContentValues result = new ContentValues();
-            result.put("TenKetQuaChuanDoan", symp);
-            result.put("BacSiID", doctorID);
-            result.put("BenhNhanID", patientID);
-            result.put("ToaThuocID", toaThuocID);
-            long ketQuaChuanDoanID = db.insert("KetQuanChuanDoan", null, result);
+            result.put("TenKetQuaChuanDoan", symp);  // Chèn triệu chứng vào
+            result.put("BacSiID", doctorID);  // Chèn ID bác sĩ vào
+            result.put("BenhNhanID", patientID);  // Chèn ID bệnh nhân vào
+            result.put("ToaThuocID", toaThuocID);  // Chèn ID toa thuốc vào
+            long ketQuaChuanDoanID = db.insert("KetQuaChuanDoan", null, result);  // Thêm bản ghi vào bảng KetQuaChuanDoan và nhận về KetQuaChuanDoanID
 
             ContentValues updateValues = new ContentValues();
-            updateValues.put("KetQuaChuanDoanID", ketQuaChuanDoanID);
+            updateValues.put("KetQuaChuanDoanID", ketQuaChuanDoanID);  // Cập nhật KetQuaChuanDoanID
+            updateValues.put("isKham", 1);
 
             String whereClause = "BenhNhanID = ? AND BacSiID = ? AND NgayKham = ?";
-            String[] whereArgs = new String[]{patientID, doctorID, utils.getCurrentDate()};
+            String[] whereArgs = new String[]{patientID, doctorID, utils.getCurrentDate()};  // Các tham số điều kiện cho WHERE
 
-            // Cập nhật bảng LichHen
             int rowsUpdated = db.update("LichHen", updateValues, whereClause, whereArgs);
 
+            if (ketQuaChuanDoanID != -1 && rowsUpdated > 0) {
+                ContentValues updateLichHenID = new ContentValues();
+                updateLichHenID.put("LichHenID", rowsUpdated);  // Lưu LichHenID vào bảng KetQuaChuanDoan
+
+                String whereClauseForKetQuaChuanDoan = "KetQuaChuanDoanID = ?";
+                String[] whereArgsForKetQuaChuanDoan = new String[]{String.valueOf(ketQuaChuanDoanID)};
+                db.update("KetQuaChuanDoan", updateLichHenID, whereClauseForKetQuaChuanDoan, whereArgsForKetQuaChuanDoan);
+            }
 
             db.setTransactionSuccessful();
         } catch (Exception e) {
@@ -675,8 +689,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return doctorID;
     }
 
-    public List<UserInformation> showPatient() {
-        List<UserInformation> ls = new ArrayList<>();
+    public List<Patient> showPatient() {
+        List<Patient> ls = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "SELECT NguoiDung.HoTen, NguoiDung.TaiKhoanID, LichHen.TrieuChung, LichHen.NgayKham " +
@@ -693,10 +707,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                     String hoTen = cursor.getString(cursor.getColumnIndexOrThrow("HoTen"));
                     String trieuChung = cursor.getString(cursor.getColumnIndexOrThrow("TrieuChung"));
                     String ngayKham = cursor.getString(cursor.getColumnIndexOrThrow("NgayKham"));
-                    ls.add(new UserInformation(id, hoTen, trieuChung, ngayKham));
+                    ls.add(new Patient(id, hoTen, trieuChung, ngayKham));
                 }
             } finally {
-                cursor.close(); // Ensure the Cursor is closed to prevent resource leaks
+                cursor.close();
             }
         }
         return ls;
@@ -708,8 +722,20 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.beginTransaction();
 
         try {
+            String query = "SELECT MAX(SoThuTuKham) FROM LichHen WHERE NgayKham = ?";
+            Cursor cursor = db.rawQuery(query, new String[]{appointDay});
+
+            int nextSoThuTuKham = 0;
+            if (cursor != null && cursor.moveToFirst()) {
+                int currentValue = cursor.getInt(0);
+                nextSoThuTuKham = (currentValue == 0) ? 1 : currentValue + 1;
+            }
+            if (cursor != null) {
+                cursor.close();
+            }
+
             String whereClauseLichHen = "BenhNhanID = ? AND NgayKham = ?";
-            String[] whereArgsLichHen = new String[]{id, appointDay};
+            String[] whereArgsLichHen = new String[]{getPatientID(id), appointDay};
             String bacSiID = getBacSiIDFromLichLamViec(appointDay);
             if (bacSiID == null)
                 return false;
@@ -717,6 +743,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             ContentValues updateValues = new ContentValues();
             updateValues.put("BacSiID", bacSiID);
             updateValues.put("isHen", 1);
+            updateValues.put("SoThuTuKham", nextSoThuTuKham);
             db.update("LichHen", updateValues, whereClauseLichHen, whereArgsLichHen);
 
             db.setTransactionSuccessful();
@@ -745,25 +772,18 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return bacSiID;
     }
 
-    public String confirm(String id, String appointDay) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String confirm = "";
-        String query = "SELECT isHen FROM LichHen WHERE BenhNhanID = ? AND NgayKham = ?";
-        Cursor cursor = db.rawQuery(query, new String[] { id, appointDay });
-        if (cursor != null && cursor.moveToFirst()) {
-            @SuppressLint("Range") int isHen = cursor.getInt(cursor.getColumnIndex("isHen"));
-            if (isHen == 1) {
-                confirm = "Đã xác nhận đăng kí";
-            } else {
-                confirm = "Chưa xác nhận";
-            }
-        }
-        // Đóng con trỏ sau khi sử dụng xong
-        if (cursor != null) {
-            cursor.close();
-        }
 
-        // Trả về kết quả xác nhận
-        return confirm;
+    public boolean updateDoctor(String bacSiID, String ngayLam) {
+        SQLiteDatabase db = this.getWritableDatabase();  // Mở kết nối với database (quyền ghi)
+
+        ContentValues values = new ContentValues();  // Tạo đối tượng ContentValues để lưu trữ các giá trị cần cập nhật
+        values.put("BacSiID", bacSiID);  // Cập nhật trường BacSiID
+        values.put("NgayLamViec", ngayLam);  // Cập nhật trường NgayLamViec
+        long result = db.insert("LichLamViec", null, values);
+
+
+        db.close();
+        return result != -1;
     }
+
 }

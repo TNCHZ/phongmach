@@ -2,18 +2,18 @@ package com.example.jpyou.ui.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.jpyou.ui.view.fragment.MedicalRecordDoctorFragment;
-import com.example.jpyou.data.model.UserInformation;
+import com.example.jpyou.data.model.Patient;
 import com.example.jpyou.data.datasource.MyDatabaseHelper;
 import com.example.myapplication.R;
 
@@ -22,15 +22,15 @@ import java.util.List;
 public class SchedulePatientAdapter extends BaseAdapter {
     private Context context;
     private Integer layout;
-    private List<UserInformation> userInformation;
+    private List<Patient> patient;
     private String userID;
     private MyDatabaseHelper db;
 
 
-    public SchedulePatientAdapter(Context context, Integer layout, List<UserInformation> userInformation, String userID) {
+    public SchedulePatientAdapter(Context context, Integer layout, List<Patient> patient, String userID) {
         this.context = context;
         this.layout = layout;
-        this.userInformation = userInformation;
+        this.patient = patient;
         this.userID = userID;
         this.db = new MyDatabaseHelper(context);
     }
@@ -44,7 +44,7 @@ public class SchedulePatientAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return userInformation.size();
+        return patient.size();
     } //Hiển thị mỗi phần từ trong List
 
     @Override
@@ -73,7 +73,7 @@ public class SchedulePatientAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-        UserInformation ps = userInformation.get(i);
+        Patient ps = patient.get(i);
         holder.txtName.setText(ps.getHoTen());
         if (db.getRole(userID).equals("Bac si")) {
             holder.txtDescribe.setText(ps.getTxtDescribe());
@@ -81,6 +81,7 @@ public class SchedulePatientAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View view) {
                     Bundle bundlePatientID = new Bundle();
+
                     bundlePatientID.putString("patient_id", ps.getId());
                     MedicalRecordDoctorFragment fragment = new MedicalRecordDoctorFragment();
                     fragment.setArguments(bundlePatientID);
@@ -104,7 +105,7 @@ public class SchedulePatientAdapter extends BaseAdapter {
     }
 
     public interface OnConfirmClickListener {
-        void onConfirmClick(UserInformation userInformation, View view);
+        void onConfirmClick(Patient patient, View view);
     }
     private OnConfirmClickListener listener;
 

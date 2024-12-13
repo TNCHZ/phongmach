@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +22,11 @@ import android.widget.SearchView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.example.jpyou.ui.adapter.DoctorWorkDayAdapter;
 import com.example.jpyou.ui.adapter.SchedulePatientAdapter;
 import com.example.jpyou.ui.adapter.ShowDoctorAdapter;
 import com.example.jpyou.data.model.Doctor;
-import com.example.jpyou.data.model.UserInformation;
+import com.example.jpyou.data.model.Patient;
 import com.example.jpyou.data.datasource.MyDatabaseHelper;
 import com.example.jpyou.ui.view.activity.SignIn;
 import com.example.myapplication.R;
@@ -35,10 +37,10 @@ import java.util.List;
 public class HomeFragment extends Fragment {
     private String userID;
     private MyDatabaseHelper db;
-    private Button btnRegisTreatMent, btnChooseDoctor, btnResults, btnRegisForDoctor;
+    private Button btnRegisTreatMent, btnChooseDoctor, btnRegisForDoctor;
     private TableLayout layout;
     private List<Doctor> doctors;
-    private List<UserInformation> patients;
+    private List<Patient> patients;
     private ListView lv;
     private HorizontalScrollView scrview;
     private TextView tv;
@@ -47,7 +49,7 @@ public class HomeFragment extends Fragment {
 
 
     public HomeFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -72,13 +74,11 @@ public class HomeFragment extends Fragment {
             btnRegisForDoctor = view.findViewById(R.id.btnAddWorkDayForDoctor_HomeFragment);
             btnRegisTreatMent = view.findViewById(R.id.btnTreatment_HomeFragment);
             btnChooseDoctor = view.findViewById(R.id.btnChooseDoctor_HomeFragment);
-            btnResults = view.findViewById(R.id.btnResults_HomeFragment);
             layout = view.findViewById(R.id.table_HomeFragment);
             sv = view.findViewById(R.id.searchView_HomeFragment);
-
+            doctors = db.getDoctors();
 
             if (userID == null) {
-                doctors = db.getDoctors();
                 ShowDoctorAdapter adapter = new ShowDoctorAdapter(getActivity(), R.layout.row_list_doctor, doctors);
                 lv.setAdapter(adapter);
                 layout.setVisibility(View.GONE);
@@ -111,21 +111,41 @@ public class HomeFragment extends Fragment {
                     ln.setVisibility(View.GONE);
                     layout.setVisibility(View.GONE);
                     sv.setVisibility(View.VISIBLE);
+                    sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                        @Override
+                        public boolean onQueryTextSubmit(String query) {
+                            // Filter results when the user submits the query (optional)
+                            filterPatient(query);
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onQueryTextChange(String newText) {
+                            filterPatient(newText);
+                            return false;
+                        }
+                    });
                     btnRegisForDoctor.setVisibility(View.GONE);
                     tv.setText("Danh sách bệnh nhân");
                     patients = new ArrayList<>();
                     patients = db.showPatientForDoctor(db.getDoctorID(userID));
                     SchedulePatientAdapter adapterPatient = new SchedulePatientAdapter(getActivity(), R.layout.row_list_patient, patients, userID);
                     lv.setAdapter(adapterPatient);
-                } else {
-                    sv.setVisibility(View.VISIBLE);
+                } else if (db.getRole(userID).equals("Y ta")){
                     scrview.setVisibility(View.GONE);
                     layout.setVisibility(View.GONE);
                     btnRegisForDoctor.setVisibility(View.VISIBLE);
+                    Log.d("1", userID);
                     btnRegisForDoctor.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            
+                            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                            FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+                            AddDoctorWorkDayNurseFragment anotherFragment = new AddDoctorWorkDayNurseFragment();
+                            transaction.replace(R.id.fragment_home, anotherFragment);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
                         }
                     });
                     tv.setVisibility(View.GONE);
@@ -135,5 +155,17 @@ public class HomeFragment extends Fragment {
 
         }
         return view;
+    }
+    private void filterPatient(String query) {
+        List<Patient> filteredList = new ArrayList<>();
+        for (Patient patient : patients) {
+            if (patient.getAppointDay().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(patient);
+            }
+        }
+
+        // Update the adapter with the filtered list
+        SchedulePatientAdapter filteredAdapter = new SchedulePatientAdapter(getActivity(), R.layout.row_medicine, filteredList,userID);
+        lv.setAdapter(filteredAdapter); // Update the ListView with the filtered results
     }
 }

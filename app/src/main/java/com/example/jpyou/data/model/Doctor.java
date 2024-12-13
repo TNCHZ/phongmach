@@ -1,11 +1,20 @@
 package com.example.jpyou.data.model;
 
+import java.util.List;
+
 public class Doctor extends PersonInformation{
     private String kinhNghiem;
+    private List<String> ngayLam;
 
-    public Doctor(String hoTen, String kinhNghiem) {
-        super(hoTen);
+    public Doctor(String id, String hoTen, String kinhNghiem) {
+        super(id, hoTen);
         this.kinhNghiem = kinhNghiem;
+    }
+
+    public Doctor(String id, String hoTen, String kinhNghiem, List<String> ngayLam) {
+        super(id, hoTen);
+        this.kinhNghiem = kinhNghiem;
+        this.ngayLam = ngayLam;
     }
 
     public Doctor(String id, String hoTen, String gioiTinh, String ngaySinh, String soDT, String email) {
@@ -18,5 +27,13 @@ public class Doctor extends PersonInformation{
 
     public void setKinhNghiem(String kinhNghiem) {
         this.kinhNghiem = kinhNghiem;
+    }
+
+    public List<String> getNgayLam() {
+        return ngayLam;
+    }
+
+    public void setNgayLam(List<String> ngayLam) {
+        this.ngayLam = ngayLam;
     }
 }

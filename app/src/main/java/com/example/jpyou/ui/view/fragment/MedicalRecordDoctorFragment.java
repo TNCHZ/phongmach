@@ -2,6 +2,7 @@ package com.example.jpyou.ui.view.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Person;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -57,18 +58,16 @@ public class MedicalRecordDoctorFragment extends Fragment {
         {
             listView = view.findViewById(R.id.listPrescriptions_MedicalRecordDoctorFragment);
             symptom = view.findViewById(R.id.txtResults_MedicalRecordDoctorFragment);
-            String symp = symptom.getText().toString();
             db = new MyDatabaseHelper(getActivity());
-
             txtName = view.findViewById(R.id.txtName_MedicalRecordDoctorFragment);
             txtDayOfBirth = view.findViewById(R.id.txtDate_MedicalRecordDoctorFragment);
             txtGender = view.findViewById(R.id.txtGender_MedicalRecordDoctorFragment);
             txtPhone = view.findViewById(R.id.txtPhone_MedicalRecordDoctorFragment);
-
+            medicines = new ArrayList<>();
 
             SharedViewModel viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
             viewModel.getMedicines().observe(getViewLifecycleOwner(), saveMedicines -> {
-                medicines = new ArrayList<>(saveMedicines);
+                medicines.addAll(saveMedicines);
 
                 if (!saveMedicines.isEmpty()) {
                     MedicalRecordAdapter adapter = new MedicalRecordAdapter(getActivity(), R.layout.row_medicine_chosen, saveMedicines);
@@ -77,6 +76,7 @@ public class MedicalRecordDoctorFragment extends Fragment {
                     listView.setVisibility(View.GONE);
                 }
             });
+
 
             Bundle bundle = getArguments();
             if (bundle != null) {
@@ -87,8 +87,6 @@ public class MedicalRecordDoctorFragment extends Fragment {
                 txtGender.setText(ps.getGioiTinh());
                 txtDayOfBirth.setText(ps.getNgaySinh());
             }
-
-
 
             btnAddMedicine = view.findViewById(R.id.btnAddMedicine_MedicalRecordDoctorFragment);
             btnAddMedicine.setOnClickListener(new View.OnClickListener() {
@@ -112,8 +110,9 @@ public class MedicalRecordDoctorFragment extends Fragment {
             btnConfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    String symp = symptom.getText().toString();
                     if (!medicines.isEmpty() && !symp.isEmpty()) {
-                        db.addMedicine(patientID, db.getDoctorID(userID), symp, medicines);
+                        db.addMedicine(db.getPatientID(patientID), db.getDoctorID(userID), symp, medicines);
                     }
                     getActivity().getSupportFragmentManager().popBackStack(); // Quay lại Fragment trước
                 }

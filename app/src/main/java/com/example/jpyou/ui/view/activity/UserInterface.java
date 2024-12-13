@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ public class UserInterface extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     private boolean isNightMode;
+    private int fontSize;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -40,8 +42,8 @@ public class UserInterface extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
         sharedPreferences = getSharedPreferences("MODE", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         isNightMode = sharedPreferences.getBoolean("night", false);
         if (isNightMode){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -49,8 +51,9 @@ public class UserInterface extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
-        SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         editor.putString("TaiKhoanID", getIntent().getStringExtra("TaiKhoanID"));
         editor.apply();
 
