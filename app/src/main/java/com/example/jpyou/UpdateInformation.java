@@ -14,8 +14,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.jpyou.Model.PersonInformation;
-import com.example.jpyou.User.UserInterface;
+import com.example.jpyou.data.model.PersonInformation;
+import com.example.jpyou.ui.view.activity.UserInterface;
+import com.example.jpyou.data.datasource.MyDatabaseHelper;
 import com.example.myapplication.R;
 
 public class UpdateInformation extends AppCompatActivity {

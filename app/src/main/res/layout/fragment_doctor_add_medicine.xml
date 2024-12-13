@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_doctor_add_medicines"
     style="@style/SCREEN"
-    tools:context="com.example.jpyou.Employee.Doctor.DoctorFragments.AddMedicineDoctorFragment">
+    tools:context="com.example.jpyou.ui.view.fragment.AddMedicineDoctorFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

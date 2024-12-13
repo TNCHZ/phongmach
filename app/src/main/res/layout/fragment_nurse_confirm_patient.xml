@@ -3,13 +3,23 @@
     android:id="@+id/fragment_nurse_confirm_patient"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jpyou.Employee.Nurse.NurseFragments.ConfirmPatientNurseFragment">
+    tools:context="com.example.jpyou.ui.view.fragment.ConfirmPatientNurseFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <ListView
-        android:id="@+id/list_ComfirmPatientNurseFragment"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <SearchView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ListView
+            android:id="@+id/list_ComfirmPatientNurseFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
 </FrameLayout>

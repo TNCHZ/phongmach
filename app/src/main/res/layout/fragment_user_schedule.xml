@@ -4,7 +4,7 @@
     android:id="@+id/fragment_user_schedule"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jpyou.User.UserFragments.ScheduleUserFragment">
+    tools:context="com.example.jpyou.ui.view.fragment.ScheduleUserFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -12,6 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <SearchView
+            android:id="@+id/searchView_ScheduleUserFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <CalendarView
             android:id="@+id/calendar_ScheduleUserFragment"

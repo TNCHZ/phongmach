@@ -5,49 +5,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jpyou.User.UserInterface">
+    tools:context="com.example.jpyou.ui.view.activity.UserInterface">
 
-    <LinearLayout
-        android:id="@+id/linearLayoutTop_UserInterface"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="@color/lam"
-        android:orientation="horizontal"
-        android:padding="20dp">
 
-        <ImageView
-            android:id="@+id/imgLogo_UserInterface"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/jpyou" />
-
-        <TextView
-            android:id="@+id/textViewHeader_UserInterface"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="JpYou"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="34sp"
-            android:textStyle="bold" />
-
-        <ImageButton
-            android:id="@+id/imgbtnAvatar_UserInterface"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_person" />
-
-    </LinearLayout>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager_UserInterface"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottomNavigation_UserInterface"
-        android:layout_below="@id/linearLayoutTop_UserInterface" />
+        android:layout_above="@id/bottomNavigation_UserInterface" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation_UserInterface"

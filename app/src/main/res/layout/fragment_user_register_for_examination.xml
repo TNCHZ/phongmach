@@ -3,11 +3,12 @@
     android:id="@+id/fragment_user_register_for_examination"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.example.jpyou.User.UserFragments.RegisterForExaminationUserFragment">
+    style="@style/SCREEN"
+    tools:context="com.example.jpyou.ui.view.fragment.RegisterForExaminationUserFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="572dp"
         android:background="@drawable/background_empty"
         android:orientation="vertical">
 

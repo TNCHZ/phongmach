@@ -5,7 +5,7 @@
     style="@style/SCREEN"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jpyou.BottomNavigator.ProfileFragment">
+    tools:context="com.example.jpyou.ui.view.fragment.ProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -14,12 +14,34 @@
         android:orientation="vertical"
         tools:ignore="UseSwitchCompatOrMaterialXml">
 
+        <LinearLayout
+            android:id="@+id/linearLayoutTop_ProfileFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@color/lam"
+            android:orientation="horizontal"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/textViewHeader_HomeFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Thiết lập"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
         <Button
             android:id="@+id/btnUpdateInformation_ProfileFragment"
             style="@style/BUTTON"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:text="Cập nhật thông tin cá nhân"
             android:textAlignment="viewStart"

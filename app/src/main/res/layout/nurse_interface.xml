@@ -5,46 +5,12 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jpyou.Employee.Nurse.NurseInterface">
-
-    <LinearLayout
-        android:id="@+id/linearLayoutHeader_NurseInterface"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/lam"
-        android:orientation="horizontal"
-        android:layout_alignParentTop="true"
-        android:padding="15dp">
-
-        <ImageView
-            android:id="@+id/imgLogo_NurseInterface"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:srcCompat="@drawable/jpyou" />
-
-        <TextView
-            android:id="@+id/textViewHearder_NurseInterface"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="JpYou"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textSize="34sp"
-            android:textStyle="bold" />
-
-        <ImageButton
-            android:id="@+id/imgbtnAvatar_NurseInterface"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_person" />
-    </LinearLayout>
+    tools:context="com.example.jpyou.ui.view.activity.NurseInterface">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager_NurseInterface"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/linearLayoutHeader_NurseInterface"
         android:layout_above="@id/bottomNavigation_NurseInterface" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

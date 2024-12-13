@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/SCREEN"
-    tools:context="com.example.jpyou.Employee.Doctor.DoctorFragments.MedicalRecordDoctorFragment">
+    tools:context="com.example.jpyou.ui.view.fragment.MedicalRecordDoctorFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -36,12 +36,13 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/ttxName_MedicalRecordDoctorFragment"
+                    android:id="@+id/txtName_MedicalRecordDoctorFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_span="3"
                     android:ems="10"
                     android:textColor="@color/black"
+                    android:enabled="false"
                     android:hint="Họ và Tên"
                     android:inputType="text" />
 
@@ -66,6 +67,7 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:enabled="false"
                     android:hint="Ngày sinh"
                     android:inputType="date"
                     android:textColor="@color/black"
@@ -82,12 +84,13 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/txtSex_MedicalRecordDoctorFragment"
+                    android:id="@+id/txtGender_MedicalRecordDoctorFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="Giới tính"
                     android:inputType="text"
+                    android:enabled="false"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
             </TableRow>
@@ -112,6 +115,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="3"
                     android:ems="10"
+                    android:enabled="false"
                     android:hint="SDT"
                     android:inputType="phone"
                     android:textColor="@color/black"
