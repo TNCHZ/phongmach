@@ -40,12 +40,12 @@ public class UpdateInformation extends AppCompatActivity {
         db = new MyDatabaseHelper(this);
         ps = (PersonInformation) getIntent().getSerializableExtra("PersonInformation");
 
-        txtName = findViewById(R.id.txtNameUpdate);
-        txtDayOfBirth = findViewById(R.id.txtDayOfBirthUpdate);
-        txtPhone = findViewById(R.id.txtPhoneUpdate);
-        txtEmail = findViewById(R.id.txtEmailUpdate);
-        rdMale = findViewById(R.id.rdMaleUpdate);
-        rdFemale = findViewById(R.id.rdFemaleUpdate);
+        txtName = findViewById(R.id.txtName_UpdateInformation);
+        txtDayOfBirth = findViewById(R.id.txtDayOfBirth_UpdateInformation);
+        txtPhone = findViewById(R.id.txtPhone_UpdateInformation);
+        txtEmail = findViewById(R.id.txtEmail_UpdateInformation);
+        rdMale = findViewById(R.id.rdMale_UpdateInformation);
+        rdFemale = findViewById(R.id.rdFemale_UpdateInformation);
         
         txtName.setText(ps.getHoTen());
         txtDayOfBirth.setText(ps.getNgaySinh());
@@ -59,7 +59,7 @@ public class UpdateInformation extends AppCompatActivity {
         }
 
 
-        btnUpdate = findViewById(R.id.btnUpdate);
+        btnUpdate = findViewById(R.id.btnUpdate_UpdateInformation);
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

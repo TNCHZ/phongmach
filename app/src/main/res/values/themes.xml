@@ -9,17 +9,24 @@
 
 
     <!-- Light Mode -->
-<!--background-->
+    <!--background-->
     <style name="SCREEN">
         <item name="android:background">@color/white</item>
     </style>
-<!--text-->
+    <!--text-->
     <style name="TEXT">
         <item name="android:textColor">@color/black</item>
     </style>
-<!--button-->
+    <!--button-->
     <style name="BUTTON">
         <item name="android:background">@drawable/custom_button_light_mode</item>
         <item name="android:textColor">@color/black</item>
     </style>
+    <!--edit text-->
+    <style name="EDITTEXT">
+        <item name="android:background">@drawable/custom_button_light_mode</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>
