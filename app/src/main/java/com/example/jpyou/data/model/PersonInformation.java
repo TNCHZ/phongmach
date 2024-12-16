@@ -12,6 +12,7 @@ public class PersonInformation implements Serializable {
     private String email;
     private byte[] imgAvatar;
 
+
     public PersonInformation(String id, String hoTen) {
         this.id = id;
         this.hoTen = hoTen;

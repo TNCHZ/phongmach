@@ -3,8 +3,7 @@ package com.example.jpyou.data.model;
 public class Patient extends PersonInformation {
     private String appointDay;
     private String txtDescribe;
-    private String  nameAppoint;
-    private Boolean blConfirmed;
+    private String nameAppoint;
 
     public Patient(String id, String hoTen, String txtDescribe, String appointDay) {
         super(id, hoTen);
@@ -33,13 +32,6 @@ public class Patient extends PersonInformation {
         this.txtDescribe = txtDescribe;
     }
 
-    public Boolean getBlConfirmed() {
-        return blConfirmed;
-    }
-
-    public void setBlConfirmed(Boolean blConfirmed) {
-        this.blConfirmed = blConfirmed;
-    }
 
     public String getTxtDescribe() {
         return txtDescribe;

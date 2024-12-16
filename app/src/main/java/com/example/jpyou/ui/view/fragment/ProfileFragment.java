@@ -30,6 +30,8 @@ public class ProfileFragment extends Fragment {
     private String userID;
     private MyDatabaseHelper db;
 
+    public ProfileFragment(){}
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

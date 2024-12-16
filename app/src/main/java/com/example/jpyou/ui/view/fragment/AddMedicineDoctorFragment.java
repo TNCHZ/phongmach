@@ -35,6 +35,9 @@ public class AddMedicineDoctorFragment extends Fragment {
     private String userID;
     private MyDatabaseHelper db;
 
+    public AddMedicineDoctorFragment()
+    {}
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +94,6 @@ public class AddMedicineDoctorFragment extends Fragment {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     // Get the selected medicine
                     Medicine selectedMedicine = medicines.get(position);
-                    Log.d("alo", selectedMedicine.toString());
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("Nhập thông tin");

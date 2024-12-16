@@ -28,13 +28,20 @@
             android:name="com.example.jpyou.ui.view.activity.DoctorInterface"
             android:exported="false" />
         <activity
+            android:name="com.example.jpyou.ui.view.activity.AdminInterface"
+
+            android:exported="false" />
+
+        <activity
             android:name="com.example.jpyou.ui.view.activity.UserInterface"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.example.jpyou.ui.view.activity.AdminLogin" />
     </application>
 
 </manifest>

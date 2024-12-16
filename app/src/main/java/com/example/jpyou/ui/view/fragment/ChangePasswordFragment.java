@@ -7,14 +7,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 
 import com.example.myapplication.R;
 
+public class ChangePasswordFragment extends Fragment {
 
-public class ScheduleDoctorFragment extends Fragment {
-
-    public ScheduleDoctorFragment() {
+    public ChangePasswordFragment() {
+        // Required empty public constructor
     }
 
     @Override
@@ -26,8 +25,12 @@ public class ScheduleDoctorFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view =  inflater.inflate(R.layout.fragment_change_password, container, false);
 
 
-        return inflater.inflate(R.layout.fragment_doctor_schedule, container, false);
+
+
+        return view;
     }
 }

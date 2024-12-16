@@ -31,6 +31,7 @@ public class RegisterForExaminationUserFragment extends Fragment {
     private Button btnRegis;
     private EditText txtDate, txtSymptom;
 
+    public RegisterForExaminationUserFragment(){}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

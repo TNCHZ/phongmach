@@ -33,6 +33,8 @@ public class MedicalRecordDoctorFragment extends Fragment {
     private String userID;
     private String patientID;
 
+    public MedicalRecordDoctorFragment(){}
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

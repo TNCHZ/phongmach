@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp">
+
+
+    <ImageView
+        android:id="@+id/imgAvatar_RowInformation"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="10dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/custom_button_rim"
+        app:backgroundTint="@null"
+        app:srcCompat="@drawable/ic_person" />
+
+    <TextView
+        android:id="@+id/textViewName_RowInformation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toLeftOf="@id/btnShow_RowInformation"
+        android:layout_toRightOf="@id/imgAvatar_RowInformation"
+        android:text="Name"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewDescribe_RowInformation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewName_RowInformation"
+        android:layout_toLeftOf="@id/btnShow_RowInformation"
+        android:layout_toRightOf="@id/imgAvatar_RowInformation"
+        android:text="Describe"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textViewWorking_RowInformation2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewDescribe_RowInformation"
+        android:layout_toLeftOf="@id/btnShow_RowInformation"
+        android:layout_toRightOf="@id/imgAvatar_RowInformation"
+        android:text="Describe"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnShow_RowInformation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/custom_button"
+        android:text="Xem chi tiết"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:backgroundTint="@null" />
+
+</RelativeLayout>

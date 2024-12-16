@@ -64,8 +64,6 @@ public class UserInterface extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNavigation_UserInterface);
         ViewPagerAdapterUser adapterUser = new ViewPagerAdapterUser(this);
         viewPager.setAdapter(adapterUser);
-
-
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

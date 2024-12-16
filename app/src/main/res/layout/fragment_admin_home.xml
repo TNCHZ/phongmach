@@ -1,0 +1,76 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/homeAdminFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.jpyou.ui.view.fragment.HomeAdminFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textViewHeader_HomeAdminFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MENU"
+            android:textAlignment="center"
+            android:layout_alignParentTop="true"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewHeader_HomeAdminFragment"
+            android:layout_centerInParent="true"
+            android:shrinkColumns="*">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/btnCreateEmployee_HomeAdminFragment"
+                    style="@style/BUTTON"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_person"
+                    android:text="Tạo tài khoản nhân viên"
+                    app:backgroundTint="@null" />
+
+                <Button
+                    android:id="@+id/btnListNguoiDung_HomeAdminFragment"
+                    style="@style/BUTTON"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_person"
+                    android:text="Danh sách người đăng ký"
+                    app:backgroundTint="@null" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/btnStatistics_HomeAdminFragment"
+                    style="@style/BUTTON"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_person"
+                    android:text="Thống kê doanh số"
+                    app:backgroundTint="@null" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </TableRow>
+
+        </TableLayout>
+    </RelativeLayout>
+
+</FrameLayout>

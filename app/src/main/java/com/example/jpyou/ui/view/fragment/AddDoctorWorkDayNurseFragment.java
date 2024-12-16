@@ -29,6 +29,10 @@ import java.util.List;
 
 
 public class AddDoctorWorkDayNurseFragment extends Fragment {
+
+    public AddDoctorWorkDayNurseFragment(){
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

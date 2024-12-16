@@ -15,6 +15,7 @@ import com.example.jpyou.data.model.Doctor;
 import com.example.jpyou.data.model.Medicine;
 import com.example.jpyou.data.model.PersonInformation;
 import com.example.jpyou.data.model.Patient;
+import com.example.jpyou.data.model.Role;
 import com.example.jpyou.utils;
 
 import java.time.LocalDate;
@@ -237,7 +238,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public void addUser(String username, String password, String name, String gender, String dayOfBirth, String phone, String email) {
+    public boolean addUser(String username, String password, String name, String gender, String dayOfBirth, String phone, String email, String exp, String who, String role) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         try {
@@ -247,6 +248,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             account.put("NgayThamGia", utils.getCurrentDate());
             account.put("HoatDong", 1);
             long addAccount = db.insert("TaiKhoan", null, account);
+            if(addAccount==-1)
+                return false;
 
             ContentValues userinform = new ContentValues();
             userinform.put("TaiKhoanID", addAccount);
@@ -256,10 +259,38 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             userinform.put("SoDT", phone);
             userinform.put("Email", email);
             long addUserInform = db.insert("NguoiDung", null, userinform);
+            if(addUserInform==-1)
+                return false;
 
-            ContentValues patientinform = new ContentValues();
-            patientinform.put("TaiKhoanID", addAccount);
-            long addpatientinform = db.insert("BenhNhan", null, patientinform);
+
+
+            if (who.equals("Bệnh nhân")) {
+                ContentValues patientInform = new ContentValues();
+                patientInform.put("TaiKhoanID", addAccount);
+                long addpatientinform = db.insert("BenhNhan", null, patientInform);
+                if(addpatientinform==-1)
+                    return false;
+            } else if (who.equals("Bác sĩ")) {
+                ContentValues doctorInform = new ContentValues();
+                doctorInform.put("TaiKhoanID", addAccount);
+                doctorInform.put("KinhNghiem", exp);
+                long addDoctorInform = db.insert("BacSi", null, doctorInform);
+                if(addDoctorInform==-1)
+                    return false;
+            } else if (who.equals("Y tá")) {
+                ContentValues nurseInform = new ContentValues();
+                nurseInform.put("TaiKhoanID", addAccount);
+                long addNurseInform = db.insert("YTa", null, nurseInform);
+                if(addNurseInform==-1)
+                    return false;
+            }else {
+                ContentValues adminInform = new ContentValues();
+                adminInform.put("TaiKhoanID", addAccount);
+                adminInform.put("ChucNang", role);
+                long addAdminInform = db.insert("Admin", null, adminInform);
+                if(addAdminInform==-1)
+                    return false;
+            }
 
 
         } catch (Exception e) {
@@ -269,6 +300,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 db.close();
             }
         }
+        return true;
     }
 
 
@@ -303,32 +335,38 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public String getRole(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        // SQL queries for checking role in respective tables
         String queryDoctor = "SELECT TaiKhoanID FROM BacSi WHERE TaiKhoanID = ?";
         String queryPatient = "SELECT TaiKhoanID FROM BenhNhan WHERE TaiKhoanID = ?";
         String queryNurse = "SELECT TaiKhoanID FROM YTa WHERE TaiKhoanID = ?";
+        String queryAdmin = "SELECT TaiKhoanID FROM Admin WHERE TaiKhoanID = ?";
 
-        Cursor cursor = null; // Declare a single Cursor to reuse
+        Cursor cursor = null;
 
         try {
             // Check Patient role
             cursor = db.rawQuery(queryPatient, new String[]{id});
             if (cursor != null && cursor.getCount() == 1) {
-                return "Benh nhan"; // Patient role found
+                return "Benh nhan";
             }
 
             // Check Doctor role
             if (cursor != null) cursor.close(); // Close previous Cursor
             cursor = db.rawQuery(queryDoctor, new String[]{id});
             if (cursor != null && cursor.getCount() == 1) {
-                return "Bac si"; // Doctor role found
+                return "Bac si";
             }
 
             // Check Nurse role
             if (cursor != null) cursor.close(); // Close previous Cursor
             cursor = db.rawQuery(queryNurse, new String[]{id});
             if (cursor != null && cursor.getCount() == 1) {
-                return "Y ta"; // Nurse role found
+                return "Y ta";
+            }
+
+            if (cursor != null) cursor.close(); // Close previous Cursor
+            cursor = db.rawQuery(queryAdmin, new String[]{id});
+            if (cursor != null && cursor.getCount() == 1) {
+                return "Admin";
             }
         } catch (Exception e) {
             Log.e("getRole", "Error while getting role", e);
@@ -827,7 +865,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean cancelDay(String id){
+    public boolean cancelDay(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -844,29 +882,31 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return rowsAffected > 0;
     }
 
-    public List<Medicine> getResult(String id)
-    {
+    public List<Medicine> getResult(String id, String day) {
         SQLiteDatabase db = this.getReadableDatabase();
         List<Medicine> rs = new ArrayList<>();
+
+        // Truy vấn SQL để lấy thông tin thuốc và ngày khám
         String query = "SELECT T.TenThuoc, T.DonVi, TT_Thuoc.SoLuong, TT_Thuoc.HuongDanSuDung " +
                 "FROM KetQuaChuanDoan KQCD " +
                 "JOIN ToaThuoc TT ON KQCD.ToaThuocID = TT.ToaThuocID " +
                 "JOIN ToaThuoc_Thuoc TT_Thuoc ON TT.ToaThuocID = TT_Thuoc.ToaThuocID " +
                 "JOIN Thuoc T ON TT_Thuoc.ThuocID = T.ThuocID " +
-                "WHERE KQCD.BenhNhanID = ?";
+                "JOIN LichHen L ON KQCD.LichHenID = L.LichhenID " +
+                "WHERE KQCD.BenhNhanID = ? AND L.NgayKham = ?";  // Thêm điều kiện lọc theo NgayKham
 
-        Cursor cursor = db.rawQuery(query, new String[]{id});
-
+        Cursor cursor = db.rawQuery(query, new String[]{id, day});
 
         if (cursor != null) {
             try {
                 while (cursor.moveToNext()) {
-                    String thuocID = cursor.getString(cursor.getColumnIndexOrThrow("ThuocID"));
                     String tenThuoc = cursor.getString(cursor.getColumnIndexOrThrow("TenThuoc"));
                     String donVi = cursor.getString(cursor.getColumnIndexOrThrow("DonVi"));
                     String soLuong = cursor.getString(cursor.getColumnIndexOrThrow("SoLuong"));
                     String huongDan = cursor.getString(cursor.getColumnIndexOrThrow("HuongDanSuDung"));
-                    Medicine mc = new Medicine(thuocID, tenThuoc, donVi, huongDan, soLuong);
+                    String ngayKham = cursor.getString(cursor.getColumnIndexOrThrow("NgayKham")); // Lấy NgayKham từ LichHen
+
+                    Medicine mc = new Medicine(tenThuoc, donVi, huongDan, soLuong, ngayKham); // Truyền NgayKham vào constructor của Medicine
                     rs.add(mc);
                 }
             } finally {
@@ -877,4 +917,114 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return rs;
     }
+
+
+    public List<Role> showInformationForPerson()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Role> rs = new ArrayList<>();
+
+        String query = "SELECT * FROM TaiKhoan ";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String id = cursor.getString(cursor.getColumnIndexOrThrow("TaiKhoanID"));
+                Role role = new Role(getInformation(id), getRole(id));
+                rs.add(role);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return rs;
+    }
+
+    public boolean lockAccount(String patientID) {
+        SQLiteDatabase db = this.getWritableDatabase(); // Sử dụng writable database để thực hiện update
+
+        ContentValues values = new ContentValues();
+        values.put("HoatDong", 0);
+
+        int rowsAffected = db.update(
+                "TaiKhoan",
+                values,
+                "TaiKhoanID = ?",
+                new String[]{patientID}
+        );
+
+        db.close();
+        return rowsAffected > 0;
+    }
+
+    public boolean unlockAccount(String patientID) {
+        SQLiteDatabase db = this.getWritableDatabase(); // Sử dụng writable database để thực hiện update
+
+        // Cập nhật giá trị HoatDong thành 1 (mở khóa)
+        ContentValues values = new ContentValues();
+        values.put("HoatDong", 1);
+
+        int rowsAffected = db.update(
+                "TaiKhoan",
+                values,
+                "TaiKhoanID = ?", // Điều kiện WHERE
+                new String[]{patientID} // Giá trị cho điều kiện
+        );
+
+        db.close();
+        return rowsAffected > 0;
+    }
+
+    public boolean isAccountActive(String patientID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT HoatDong FROM TaiKhoan WHERE TaiKhoanID = ?",
+                new String[]{patientID}
+        );
+        boolean isActive = false;
+        if (cursor.moveToFirst()) {
+            int hoatDongValue = cursor.getInt(0);
+            if (hoatDongValue == 1) {
+                isActive = true;
+            }
+        }
+        cursor.close();
+
+        db.close();
+
+        return isActive;
+    }
+
+
+    @SuppressLint("Range")
+    public String getSympton(String patientID, String day) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        String symptom = null;
+
+        try {
+            // Truy vấn SQL để lấy TenKetQuaChuanDoan dựa vào BenhNhanID và NgayKham
+            String query = "SELECT KQCD.TenKetQuaChuanDoan " +
+                    "FROM KetQuaChuanDoan KQCD " +
+                    "JOIN LichHen LH ON KQCD.LichHenID = LH.LichhenID " +
+                    "WHERE KQCD.BenhNhanID = ? AND LH.NgayKham = ?";
+            cursor = db.rawQuery(query, new String[]{patientID, day});
+
+            // Kiểm tra và lấy kết quả nếu có
+            if (cursor != null && cursor.moveToFirst()) {
+                symptom = cursor.getString(cursor.getColumnIndex("TenKetQuaChuanDoan"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+        }
+
+        return symptom;
+    }
+
+
 }

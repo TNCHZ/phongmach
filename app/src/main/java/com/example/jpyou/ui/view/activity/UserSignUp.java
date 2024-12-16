@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -66,14 +67,18 @@ public class UserSignUp extends AppCompatActivity {
                 } else {
                     WarningAccount warningAccount = new WarningAccount(txtPhone, txtPassword, txtWarning);
                     if (warningAccount.checkAccount()) {
-                        if (txtPasswordConfirm.getText().toString().isEmpty()){
+                        if (txtPasswordConfirm.getText().toString().isEmpty()) {
                             txtWarning.setText("Vui lòng nhập lại mật khẩu");
                         } else if (!txtPasswordConfirm.getText().toString().equals(password)) {
                             txtWarning.setText("Mật khẩu nhập lại không trùng khớp");
                         } else {
-                            db.addUser(phone, password, name, gender, dayOfBirth, phone, email);
-                            Intent intent = new Intent(UserSignUp.this, SignIn.class);
-                            startActivity(intent);
+                            if (db.addUser(phone, password, name, gender, dayOfBirth, phone, email, "", "Bệnh nhân", "")) {
+                                Intent intent = new Intent(UserSignUp.this, SignIn.class);
+                                startActivity(intent);
+                            } else
+                                Toast.makeText(UserSignUp.this,
+                                        "Thêm tài khoản thất bại",
+                                        Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

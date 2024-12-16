@@ -25,6 +25,8 @@ import java.util.List;
 public class ConfirmPatientNurseFragment extends Fragment {
     private String userID;
 
+    public ConfirmPatientNurseFragment(){}
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

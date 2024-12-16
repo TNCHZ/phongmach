@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +45,7 @@ public class HomeFragment extends Fragment {
     private HorizontalScrollView scrview;
     private TextView tv;
     private SearchView sv;
-    private LinearLayout ln;
+    private LinearLayout ln, lnScrV;
 
 
     public HomeFragment() {
@@ -58,7 +59,7 @@ public class HomeFragment extends Fragment {
         userID = sharedPreferences.getString("TaiKhoanID", null);
     }
 
-    @SuppressLint("WrongThread")
+    @SuppressLint({"WrongThread", "MissingInflatedId"})
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,6 +70,7 @@ public class HomeFragment extends Fragment {
             scrview = view.findViewById(R.id.scrollview_HomeFragment);
             lv = view.findViewById(R.id.listDSBS_HomeFragment);
             ln = view.findViewById(R.id.linearLayoutTop_HomeFragment);
+            lnScrV = view.findViewById(R.id.linearLayoutScrollView_HomeFragment);
             tv = view.findViewById(R.id.textViewChange_HomeFragment);
             btnRegisForDoctor = view.findViewById(R.id.btnAddWorkDayForDoctor_HomeFragment);
             btnRegisTreatMent = view.findViewById(R.id.btnTreatment_HomeFragment);
@@ -76,6 +78,25 @@ public class HomeFragment extends Fragment {
             layout = view.findViewById(R.id.table_HomeFragment);
             sv = view.findViewById(R.id.searchView_HomeFragment);
             doctors = db.getDoctors();
+
+
+            final Handler handler = new Handler();
+            final Runnable scrollRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    int currentScrollX = scrview.getScrollX();
+                    int maxScrollX = lnScrV.getWidth() - scrview.getWidth();
+
+                    if (currentScrollX >= maxScrollX) {
+                        scrview.smoothScrollTo(0, 0);  // Quay lại đầu
+                    } else {
+                        int nextPosition = currentScrollX + 600;
+                        scrview.smoothScrollTo(nextPosition, 0);
+                    }
+                    handler.postDelayed(this, 2000);
+                }
+            };
+            handler.postDelayed(scrollRunnable, 2000);
 
             if (userID == null) {
                 ShowDoctorAdapter adapter = new ShowDoctorAdapter(getActivity(), R.layout.row_list_doctor, doctors);
@@ -98,8 +119,8 @@ public class HomeFragment extends Fragment {
                                 FragmentTransaction transaction = fragmentManager.beginTransaction();
 
                                 RegisterForExaminationUserFragment anotherFragment = new RegisterForExaminationUserFragment();
-                                transaction.replace(R.id.fragment_home, anotherFragment); // Thay thế Fragment hiện tại bằng Fragment mới
-                                transaction.addToBackStack(null); // Thêm vào BackStack để hỗ trợ quay lại nếu cần
+                                transaction.replace(R.id.fragment_home, anotherFragment);
+                                transaction.addToBackStack(null);
                                 transaction.commit();
 
                             }

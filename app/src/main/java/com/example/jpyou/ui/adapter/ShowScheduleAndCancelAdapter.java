@@ -1,6 +1,7 @@
 package com.example.jpyou.ui.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.fragment.app.FragmentActivity;
+
 import com.example.jpyou.data.datasource.MyDatabaseHelper;
 import com.example.jpyou.data.model.Patient;
 
+import com.example.jpyou.ui.view.fragment.MedicalRecordDoctorFragment;
+import com.example.jpyou.ui.view.fragment.ShowResultUserFragment;
 import com.example.jpyou.utils;
 import com.example.myapplication.R;
 
@@ -104,7 +109,18 @@ public class ShowScheduleAndCancelAdapter extends BaseAdapter {
         holder.btnShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundlePatientID = new Bundle();
 
+                bundlePatientID.putString("patient_id", ps.getId());
+                bundlePatientID.putString("NgayKham", ps.getAppointDay());
+                ShowResultUserFragment fragment = new ShowResultUserFragment();
+                fragment.setArguments(bundlePatientID);
+
+                ((FragmentActivity) context).getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_home, fragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
