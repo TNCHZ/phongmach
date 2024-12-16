@@ -19,10 +19,11 @@
 
             <TextView
                 android:id="@+id/textViewName_ShowResultUserFragment"
+                style="@style/TEXT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/TEXT"
-                android:text="Nhập họ và tên" />
+                android:text="Nhập họ và tên"
+                android:textStyle="bold" />
         </TableRow>
 
         <TableRow
@@ -46,17 +47,19 @@
 
             <TextView
                 android:id="@+id/textViewBirtday_ShowResultUserFragment"
+                style="@style/TEXT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/TEXT"
-                android:text="Ngày, tháng, năm sinh" />
+                android:text="Ngày, tháng, năm sinh"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textViewSex_ShowResultUserFragment"
+                style="@style/TEXT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/TEXT"
-                android:text="Giới tính" />
+                android:text="Giới tính"
+                android:textStyle="bold" />
         </TableRow>
 
         <TableRow
@@ -106,7 +109,8 @@
                 style="@style/TEXT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Triệu chứng :" />
+                android:text="Triệu chứng :"
+                android:textStyle="bold" />
         </TableRow>
 
         <TableRow
@@ -115,13 +119,14 @@
 
             <EditText
                 android:id="@+id/txtPhone_ShowResultUserFragment"
+                style="@style/EDITTEXT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_span="2"
                 android:ems="10"
-                style="@style/EDITTEXT"
                 android:enabled="false"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:singleLine="false" />
         </TableRow>
 
         <TableRow
@@ -145,7 +150,8 @@
 
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_span="2"/>
         </TableRow>
     </TableLayout>
 </FrameLayout>

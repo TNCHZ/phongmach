@@ -7,12 +7,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
+        android:layout_margin="5dp"
+        style="@style/BUTTON"
         android:stretchColumns="*">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            style="@style/BUTTON">
+            android:layout_height="match_parent" >
 
             <TextView
                 android:id="@+id/textViewName_RowMedicineUser"
@@ -32,8 +33,7 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            style="@style/BUTTON" >
+            android:layout_height="match_parent" >
 
             <TextView
                 android:id="@+id/textViewSL_RowMedicineUser"
@@ -67,8 +67,7 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            style="@style/BUTTON" >
+            android:layout_height="match_parent" >
 
             <TextView
                 android:id="@+id/textViewHDSD_RowMedicineUser"
