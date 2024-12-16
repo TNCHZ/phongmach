@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.jpyou.data.datasource.MyDatabaseHelper;
@@ -20,16 +21,17 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class ShowSchduleAndCancelAdapter extends BaseAdapter {
+public class ShowScheduleAndCancelAdapter extends BaseAdapter {
     private Context context;
     private Integer layout;
     private List<Patient> patient;
     private MyDatabaseHelper db;
 
-    public ShowSchduleAndCancelAdapter(Context context, Integer layout, List<Patient> patient) {
+    public ShowScheduleAndCancelAdapter(Context context, Integer layout, List<Patient> patient) {
         this.context = context;
         this.layout = layout;
         this.patient = patient;
+        db = new MyDatabaseHelper(context);
     }
 
     //Lớp ViewHolder giúp tránh ánh xạ lặp đi lặp lại khi lướt lên xuống
@@ -91,7 +93,10 @@ public class ShowSchduleAndCancelAdapter extends BaseAdapter {
                 holder.btnCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        if(db.cancelDay(ps.getId()))
+                            Toast.makeText(context, "Hủy lịch thành công", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(context, "Hủy lịch thất bại", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

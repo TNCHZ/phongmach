@@ -1,15 +1,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_user_register_for_examination"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    style="@style/SCREEN"
+    android:layout_height="match_parent"
     tools:context="com.example.jpyou.ui.view.fragment.RegisterForExaminationUserFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="572dp"
-        android:background="@drawable/background_empty"
+        android:layout_height="match_parent"
+        style="@style/SCREEN"
         android:orientation="vertical">
 
         <TableLayout
@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            style="@style/SCREEN"
             android:shrinkColumns="*">
 
             <TableRow
@@ -27,6 +28,7 @@
                     android:id="@+id/textViewName_RegisterForExaminonUserFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/TEXT"
                     android:text="Nhập họ và tên" />
             </TableRow>
 
@@ -41,6 +43,7 @@
                     android:layout_span="2"
                     android:ems="10"
                     android:enabled="false"
+                    style="@style/EDITTEXT"
                     android:inputType="text" />
             </TableRow>
 
@@ -52,12 +55,14 @@
                     android:id="@+id/textViewBirtday_RegisterForExaminonUserFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/TEXT"
                     android:text="Ngày, tháng, năm sinh" />
 
                 <TextView
                     android:id="@+id/textViewSex_RegisterForExaminonUserFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/TEXT"
                     android:text="Giới tính" />
             </TableRow>
 
@@ -71,12 +76,14 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:enabled="false"
+                    style="@style/EDITTEXT"
                     android:inputType="date" />
 
                 <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
+                    style="@style/SCREEN"
                     android:orientation="horizontal">
 
                     <RadioButton
@@ -105,6 +112,7 @@
                     android:id="@+id/textViewPhone_RegisterForExaminonUserFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/TEXT"
                     android:text="Số điện thoại" />
             </TableRow>
 
@@ -118,6 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="2"
                     android:ems="10"
+                    style="@style/EDITTEXT"
                     android:enabled="false"
                     android:inputType="phone" />
             </TableRow>
@@ -130,6 +139,7 @@
                     android:id="@+id/textViewEmail_RegisterForExaminonUserFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/TEXT"
                     android:text="Email" />
             </TableRow>
 
@@ -144,6 +154,7 @@
                     android:layout_span="2"
                     android:ems="10"
                     android:enabled="false"
+                    style="@style/EDITTEXT"
                     android:inputType="textEmailAddress" />
             </TableRow>
         </TableLayout>
@@ -179,7 +190,7 @@
                     android:layout_height="wrap_content"
                     android:text="Chọn ngày khám"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    style="@style/TEXT"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -188,8 +199,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Triệu chứng"
+                    style="@style/TEXT"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -212,7 +223,8 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:lines="@integer/material_motion_duration_long_2" />
 
             </TableRow>
 
@@ -226,6 +238,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_span="2"
+                    style="@style/BUTTON"
+                    app:backgroundTint="@null"
                     android:text="Đặt lịch khám" />
             </TableRow>
 

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -12,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.example.jpyou.data.model.CalendarEdit;
 import com.example.jpyou.data.model.Doctor;
 import com.example.jpyou.data.model.Medicine;
 import com.example.jpyou.data.model.PersonInformation;
@@ -54,7 +52,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 "NgaySinh TEXT, " +
                 "SoDT TEXT UNIQUE, " +
                 "Email TEXT UNIQUE, " +
-                "HinhAnh BLOB, " +
                 "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
 
 
@@ -788,32 +785,96 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public List<CalendarEdit> getDayDoctorWork() {
+    public String getDoctorWorkAtDay(String day) {
         SQLiteDatabase db = this.getWritableDatabase();
-        List<CalendarEdit> lv = new ArrayList<>();
+        String doctorName = null;
 
         // Corrected query
-        String query = "SELECT LichLamViec.NgayLamViec, NguoiDung.HoTen, BacSi.BacSiID " +
-                "FROM LichLamViec " +
-                "JOIN BacSi ON LichLamViec.BacSiID = BacSi.BacSiID " +
-                "JOIN NguoiDung ON BacSi.TaiKhoanID = NguoiDung.TaiKhoanID";
+        String query = "SELECT NguoiDung.HoTen " +
+                "FROM NguoiDung " +
+                "JOIN BacSi ON BacSi.TaiKhoanID = NguoiDung.TaiKhoanID " +
+                "JOIN LichLamViec ON LichLamViec.BacSiID = BacSi.BacSiID " +
+                "WHERE LichLamViec.NgayLamViec = ?";
 
-        Cursor cursor = db.rawQuery(query, null); // No parameters needed
+        Cursor cursor = db.rawQuery(query, new String[]{day});
+        if (cursor != null) {
+            try {
+                if (cursor.moveToFirst()) { // Chỉ lấy hàng đầu tiên
+                    doctorName = cursor.getString(cursor.getColumnIndexOrThrow("HoTen"));
+                }
+            } finally {
+                cursor.close(); // Đảm bảo đóng con trỏ
+            }
+        }
+        return doctorName; // Trả về null nếu không có kết quả
+    }
+
+    public boolean changeDoctorWork(String id, String selectedDate) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("NgayLamViec", selectedDate);
+
+        int rowsAffected = db.update(
+                "LichLamViec",
+                values,
+                "BacSiID = ?",
+                new String[]{id}
+        );
+
+        db.close();
+        return rowsAffected > 0;
+    }
+
+
+    public boolean cancelDay(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("isHuy", 1);
+
+        int rowsAffected = db.update(
+                "LichHen",
+                values,
+                "isHuy = ?",
+                new String[]{id}
+        );
+
+        db.close();
+        return rowsAffected > 0;
+    }
+
+    public List<Medicine> getResult(String id)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Medicine> rs = new ArrayList<>();
+        String query = "SELECT T.TenThuoc, T.DonVi, TT_Thuoc.SoLuong, TT_Thuoc.HuongDanSuDung " +
+                "FROM KetQuaChuanDoan KQCD " +
+                "JOIN ToaThuoc TT ON KQCD.ToaThuocID = TT.ToaThuocID " +
+                "JOIN ToaThuoc_Thuoc TT_Thuoc ON TT.ToaThuocID = TT_Thuoc.ToaThuocID " +
+                "JOIN Thuoc T ON TT_Thuoc.ThuocID = T.ThuocID " +
+                "WHERE KQCD.BenhNhanID = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{id});
+
+
         if (cursor != null) {
             try {
                 while (cursor.moveToNext()) {
-                    // Fetching data
-                    String id = cursor.getString(cursor.getColumnIndexOrThrow("BacSiID"));
-                    String hoTen = cursor.getString(cursor.getColumnIndexOrThrow("HoTen"));
-                    String ngayLam = cursor.getString(cursor.getColumnIndexOrThrow("NgayLamViec"));
-                    lv.add(new CalendarEdit(ngayLam, new Doctor(id, hoTen)));
+                    String thuocID = cursor.getString(cursor.getColumnIndexOrThrow("ThuocID"));
+                    String tenThuoc = cursor.getString(cursor.getColumnIndexOrThrow("TenThuoc"));
+                    String donVi = cursor.getString(cursor.getColumnIndexOrThrow("DonVi"));
+                    String soLuong = cursor.getString(cursor.getColumnIndexOrThrow("SoLuong"));
+                    String huongDan = cursor.getString(cursor.getColumnIndexOrThrow("HuongDanSuDung"));
+                    Medicine mc = new Medicine(thuocID, tenThuoc, donVi, huongDan, soLuong);
+                    rs.add(mc);
                 }
             } finally {
                 cursor.close();
             }
         }
 
-        return lv;
+        db.close();
+        return rs;
     }
-
 }

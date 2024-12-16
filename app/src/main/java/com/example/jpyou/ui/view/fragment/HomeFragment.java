@@ -133,6 +133,7 @@ public class HomeFragment extends Fragment {
                 } else if (db.getRole(userID).equals("Y ta")){
                     scrview.setVisibility(View.GONE);
                     layout.setVisibility(View.GONE);
+                    sv.setVisibility(View.GONE);
                     btnRegisForDoctor.setVisibility(View.VISIBLE);
                     Log.d("1", userID);
                     btnRegisForDoctor.setOnClickListener(new View.OnClickListener() {

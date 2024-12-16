@@ -1,8 +1,10 @@
 package com.example.jpyou.ui.view.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -18,6 +20,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.jpyou.data.model.NightMode;
 import com.example.jpyou.ui.view.adapter.ViewPagerAdapterUser;
 import com.example.myapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -28,8 +31,7 @@ public class UserInterface extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    private boolean isNightMode;
-    private int fontSize;
+    private String userID;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -42,20 +44,17 @@ public class UserInterface extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        sharedPreferences = getSharedPreferences("MODE", MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        isNightMode = sharedPreferences.getBoolean("night", false);
-        if (isNightMode){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-
 
         sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        editor.putString("TaiKhoanID", getIntent().getStringExtra("TaiKhoanID"));
-        editor.apply();
+        userID = sharedPreferences.getString("TaiKhoanID", null);
+        if(userID != null){
+            editor.putString("TaiKhoanID", userID);
+            editor.apply();
+        }else {
+            editor.putString("TaiKhoanID", getIntent().getStringExtra("TaiKhoanID"));
+            editor.apply();
+        }
 
         setUpBottomNavigation();
     }
@@ -71,7 +70,7 @@ public class UserInterface extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if (id == R.id.navHome_User){
+                if (id == R.id.navHome_User) {
                     viewPager.setCurrentItem(0);
                 } else if (id == R.id.navSchedule_User) {
                     viewPager.setCurrentItem(1);
@@ -81,6 +80,7 @@ public class UserInterface extends AppCompatActivity {
                 return true;
             }
         });
+
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {

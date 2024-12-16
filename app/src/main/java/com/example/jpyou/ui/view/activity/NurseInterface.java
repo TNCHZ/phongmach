@@ -14,6 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.jpyou.data.model.NightMode;
 import com.example.jpyou.ui.view.adapter.ViewPagerAdapterNurse;
 import com.example.myapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -22,10 +23,9 @@ import com.google.android.material.navigation.NavigationBarView;
 public class NurseInterface extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView bottomNavigationView;
-    private TextView txtHeader;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    private boolean isNightMode;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,20 +38,17 @@ public class NurseInterface extends AppCompatActivity {
             return insets;
         });
 
-        sharedPreferences = getSharedPreferences("MODE", MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        isNightMode = sharedPreferences.getBoolean("night", false);
-        if (isNightMode){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-
 
         sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        editor.putString("TaiKhoanID", getIntent().getStringExtra("TaiKhoanID"));
-        editor.apply();
+        userID = sharedPreferences.getString("TaiKhoanID", null);
+        if(userID != null){
+            editor.putString("TaiKhoanID", userID);
+            editor.apply();
+        }else {
+            editor.putString("TaiKhoanID", getIntent().getStringExtra("TaiKhoanID"));
+            editor.apply();
+        }
 
         viewPager = findViewById(R.id.viewPager_NurseInterface);
         bottomNavigationView = findViewById(R.id.bottomNavigation_NurseInterface);

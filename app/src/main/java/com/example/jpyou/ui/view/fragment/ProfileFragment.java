@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.jpyou.data.datasource.MyDatabaseHelper;
 import com.example.jpyou.UpdateInformation;
+import com.example.jpyou.data.model.NightMode;
 import com.example.jpyou.ui.view.activity.UserInterface;
 import com.example.jpyou.ui.view.activity.SignIn;
 import com.example.myapplication.R;
@@ -32,17 +33,16 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
-        userID = sharedPreferences.getString("TaiKhoanID", null);
+//        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
+//        userID = sharedPreferences.getString("TaiKhoanID", null);
     }
-    private int fontSize;
-    private TextView textView;
-    private SeekBar sBFontSize;
+
     private Switch swicthNightMode;
     private Boolean isNightMode;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     private Button btnUpdateInformation, btnChangePassword, btnLogOut, btnLogIn;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -51,31 +51,9 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         {
-            swicthNightMode = view.findViewById(R.id.switchNightMode_ProfileFragment);
-            //Dùng sharedPreferences để lưu mode  nếu khi thoát app và trả lại vẫn còn
-            sharedPreferences = view.getContext().getSharedPreferences("MODE", Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
+            userID = sharedPreferences.getString("TaiKhoanID", null);
             isNightMode = sharedPreferences.getBoolean("night", false);
-            if (isNightMode) {
-                swicthNightMode.setChecked(true);
-            }
-            swicthNightMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    isNightMode = b;
-                    editor = sharedPreferences.edit();
-                    if (isNightMode){
-                        swicthNightMode.setText("Tắt chế độ ban đêm");
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        editor.putBoolean("night", true);
-                    } else {
-                        swicthNightMode.setText("Bật chế độ ban đêm");
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        editor.putBoolean("night", false);
-                    }
-                    editor.commit();
-                }
-            });
-
 
 //            sBFontSize = view.findViewById(R.id.seekBarFontSize_ProfileFragment);
 //            textView = view.findViewById(R.id.textViewFontSize_ProfileFragment);
@@ -110,11 +88,14 @@ public class ProfileFragment extends Fragment {
 //                }
 //            });
 
+            swicthNightMode = view.findViewById(R.id.switchNightMode_ProfileFragment);
             btnLogOut = view.findViewById(R.id.btnLogOut_FragmentProfile);
             btnLogIn = view.findViewById(R.id.btnLogIn_ProfileFragment);
-            if (userID == null){
+            if (userID == null) {
                 btnLogOut.setVisibility(View.INVISIBLE);
                 btnLogIn.setVisibility(View.VISIBLE);
+                swicthNightMode.setEnabled(false);
+
                 btnLogIn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -125,6 +106,28 @@ public class ProfileFragment extends Fragment {
             } else {
                 btnLogIn.setVisibility(View.INVISIBLE);
                 btnLogOut.setVisibility(View.VISIBLE);
+                swicthNightMode.setEnabled(true);
+
+                //isNightMode = sharedPreferences.getBoolean("night", false);
+                if (isNightMode) {
+                    swicthNightMode.setText("Tắt chế độ ban đêm");
+                }
+                swicthNightMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        isNightMode = b;
+                        editor = sharedPreferences.edit();
+                        if (isNightMode) {
+                            swicthNightMode.setText("Tắt chế độ ban đêm");
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        } else {
+                            swicthNightMode.setText("Bật chế độ ban đêm");
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        }
+                        editor.putBoolean("night", b);
+                        editor.commit();
+                    }
+                });
 
                 db = new MyDatabaseHelper(getActivity());
                 btnUpdateInformation = view.findViewById(R.id.btnUpdateInformation_ProfileFragment);

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:stretchColumns="*">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/BUTTON">
+
+            <TextView
+                android:id="@+id/textViewName_RowMedicineUser"
+                style="@style/TEXT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên thuốc: " />
+
+            <TextView
+                android:id="@+id/txtName_RowMedicineUser"
+                style="@style/TEXT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="3"
+                android:text="Thuoc Paracetamon" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/BUTTON" >
+
+            <TextView
+                android:id="@+id/textViewSL_RowMedicineUser"
+                style="@style/TEXT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Số lượng: " />
+
+            <TextView
+                android:id="@+id/txtSL_RowMedicineUser"
+                style="@style/TEXT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1" />
+
+            <TextView
+                android:id="@+id/textViewDV_RowMedicineUser"
+                style="@style/TEXT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đơn vị: " />
+
+            <TextView
+                android:id="@+id/txtDV_RowMedicineUser"
+                style="@style/TEXT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/BUTTON" >
+
+            <TextView
+                android:id="@+id/textViewHDSD_RowMedicineUser"
+                style="@style/TEXT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hướng dẫn sử dụng: " />
+
+            <TextView
+                android:id="@+id/txtHDSD_RowMedicineUser"
+                style="@style/TEXT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="3"
+                android:text="3 vien / ngay" />
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>

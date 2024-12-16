@@ -16,7 +16,7 @@ import android.widget.CalendarView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.example.jpyou.ui.adapter.ShowSchduleAndCancelAdapter;
+import com.example.jpyou.ui.adapter.ShowScheduleAndCancelAdapter;
 import com.example.jpyou.data.datasource.MyDatabaseHelper;
 import com.example.jpyou.data.model.Patient;
 import com.example.jpyou.ui.view.activity.SignIn;
@@ -80,7 +80,7 @@ public class ScheduleUserFragment extends Fragment {
                 lv = view.findViewById(R.id.listSchedule_ScheduleUserFragment);
 
                 schedules = db.getDaySchedule(db.getPatientID(userID));
-                ShowSchduleAndCancelAdapter adapter = new ShowSchduleAndCancelAdapter(getActivity(), R.layout.row_show_schedule_and_cancel, schedules);
+                ShowScheduleAndCancelAdapter adapter = new ShowScheduleAndCancelAdapter(getActivity(), R.layout.row_show_schedule_and_cancel, schedules);
                 lv.setAdapter(adapter);
 
                 cldView.setOnDateChangeListener((calendarView, year, month, dayOfMonth) -> {
@@ -90,7 +90,7 @@ public class ScheduleUserFragment extends Fragment {
                     String selectedDate = sdf.format(calendar.getTime());
 
                     schedules = db.getScheduleAtDay(db.getPatientID(userID), selectedDate);
-                    ShowSchduleAndCancelAdapter adapter2 = new ShowSchduleAndCancelAdapter(getActivity(), R.layout.row_show_schedule_and_cancel, schedules);
+                    ShowScheduleAndCancelAdapter adapter2 = new ShowScheduleAndCancelAdapter(getActivity(), R.layout.row_show_schedule_and_cancel, schedules);
                     lv.setAdapter(adapter2);
                 });
             }
