@@ -1,126 +1,149 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/SCREEN"
     tools:context="com.example.jpyou.ui.view.fragment.AddEmployeeAdminFragment">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/main"
-        >
+        android:id="@+id/main">
+
         <Button
             android:id="@+id/buttonBack_AddEmployeeAdminFragment"
             android:layout_width="50dp"
             android:layout_height="40dp"
             android:background="@drawable/ic_back"
-            android:text="" />
+            android:layout_alignParentTop="true"
+            app:backgroundTint="@null" />
 
-        <EditText
-            android:id="@+id/txtName_AddEmployeeAdminFragment"
+        <LinearLayout
+            android:id="@+id/linearLayoutImformation_AddEmployeeAdminFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:hint="Họ và tên" />
+            android:layout_centerInParent="true"
+            android:layout_margin="5dp"
+            android:background="@drawable/custom_button_empty"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/rdMale_AddEmployeeAdminFragment"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/txtName_AddEmployeeAdminFragment"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Nam"
-                android:checked="true"
-                />
+                android:ems="10"
+                android:hint="Họ và tên"
+                android:inputType="text" />
 
-            <RadioButton
-                android:id="@+id/rdFemale_AddEmployeeAdminFragment"
-                android:layout_width="wrap_content"
+            <RadioGroup
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Nữ" />
-        </RadioGroup>
+                android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/txtDayOfBirth_AddEmployeeAdminFragment"
+                <RadioButton
+                    android:id="@+id/rdMale_AddEmployeeAdminFragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="Nam" />
+
+                <RadioButton
+                    android:id="@+id/rdFemale_AddEmployeeAdminFragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Nữ" />
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/txtDayOfBirth_AddEmployeeAdminFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Năm sinh"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/txtPhone_AddEmployeeAdminFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Số điện thoại"
+                android:inputType="phone"
+                android:maxLength="10" />
+
+            <EditText
+                android:id="@+id/txtPassword_AddEmployeeAdminFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Mật khẩu"
+                android:inputType="phone" />
+
+            <EditText
+                android:id="@+id/txtEmail_AddEmployeeAdminFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:hint="Email"
+                android:inputType="text" />
+        </LinearLayout>
+
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:hint="Năm sinh" />
+            android:layout_height="match_parent"
+            android:layout_below="@id/linearLayoutImformation_AddEmployeeAdminFragment"
+            android:layout_above="@id/btnRegis_AddEmployeeAdminFragment"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/TEXT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Chọn chức vụ" />
 
-        <EditText
-            android:id="@+id/txtPhone_AddEmployeeAdminFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Số điện thoại"
-            android:inputType="phone"
-            android:maxLength="10" />
+            <Spinner
+                android:id="@+id/spinnerWho_AddEmployeeAdminFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/txtPassword_AddEmployeeAdminFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="phone"
-            android:hint="Mật khẩu" />
+            <TextView
+                android:id="@+id/textViewRole_AddEmployeeAdminFragment"
+                style="@style/TEXT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Chọn chức năng" />
 
-        <EditText
-            android:id="@+id/txtEmail_AddEmployeeAdminFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:hint="Email"
-            android:layout_marginBottom="10dp"/>
+            <Spinner
+                android:id="@+id/spinnerRole_AddEmployeeAdminFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
 
-        <EditText
-            android:id="@+id/txtExp_AddEmployeeAdminFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:hint="Kinh nghiệm"
-            android:layout_marginBottom="10dp"/>
-
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Chọn chức vụ" />
-
-        <Spinner
-            android:id="@+id/spinnerWho_AddEmployeeAdminFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/textViewRole_AddEmployeeAdminFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Chọn chức năng" />
-
-        <Spinner
-            android:id="@+id/spinnerRole_AddEmployeeAdminFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"/>
+            <EditText
+                android:id="@+id/txtExp_AddEmployeeAdminFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:hint="Kinh nghiệm"
+                android:inputType="text" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnRegis_AddEmployeeAdminFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:backgroundTint="@null"
+            style="@style/BUTTON"
             android:text="Đăng kí" />
 
-    </LinearLayout>
+    </RelativeLayout>
 </FrameLayout>
