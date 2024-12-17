@@ -21,4 +21,5 @@
         android:layout_alignParentBottom="true"
         app:itemTextColor="@color/custom_bottom_navigation"
         app:menu="@menu/menu_bottom_navigation_doctor"/>
+
 </RelativeLayout>

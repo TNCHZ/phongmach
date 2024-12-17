@@ -108,6 +108,8 @@ public class HomeFragment extends Fragment {
                 if (db.getRole(userID).equals("Benh nhan")) {
                     layout.setVisibility(View.VISIBLE);
                     sv.setVisibility(View.GONE);
+                    ShowDoctorAdapter adapter = new ShowDoctorAdapter(getActivity(), R.layout.row_list_doctor, doctors);
+                    lv.setAdapter(adapter);
                     btnRegisForDoctor.setVisibility(View.GONE);
                     btnRegisTreatMent.setOnClickListener(new View.OnClickListener() {
                         @Override
