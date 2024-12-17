@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:backgroundTint="@null"
-    android:background="@drawable/custom_button_rim" >
+    android:background="@drawable/custom_empty_rim" >
 
     <!-- TextView hiển thị tên -->
     <TextView

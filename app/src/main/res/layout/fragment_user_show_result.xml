@@ -145,7 +145,7 @@
                 android:id="@+id/listView_ShowResultUserFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/custom_button_empty"
+                android:background="@drawable/custom_empty_rim_black"
                 android:layout_span="2"/>
         </TableRow>
     </TableLayout>
