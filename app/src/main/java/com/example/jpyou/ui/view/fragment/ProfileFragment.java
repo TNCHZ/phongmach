@@ -162,8 +162,8 @@ public class ProfileFragment extends Fragment {
                     public void onClick(View view) {
                         Intent intentLogout = new Intent(getActivity(), UserInterface.class);
                         boolean check = true;
-                        Toast.makeText(getActivity().getApplicationContext(), "Vo Logout", Toast.LENGTH_SHORT).show();
                         intentLogout.putExtra("TaiKhoan", check);
+                        Toast.makeText(getActivity().getApplicationContext(), "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
                         startActivity(intentLogout);
                     }
                 });
