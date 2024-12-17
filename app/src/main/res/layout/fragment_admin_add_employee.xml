@@ -23,8 +23,8 @@
             android:id="@+id/linearLayoutImformation_AddEmployeeAdminFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_margin="5dp"
+            android:layout_below="@id/buttonBack_AddEmployeeAdminFragment"
             android:background="@drawable/custom_button_empty"
             android:orientation="vertical"
             android:padding="10dp">

@@ -8,7 +8,7 @@
         android:centerColor="@color/blueSky"/>
 
     <stroke android:width="5dp" android:color="@color/black"/>
-    <corners android:topRightRadius="150dp"
-        android:topLeftRadius="150dp"/>
+    <corners android:topRightRadius="100dp"
+        android:topLeftRadius="100dp"/>
     <padding android:top="10dp"/>
 </shape>
