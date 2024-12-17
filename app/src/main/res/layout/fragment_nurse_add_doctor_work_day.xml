@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/SCREEN"
+            android:background="@drawable/custom_lineaerlayout_header"
             android:layout_alignParentTop="true"
             android:orientation="horizontal">
 
@@ -25,17 +26,18 @@
                 android:layout_width="50dp"
                 android:layout_height="40dp"
                 android:background="@drawable/ic_back"
-                android:text="" />
+                app:backgroundTint="@null" />
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 style="@style/TEXT"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:text="Danh sách ngày làm"
                 android:textAlignment="center"
-                android:textSize="20dp" />
+                android:textSize="26sp"
+                android:textStyle="bold" />
 
 
         </LinearLayout>
@@ -43,7 +45,9 @@
         <CalendarView
             android:id="@+id/calendarView2_AddDoctorWorkDayNurseFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_calendar"/>
 
         <TextView
             android:id="@+id/textview_AddDoctorWorkDayNurseFragment"
@@ -52,7 +56,9 @@
             android:layout_height="wrap_content"
             android:text="Bác sĩ"
             android:textAlignment="center"
-            android:textSize="20dp" />
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/spinnerDoctors_AddDoctorWorkDayNurseFragment"
@@ -77,6 +83,7 @@
             style="@style/BUTTON"
             android:layout_marginTop="20dp"
             app:backgroundTint="@null"
+            android:background="@drawable/custom_button"
             android:text="Xác nhận" />
     </LinearLayout>
 
