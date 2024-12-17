@@ -43,39 +43,40 @@ public class ListUserAdminFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_admin_list_user, container, false);
-        btnBack = view.findViewById(R.id.buttonBack_ListUserAdminFragment);
-        sv = view.findViewById(R.id.searchView_ListUserAdminFragment);
-        lv = view.findViewById(R.id.listView_ListUserAdminFragment);
-        db = new MyDatabaseHelper(getActivity());
-        rs = new ArrayList<>();
-        rs = db.showInformationForPerson();
+        {
+            btnBack = view.findViewById(R.id.buttonBack_ListUserAdminFragment);
+            sv = view.findViewById(R.id.searchView_ListUserAdminFragment);
+            lv = view.findViewById(R.id.listView_ListUserAdminFragment);
+            db = new MyDatabaseHelper(getActivity());
+            rs = new ArrayList<>();
+            rs = db.showInformationForPerson();
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager().popBackStack();
-            }
-        });
+            btnBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().getSupportFragmentManager().popBackStack();
+                }
+            });
 
-        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // Filter results when the user submits the query (optional)
-                filterPeople(query);
-                return false;
-            }
+            sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    // Filter results when the user submits the query (optional)
+                    filterPeople(query);
+                    return false;
+                }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                // Filter results as the user types
-                filterPeople(newText);
-                return false;
-            }
-        });
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    // Filter results as the user types
+                    filterPeople(newText);
+                    return false;
+                }
+            });
 
-        ShowInformationUserAdapter adapter = new ShowInformationUserAdapter(getContext(), R.layout.row_information, rs);
-        lv.setAdapter(adapter);
-
+            ShowInformationUserAdapter adapter = new ShowInformationUserAdapter(getContext(), R.layout.row_information, rs);
+            lv.setAdapter(adapter);
+        }
         return view;
     }
 

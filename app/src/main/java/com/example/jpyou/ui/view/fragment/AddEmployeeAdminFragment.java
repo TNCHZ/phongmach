@@ -109,7 +109,7 @@ public class AddEmployeeAdminFragment extends Fragment {
                         });
                     } else if (selectedWho.equals("Bác sĩ")) {
                         txtExp.setVisibility(View.VISIBLE);
-                        exp = txtExp.getText().toString();
+//                        exp = txtExp.getText().toString();
                     } else {
                         spnRole.setVisibility(View.GONE);
                         tv.setVisibility(View.GONE);
@@ -139,6 +139,7 @@ public class AddEmployeeAdminFragment extends Fragment {
                     String phone = txtPhone.getText().toString();
                     String email = txtEmail.getText().toString();
                     String password = txtPassword.getText().toString();
+                    exp = txtExp.getText().toString();
 
                     if (name.isEmpty() || dayOfBirth.isEmpty() || phone.isEmpty() || email.isEmpty()) {
                         Toast.makeText(getActivity(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();

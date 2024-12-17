@@ -59,9 +59,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
-        userID = sharedPreferences.getString("TaiKhoanID", null);
-
     }
     @SuppressLint({"WrongThread", "MissingInflatedId"})
     @Override
@@ -69,6 +66,9 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         {
+            SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
+            userID = sharedPreferences.getString("TaiKhoanID", null);
+
             db = new MyDatabaseHelper(getActivity());
             Intent intent = new Intent(getActivity(), SignIn.class);
             scrview = view.findViewById(R.id.scrollview_HomeFragment);

@@ -43,44 +43,45 @@ public class UpdateInformationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_update_information, container, false);
+        {
+            db = new MyDatabaseHelper(getActivity());
+            ps = db.getInformation(userID);
+            txtName = view.findViewById(R.id.txtName_UpdateInformationFragment);
+            txtDayOfBirth = view.findViewById(R.id.txtDayOfBirth_UpdateInformationFragment);
+            txtPhone = view.findViewById(R.id.txtPhone_UpdateInformationFragment);
+            txtEmail = view.findViewById(R.id.txtEmail_UpdateInformationFragment);
+            rdMale = view.findViewById(R.id.rdMale_UpdateInformationFragment);
+            rdFemale = view.findViewById(R.id.rdFemale_UpdateInformationFragment);
 
-        db = new MyDatabaseHelper(getActivity());
-        ps = db.getInformation(userID);
-        txtName = view.findViewById(R.id.txtName_UpdateInformationFragment);
-        txtDayOfBirth = view.findViewById(R.id.txtDayOfBirth_UpdateInformationFragment);
-        txtPhone = view.findViewById(R.id.txtPhone_UpdateInformationFragment);
-        txtEmail = view.findViewById(R.id.txtEmail_UpdateInformationFragment);
-        rdMale = view.findViewById(R.id.rdMale_UpdateInformationFragment);
-        rdFemale = view.findViewById(R.id.rdFemale_UpdateInformationFragment);
+            txtName.setText(ps.getHoTen());
+            txtDayOfBirth.setText(ps.getNgaySinh());
+            txtPhone.setText(ps.getSoDT());
+            txtEmail.setText(ps.getEmail());
 
-        txtName.setText(ps.getHoTen());
-        txtDayOfBirth.setText(ps.getNgaySinh());
-        txtPhone.setText(ps.getSoDT());
-        txtEmail.setText(ps.getEmail());
-
-        if (ps.getGioiTinh().equals("Nam")) {
-            rdMale.setChecked(true);
-        } else {
-            rdFemale.setChecked(true);
-        }
-
-
-        btnUpdate = view.findViewById(R.id.btnUpdate_UpdateInformationFragment);
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String id = ps.getId();
-                String name = txtName.getText().toString();
-                String gender = rdMale.isChecked() ? "Nam" : "Nữ";
-                String dayOfBirth = txtDayOfBirth.getText().toString();
-                String phone = txtPhone.getText().toString();
-                String email = txtEmail.getText().toString();
-
-                db.updateInformation(id, name, gender, dayOfBirth, phone, email);
-                Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
-                getActivity().getSupportFragmentManager().popBackStack();
+            if (ps.getGioiTinh().equals("Nam")) {
+                rdMale.setChecked(true);
+            } else {
+                rdFemale.setChecked(true);
             }
-        });
+
+
+            btnUpdate = view.findViewById(R.id.btnUpdate_UpdateInformationFragment);
+            btnUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String id = ps.getId();
+                    String name = txtName.getText().toString();
+                    String gender = rdMale.isChecked() ? "Nam" : "Nữ";
+                    String dayOfBirth = txtDayOfBirth.getText().toString();
+                    String phone = txtPhone.getText().toString();
+                    String email = txtEmail.getText().toString();
+
+                    db.updateInformation(id, name, gender, dayOfBirth, phone, email);
+                    Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                    getActivity().getSupportFragmentManager().popBackStack();
+                }
+            });
+        }
         return view;
     }
 }

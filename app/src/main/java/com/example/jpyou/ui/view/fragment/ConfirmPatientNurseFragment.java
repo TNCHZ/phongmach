@@ -30,9 +30,6 @@ public class ConfirmPatientNurseFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
-        userID = sharedPreferences.getString("TaiKhoanID", null);
-        db = new MyDatabaseHelper(getActivity());
     }
 
 
@@ -50,6 +47,9 @@ public class ConfirmPatientNurseFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_nurse_confirm_patient, container, false);
         {
+            SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
+            userID = sharedPreferences.getString("TaiKhoanID", null);
+
             db = new MyDatabaseHelper(getActivity());
             listView = (ListView) view.findViewById(R.id.list_ComfirmPatientNurseFragment);
             context = view.getContext();

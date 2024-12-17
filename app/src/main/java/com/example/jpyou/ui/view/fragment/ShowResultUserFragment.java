@@ -37,33 +37,35 @@ public class ShowResultUserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_user_show_result, container, false);
-        txtName = view.findViewById(R.id.txtName_ShowResultUserFragment);
-        txtDayOfBirth = view.findViewById(R.id.txtDayOfBirth_ShowResultUserFragment);
-        txtGender = view.findViewById(R.id.txtGender_ShowResultUserFragment);
-        txtSympton = view.findViewById(R.id.txtPhone_ShowResultUserFragment);
-        lv = view.findViewById(R.id.listView_ShowResultUserFragment);
-        btnBack = view.findViewById(R.id.buttonBack_ShowResultUserFragment);
-        db = new MyDatabaseHelper(getActivity());
+        {
+            txtName = view.findViewById(R.id.txtName_ShowResultUserFragment);
+            txtDayOfBirth = view.findViewById(R.id.txtDayOfBirth_ShowResultUserFragment);
+            txtGender = view.findViewById(R.id.txtGender_ShowResultUserFragment);
+            txtSympton = view.findViewById(R.id.txtPhone_ShowResultUserFragment);
+            lv = view.findViewById(R.id.listView_ShowResultUserFragment);
+            btnBack = view.findViewById(R.id.buttonBack_ShowResultUserFragment);
+            db = new MyDatabaseHelper(getActivity());
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager().popBackStack();
+            btnBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().getSupportFragmentManager().popBackStack();
+                }
+            });
+
+            Bundle bundle = getArguments();
+            if (bundle != null) {
+                patientID = bundle.getString("patient_id", "-1");  // Giá trị mặc định là "-1" nếu không tìm thấy
+                day = bundle.getString("NgayKham", "-1");
+                ps = db.getInformation(db.getIDFromPatientID(patientID));
+                txtName.setText(ps.getHoTen());
+                txtGender.setText(ps.getGioiTinh());
+                txtDayOfBirth.setText(ps.getNgaySinh());
+                txtSympton.setText(db.getSympton(patientID, day));
+                mcs = db.getResult(patientID, day);
+                ShowMedicineForPatientAdapter adapter = new ShowMedicineForPatientAdapter(getActivity(), R.layout.row_medicine_user, mcs);
+                lv.setAdapter(adapter);
             }
-        });
-
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            patientID = bundle.getString("patient_id", "-1");  // Giá trị mặc định là "-1" nếu không tìm thấy
-            day = bundle.getString("NgayKham", "-1");
-            ps = db.getInformation(db.getIDFromPatientID(patientID));
-            txtName.setText(ps.getHoTen());
-            txtGender.setText(ps.getGioiTinh());
-            txtDayOfBirth.setText(ps.getNgaySinh());
-            txtSympton.setText(db.getSympton(patientID, day));
-            mcs = db.getResult(patientID, day);
-            ShowMedicineForPatientAdapter adapter = new ShowMedicineForPatientAdapter(getActivity(), R.layout.row_medicine_user, mcs);
-            lv.setAdapter(adapter);
         }
         return view;
     }

@@ -30,37 +30,35 @@ public class HomeAdminFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_admin_home, container, false);
-        btnAdd = view.findViewById(R.id.btnCreateEmployee_HomeAdminFragment);
-        btnList = view.findViewById(R.id.btnListNguoiDung_HomeAdminFragment);
-        btnStatic = view.findViewById(R.id.btnStatistics_HomeAdminFragment);
+        {
+            btnAdd = view.findViewById(R.id.btnCreateEmployee_HomeAdminFragment);
+            btnList = view.findViewById(R.id.btnListNguoiDung_HomeAdminFragment);
+            btnStatic = view.findViewById(R.id.btnStatistics_HomeAdminFragment);
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                AddEmployeeAdminFragment anotherFragment = new AddEmployeeAdminFragment();
-                transaction.replace(R.id.homeAdminFragment, anotherFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
+            btnAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    AddEmployeeAdminFragment anotherFragment = new AddEmployeeAdminFragment();
+                    transaction.replace(R.id.homeAdminFragment, anotherFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+            });
 
-        btnList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                ListUserAdminFragment anotherFragment = new ListUserAdminFragment();
-                transaction.replace(R.id.homeAdminFragment, anotherFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
-
-
-
-
+            btnList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    ListUserAdminFragment anotherFragment = new ListUserAdminFragment();
+                    transaction.replace(R.id.homeAdminFragment, anotherFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+            });
+        }
         return view;
     }
 }

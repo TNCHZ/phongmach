@@ -49,8 +49,6 @@ public class ScheduleUserFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
-        userID = sharedPreferences.getString("TaiKhoanID", null);
     }
 
     private Button btnCheck;
@@ -63,6 +61,9 @@ public class ScheduleUserFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_schedule, container, false);
         {
+            SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
+            userID = sharedPreferences.getString("TaiKhoanID", null);
+
             layoutChecked = view.findViewById(R.id.linearLayoutChecked_ScheduleUserFragment);
             layoutNotChecked = view.findViewById(R.id.linearLayoutNotChecked_ScheduleUserFragment);
             if (userID== null) {

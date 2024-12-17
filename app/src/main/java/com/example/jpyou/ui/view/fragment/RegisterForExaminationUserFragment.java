@@ -46,24 +46,25 @@ public class RegisterForExaminationUserFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_register_for_examination, container, false);
-        init(view);
+        {
+            init(view);
 
-        txtDate = view.findViewById(R.id.txtDate_RegisterForExaminonUserFragment);
-        txtSymptom = view.findViewById(R.id.txtSymptom_RegisterForExaminonUserFragment);
+            txtDate = view.findViewById(R.id.txtDate_RegisterForExaminonUserFragment);
+            txtSymptom = view.findViewById(R.id.txtSymptom_RegisterForExaminonUserFragment);
 
-        btnRegis = view.findViewById(R.id.btnUpdate_RegisterForExaminonUserFragment);
-        btnRegis.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!txtDate.getText().toString().isEmpty() && !txtSymptom.getText().toString().isEmpty()) {
-                    if (db.registerExamination(db.getPatientID(userID), txtDayRegis.getText().toString(), txtSymptom.getText().toString())) {
-                        Toast.makeText(getActivity(), "Đặt lịch thành công", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getActivity(), "Đặt lich thất bại", Toast.LENGTH_SHORT).show();
+            btnRegis = view.findViewById(R.id.btnUpdate_RegisterForExaminonUserFragment);
+            btnRegis.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!txtDate.getText().toString().isEmpty() && !txtSymptom.getText().toString().isEmpty()) {
+                        if (db.registerExamination(db.getPatientID(userID), txtDayRegis.getText().toString(), txtSymptom.getText().toString())) {
+                            Toast.makeText(getActivity(), "Đặt lịch thành công", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), "Đặt lich thất bại", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
-
-                }
-                getActivity().getSupportFragmentManager().popBackStack(); // Quay lại Fragment trước
+                    getActivity().getSupportFragmentManager().popBackStack(); // Quay lại Fragment trước
 
 //                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 //                @SuppressLint("CommitTransaction") FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -71,8 +72,9 @@ public class RegisterForExaminationUserFragment extends Fragment {
 //                transaction.replace(R.id.fragment_home, anotherFragment);
 //                transaction.addToBackStack(null);
 //                transaction.commit();
-            }
-        });
+                }
+            });
+        }
         return view;
     }
 

@@ -21,12 +21,13 @@
             app:backgroundTint="@null" />
 
         <LinearLayout
+            android:id="@+id/linearLayoutInformation_ShowPersonInFormationAdminFragment"
+            style="@style/BUTTON"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/BUTTON"
-            android:padding="5dp"
             android:layout_centerInParent="true"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <EditText
                 android:id="@+id/txtName_ShowPersonInformationAdminFragment"
@@ -71,24 +72,29 @@
         </LinearLayout>
 
 
-        <Button
-            android:id="@+id/btnStop_ShowPersonInformationAdminFragment"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:backgroundTint="@null"
-            android:layout_marginTop="20dp"
-            style="@style/BUTTON"
-            android:layout_above="@id/btnOpen_ShowPersonInformationAdminFragment"
-            android:text="Dừng hoạt động tài khoản" />
-
-        <Button
-            android:id="@+id/btnOpen_ShowPersonInformationAdminFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:backgroundTint="@null"
-            style="@style/BUTTON"
             android:layout_alignParentBottom="true"
-            android:text="Mở khóa hoạt động tài khoản" />
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnStop_ShowPersonInformationAdminFragment"
+                style="@style/BUTTON"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dừng hoạt động tài khoản"
+                app:backgroundTint="@null" />
+
+            <Button
+                android:id="@+id/btnOpen_ShowPersonInformationAdminFragment"
+                style="@style/BUTTON"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mở khóa hoạt động tài khoản"
+                app:backgroundTint="@null" />
+        </LinearLayout>
 
     </RelativeLayout>
 </FrameLayout>
