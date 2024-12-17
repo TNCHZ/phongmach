@@ -13,6 +13,13 @@ public class Medicine {
     public Medicine() {
     }
 
+    public Medicine(String name, String unit, String usage, String quantity) {
+        this.name = name;
+        this.unit = unit;
+        this.usage = usage;
+        this.quantity = quantity;
+    }
+
     public Medicine(String id, String name, String unit, String usage, String quantity) {
         this.id = id;
         this.name = name;

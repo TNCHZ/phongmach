@@ -2,6 +2,7 @@ package com.example.jpyou.ui.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,7 +111,6 @@ public class ShowScheduleAndCancelAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 Bundle bundlePatientID = new Bundle();
-
                 bundlePatientID.putString("patient_id", ps.getId());
                 bundlePatientID.putString("NgayKham", ps.getAppointDay());
                 ShowResultUserFragment fragment = new ShowResultUserFragment();
@@ -118,7 +118,7 @@ public class ShowScheduleAndCancelAdapter extends BaseAdapter {
 
                 ((FragmentActivity) context).getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_home, fragment)
+                        .replace(R.id.fragment_user_schedule, fragment)
                         .addToBackStack(null)
                         .commit();
             }

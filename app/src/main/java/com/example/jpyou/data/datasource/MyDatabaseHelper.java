@@ -82,9 +82,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 "TaiKhoanID INTEGER, " +
                 "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
 
-        // Tạo bảng LichHen
         String createLichHenTable = "CREATE TABLE LichHen (" +
-                "LichhenID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "LichHenID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "TenLichHen TEXT NOT NULL, " +
                 "TrieuChung TEXT, " +
                 "NgayKham TEXT NOT NULL, " +
@@ -92,26 +91,21 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 "isHen INTEGER, " +
                 "isKham INTEGER, " +
                 "isHuy INTEGER, " +
-                "KetQuaChuanDoanID INTEGER, " +
                 "BacSiID INTEGER, " +
                 "BenhNhanID INTEGER, " +
-                "FOREIGN KEY(KetQuaChuanDoanID) REFERENCES KetQuaChuanDoan(KetQuaChuanDoanID), " +
                 "FOREIGN KEY(BacSiID) REFERENCES BacSi(BacSiID), " +
-                "FOREIGN KEY(BenhNhanID) REFERENCES BenhNhan(BenhNhanID)); ";
+                "FOREIGN KEY(BenhNhanID) REFERENCES BenhNhan(BenhNhanID));";
 
-        // Tạo bảng ketQuaChuanDoan
         String createKetQuaChuanDoanTable = "CREATE TABLE KetQuaChuanDoan (" +
-                "KetQuaChuanDoanID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "LichHenID INTEGER PRIMARY KEY, " +
                 "TenKetQuaChuanDoan TEXT NOT NULL, " +
                 "BacSiID INTEGER, " +
                 "BenhNhanID INTEGER, " +
                 "ToaThuocID INTEGER, " +
-                "LichHenID INTEGER, " +
+                "FOREIGN KEY(LichhenID) REFERENCES LichHen(LichhenID), " +
                 "FOREIGN KEY(BacSiID) REFERENCES BacSi(BacSiID), " +
-                "FOREIGN KEY(ToaThuocID) REFERENCES ToaThuoc(ToaThuocID), " +
-                "FOREIGN KEY(LichHenID) REFERENCES LichHen(LichHenID), " +
-                "FOREIGN KEY(BenhNhanID) REFERENCES BenhNhan(BenhNhanID));";
-
+                "FOREIGN KEY(BenhNhanID) REFERENCES BenhNhan(BenhNhanID), " +
+                "FOREIGN KEY(ToaThuocID) REFERENCES ToaThuoc(ToaThuocID));";
 
         // Tạo bảng Thuoc
         String createThuocTable = "CREATE TABLE Thuoc (" +
@@ -262,8 +256,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             if(addUserInform==-1)
                 return false;
 
-
-
             if (who.equals("Bệnh nhân")) {
                 ContentValues patientInform = new ContentValues();
                 patientInform.put("TaiKhoanID", addAccount);
@@ -390,7 +382,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, new String[]{id});
 
         if (cursor.moveToFirst()) {
-            // Lấy dữ liệu từ Cursor và tạo đối tượng PersonInformation
             String userID = cursor.getString(cursor.getColumnIndex("TaiKhoanID"));
             String name = cursor.getString(cursor.getColumnIndex("HoTen"));
             String gender = cursor.getString(cursor.getColumnIndex("GioiTinh"));
@@ -398,7 +389,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             String phone = cursor.getString(cursor.getColumnIndex("SoDT"));
             String email = cursor.getString(cursor.getColumnIndex("Email"));
 
-            // Khởi tạo đối tượng PersonInformation với các giá trị lấy từ database
             ps = new PersonInformation(userID, name, gender, dayOfBirth, phone, email);
         }
 
@@ -410,10 +400,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         String query = "UPDATE NguoiDung SET HoTen = ?, GioiTinh = ?, NgaySinh = ?, SoDT = ?, Email = ? WHERE TaiKhoanID = ?";
 
-        // Sử dụng SQLiteStatement hoặc phương thức execSQL với các tham số
         db.execSQL(query, new String[]{name, gender, dayOfBirth, phone, email, id});
 
-        db.close(); // Đóng kết nối với cơ sở dữ liệu
+        db.close();
     }
 
 
@@ -643,17 +632,92 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return ls;
     }
 
+//    public void addMedicine(String patientID, String doctorID, String symp, List<Medicine> medicines) {
+//        SQLiteDatabase db = this.getWritableDatabase();  // Mở cơ sở dữ liệu ở chế độ ghi
+//
+//        db.beginTransaction();
+//
+//        try {
+//            ContentValues toaThuocValues = new ContentValues();
+//            toaThuocValues.put("NgayKeToa", utils.getCurrentDate());
+//
+//            long toaThuocID = db.insert("ToaThuoc", null, toaThuocValues);
+//
+//            for (Medicine medicine : medicines) {
+//                ContentValues med = new ContentValues();
+//                med.put("SoLuong", medicine.getQuantity());
+//                med.put("HuongDanSuDung", medicine.getUsage());
+//                med.put("ThuocID", medicine.getId());
+//                med.put("ToaThuocID", toaThuocID);
+//
+//                Log.d("MedicineInsert", "SoLuong: " + medicine.getQuantity());
+//                Log.d("MedicineInsert", "HuongDanSuDung: " + medicine.getUsage());
+//                Log.d("MedicineInsert", "ThuocID: " + medicine.getId());
+//                Log.d("MedicineInsert", "ToaThuocID: " + toaThuocID);
+//
+//                db.insert("ToaThuoc_Thuoc", null, med);
+//            }
+//
+//            ContentValues result = new ContentValues();
+//            result.put("TenKetQuaChuanDoan", symp);  // Chèn triệu chứng vào
+//            result.put("BacSiID", doctorID);  // Chèn ID bác sĩ vào
+//            result.put("BenhNhanID", patientID);  // Chèn ID bệnh nhân vào
+//            result.put("ToaThuocID", toaThuocID);  // Chèn ID toa thuốc vào
+//            long ketQuaChuanDoanID = db.insert("KetQuaChuanDoan", null, result);  // Thêm bản ghi vào bảng KetQuaChuanDoan và nhận về KetQuaChuanDoanID
+//
+//            ContentValues updateValues = new ContentValues();
+//            updateValues.put("KetQuaChuanDoanID", ketQuaChuanDoanID);  // Cập nhật KetQuaChuanDoanID
+//            updateValues.put("isKham", 1);
+//
+//            String whereClause = "BenhNhanID = ? AND BacSiID = ? AND NgayKham = ?";
+//            String[] whereArgs = new String[]{patientID, doctorID, utils.getCurrentDate()};  // Các tham số điều kiện cho WHERE
+//
+//            int rowsUpdated = db.update("LichHen", updateValues, whereClause, whereArgs);
+//
+//            if (ketQuaChuanDoanID != -1 && rowsUpdated > 0) {
+//                ContentValues updateLichHenID = new ContentValues();
+//                updateLichHenID.put("LichHenID", rowsUpdated);  // Lưu LichHenID vào bảng KetQuaChuanDoan
+//
+//                String whereClauseForKetQuaChuanDoan = "KetQuaChuanDoanID = ?";
+//                String[] whereArgsForKetQuaChuanDoan = new String[]{String.valueOf(ketQuaChuanDoanID)};
+//                db.update("KetQuaChuanDoan", updateLichHenID, whereClauseForKetQuaChuanDoan, whereArgsForKetQuaChuanDoan);
+//            }
+//
+//            db.setTransactionSuccessful();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            db.endTransaction();
+//        }
+//    }
+
     public void addMedicine(String patientID, String doctorID, String symp, List<Medicine> medicines) {
-        SQLiteDatabase db = this.getWritableDatabase();  // Mở cơ sở dữ liệu ở chế độ ghi
-
+        SQLiteDatabase db = this.getWritableDatabase(); // Mở cơ sở dữ liệu ở chế độ ghi
         db.beginTransaction();
-
         try {
+            String query = "SELECT LichHenID FROM LichHen WHERE BenhNhanID = ? AND BacSiID = ? AND NgayKham = ?";
+            String lichHenID = "null";
+            Cursor cursor = null;
+            try {
+                cursor = db.rawQuery(query, new String[]{patientID, doctorID, utils.getCurrentDate()});
+                if (cursor != null && cursor.moveToFirst()) {
+                    lichHenID = cursor.getString(cursor.getColumnIndexOrThrow("LichHenID"));
+                }
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
+
+            Log.d("1", lichHenID);
+
+
+            // Thêm bản ghi vào bảng ToaThuoc
             ContentValues toaThuocValues = new ContentValues();
             toaThuocValues.put("NgayKeToa", utils.getCurrentDate());
-
             long toaThuocID = db.insert("ToaThuoc", null, toaThuocValues);
 
+            // Thêm các thuốc vào bảng ToaThuoc_Thuoc
             for (Medicine medicine : medicines) {
                 ContentValues med = new ContentValues();
                 med.put("SoLuong", medicine.getQuantity());
@@ -669,30 +733,23 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 db.insert("ToaThuoc_Thuoc", null, med);
             }
 
+            // Thêm bản ghi vào bảng KetQuaChuanDoan với LichHenID làm khóa chính
             ContentValues result = new ContentValues();
-            result.put("TenKetQuaChuanDoan", symp);  // Chèn triệu chứng vào
-            result.put("BacSiID", doctorID);  // Chèn ID bác sĩ vào
-            result.put("BenhNhanID", patientID);  // Chèn ID bệnh nhân vào
-            result.put("ToaThuocID", toaThuocID);  // Chèn ID toa thuốc vào
-            long ketQuaChuanDoanID = db.insert("KetQuaChuanDoan", null, result);  // Thêm bản ghi vào bảng KetQuaChuanDoan và nhận về KetQuaChuanDoanID
+            result.put("LichHenID", lichHenID); // Sử dụng LichHenID làm khóa chính
+            result.put("TenKetQuaChuanDoan", symp); // Chèn triệu chứng vào
+            result.put("BacSiID", doctorID); // Chèn ID bác sĩ vào
+            result.put("BenhNhanID", patientID); // Chèn ID bệnh nhân vào
+            result.put("ToaThuocID", toaThuocID); // Chèn ID toa thuốc vào
+            db.insert("KetQuaChuanDoan", null, result);
 
+            // Cập nhật trạng thái đã khám trong bảng LichHen
             ContentValues updateValues = new ContentValues();
-            updateValues.put("KetQuaChuanDoanID", ketQuaChuanDoanID);  // Cập nhật KetQuaChuanDoanID
             updateValues.put("isKham", 1);
 
-            String whereClause = "BenhNhanID = ? AND BacSiID = ? AND NgayKham = ?";
-            String[] whereArgs = new String[]{patientID, doctorID, utils.getCurrentDate()};  // Các tham số điều kiện cho WHERE
+            String whereClause = "LichHenID = ?";
+            String[] whereArgs = new String[]{String.valueOf(lichHenID)};
 
-            int rowsUpdated = db.update("LichHen", updateValues, whereClause, whereArgs);
-
-            if (ketQuaChuanDoanID != -1 && rowsUpdated > 0) {
-                ContentValues updateLichHenID = new ContentValues();
-                updateLichHenID.put("LichHenID", rowsUpdated);  // Lưu LichHenID vào bảng KetQuaChuanDoan
-
-                String whereClauseForKetQuaChuanDoan = "KetQuaChuanDoanID = ?";
-                String[] whereArgsForKetQuaChuanDoan = new String[]{String.valueOf(ketQuaChuanDoanID)};
-                db.update("KetQuaChuanDoan", updateLichHenID, whereClauseForKetQuaChuanDoan, whereArgsForKetQuaChuanDoan);
-            }
+            db.update("LichHen", updateValues, whereClause, whereArgs);
 
             db.setTransactionSuccessful();
         } catch (Exception e) {
@@ -701,7 +758,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             db.endTransaction();
         }
     }
-
 
     public String getDoctorID(String userID) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -813,7 +869,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public boolean updateDoctor(String bacSiID, String ngayLam) {
         SQLiteDatabase db = this.getWritableDatabase();  // Mở kết nối với database (quyền ghi)
 
-        ContentValues values = new ContentValues();  // Tạo đối tượng ContentValues để lưu trữ các giá trị cần cập nhật
+        ContentValues values = new ContentValues();
         values.put("BacSiID", bacSiID);  // Cập nhật trường BacSiID
         values.put("NgayLamViec", ngayLam);  // Cập nhật trường NgayLamViec
         long result = db.insert("LichLamViec", null, values);
@@ -892,7 +948,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 "JOIN ToaThuoc TT ON KQCD.ToaThuocID = TT.ToaThuocID " +
                 "JOIN ToaThuoc_Thuoc TT_Thuoc ON TT.ToaThuocID = TT_Thuoc.ToaThuocID " +
                 "JOIN Thuoc T ON TT_Thuoc.ThuocID = T.ThuocID " +
-                "JOIN LichHen L ON KQCD.LichHenID = L.LichhenID " +
+                "JOIN LichHen L ON KQCD.LichHenID = L.LichHenID " +
                 "WHERE KQCD.BenhNhanID = ? AND L.NgayKham = ?";  // Thêm điều kiện lọc theo NgayKham
 
         Cursor cursor = db.rawQuery(query, new String[]{id, day});
@@ -904,9 +960,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                     String donVi = cursor.getString(cursor.getColumnIndexOrThrow("DonVi"));
                     String soLuong = cursor.getString(cursor.getColumnIndexOrThrow("SoLuong"));
                     String huongDan = cursor.getString(cursor.getColumnIndexOrThrow("HuongDanSuDung"));
-                    String ngayKham = cursor.getString(cursor.getColumnIndexOrThrow("NgayKham")); // Lấy NgayKham từ LichHen
 
-                    Medicine mc = new Medicine(tenThuoc, donVi, huongDan, soLuong, ngayKham); // Truyền NgayKham vào constructor của Medicine
+                    Medicine mc = new Medicine(tenThuoc, donVi, huongDan, soLuong); // Truyền NgayKham vào constructor của Medicine
                     rs.add(mc);
                 }
             } finally {
@@ -1027,4 +1082,42 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    public String getIDFromPatientID(String patientID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT TaiKhoanID " +
+                "FROM BenhNhan " +
+                "WHERE BenhNhanID = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{patientID});
+        String tkID = "";
+        if (cursor != null) {
+            try {
+                if (cursor.moveToFirst()) {
+                    // Retrieve BenhNhanID from the first row of the result
+                    tkID = cursor.getString(cursor.getColumnIndexOrThrow("TaiKhoanID"));
+                }
+            } finally {
+                cursor.close(); // Ensure the cursor is closed to avoid resource leaks
+            }
+        }
+        return tkID;
+    }
+
+    public boolean changePassword(String id, String newPass, String oldPass) {
+        SQLiteDatabase db = this.getWritableDatabase(); // Sử dụng writable database để thực hiện update
+
+        // Cập nhật giá trị HoatDong thành 1 (mở khóa)
+        ContentValues values = new ContentValues();
+        values.put("MatKhau", newPass);
+
+        int rowsAffected = db.update(
+                "TaiKhoan",
+                values,
+                "TaiKhoanID = ? AND MatKhau = ?" , // Điều kiện WHERE
+                new String[]{id, oldPass} // Giá trị cho điều kiện
+        );
+
+        db.close();
+        return rowsAffected > 0;
+    }
 }

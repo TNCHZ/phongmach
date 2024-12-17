@@ -11,6 +11,7 @@ import java.util.List;
 public class SharedViewModel extends ViewModel {
     private final MutableLiveData<List<Medicine>> medicines = new MutableLiveData<>();
 
+
     public LiveData<List<Medicine>> getMedicines() {
         return medicines;
     }
@@ -18,4 +19,5 @@ public class SharedViewModel extends ViewModel {
     public void setMedicines(List<Medicine> updatedMedicines) {
         medicines.setValue(updatedMedicines);
     }
+
 }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,10 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SearchView;
 
+import com.example.jpyou.data.model.Medicine;
+import com.example.jpyou.ui.adapter.ShowMedicineAdapter;
 import com.example.jpyou.ui.adapter.ShowScheduleAndCancelAdapter;
 import com.example.jpyou.data.datasource.MyDatabaseHelper;
 import com.example.jpyou.data.model.Patient;
@@ -51,6 +55,7 @@ public class ScheduleUserFragment extends Fragment {
 
     private Button btnCheck;
     private LinearLayout layoutChecked, layoutNotChecked;
+    private SearchView sv;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -74,11 +79,28 @@ public class ScheduleUserFragment extends Fragment {
                 layoutNotChecked.setVisibility(View.INVISIBLE);
                 layoutChecked.setVisibility(View.VISIBLE);
 
+                sv = view.findViewById(R.id.searchView_ScheduleUserFragment);
                 db = new MyDatabaseHelper(getActivity());
-                schedules = new ArrayList<>();
                 cldView = view.findViewById(R.id.calendar_ScheduleUserFragment);
                 lv = view.findViewById(R.id.listSchedule_ScheduleUserFragment);
 
+                sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        filterAtDay(query);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        // Filter results as the user types
+                        filterAtDay(newText);
+                        return false;
+                    }
+                });
+
+
+                schedules = new ArrayList<>();
                 schedules = db.getDaySchedule(db.getPatientID(userID));
                 ShowScheduleAndCancelAdapter adapter = new ShowScheduleAndCancelAdapter(getActivity(), R.layout.row_show_schedule_and_cancel, schedules);
                 lv.setAdapter(adapter);
@@ -96,5 +118,18 @@ public class ScheduleUserFragment extends Fragment {
             }
         }
         return view;
+    }
+
+    private void filterAtDay(String query) {
+        List<Patient> filteredList = new ArrayList<>();
+        for (Patient ps : schedules) {
+            if (ps.getAppointDay().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(ps);
+            }
+        }
+
+        // Update the adapter with the filtered list
+        ShowScheduleAndCancelAdapter filteredAdapter = new ShowScheduleAndCancelAdapter(getActivity(), R.layout.row_show_schedule_and_cancel, filteredList);
+        lv.setAdapter(filteredAdapter); // Update the ListView with the filtered results
     }
 }

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Handler;
 import android.util.Log;
@@ -30,6 +31,7 @@ import com.example.jpyou.data.model.Doctor;
 import com.example.jpyou.data.model.Patient;
 import com.example.jpyou.data.datasource.MyDatabaseHelper;
 import com.example.jpyou.ui.view.activity.SignIn;
+import com.example.jpyou.ui.viewmodel.SharedViewModel;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
@@ -48,6 +50,7 @@ public class HomeFragment extends Fragment {
     private SearchView sv;
     private LinearLayout ln, lnScrV;
 
+    private SharedViewModel userViewModel;
 
     public HomeFragment() {
 
@@ -58,6 +61,7 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
         userID = sharedPreferences.getString("TaiKhoanID", null);
+
     }
     @SuppressLint({"WrongThread", "MissingInflatedId"})
     @Override
@@ -98,6 +102,7 @@ public class HomeFragment extends Fragment {
             };
             handler.postDelayed(scrollRunnable, 2000);
 
+
             if (userID == null) {
                 ShowDoctorAdapter adapter = new ShowDoctorAdapter(getActivity(), R.layout.row_list_doctor, doctors);
                 lv.setAdapter(adapter);
@@ -106,10 +111,9 @@ public class HomeFragment extends Fragment {
                 btnRegisForDoctor.setVisibility(View.GONE);
             } else {
                 if (db.getRole(userID).equals("Benh nhan")) {
+                    tv.setVisibility(View.GONE);
                     layout.setVisibility(View.VISIBLE);
                     sv.setVisibility(View.GONE);
-                    ShowDoctorAdapter adapter = new ShowDoctorAdapter(getActivity(), R.layout.row_list_doctor, doctors);
-                    lv.setAdapter(adapter);
                     btnRegisForDoctor.setVisibility(View.GONE);
                     btnRegisTreatMent.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -129,6 +133,7 @@ public class HomeFragment extends Fragment {
                         }
                     });
                 } else if (db.getRole(userID).equals("Bac si")) {
+                    lv.setVisibility(View.GONE);
                     scrview.setVisibility(View.GONE);
                     ln.setVisibility(View.GONE);
                     layout.setVisibility(View.GONE);

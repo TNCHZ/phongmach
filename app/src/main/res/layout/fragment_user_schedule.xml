@@ -16,7 +16,9 @@
         <SearchView
             android:id="@+id/searchView_ScheduleUserFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:queryHint="Nhập ngày"
+            />
 
         <CalendarView
             android:id="@+id/calendar_ScheduleUserFragment"

@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,13 +45,18 @@ public class ShowResultUserFragment extends Fragment {
         btnBack = view.findViewById(R.id.buttonBack_ShowResultUserFragment);
         db = new MyDatabaseHelper(getActivity());
 
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            Log.d("1", ps.getId());
             patientID = bundle.getString("patient_id", "-1");  // Giá trị mặc định là "-1" nếu không tìm thấy
             day = bundle.getString("NgayKham", "-1");
-            ps = db.getInformation(patientID);
+            ps = db.getInformation(db.getIDFromPatientID(patientID));
             txtName.setText(ps.getHoTen());
             txtGender.setText(ps.getGioiTinh());
             txtDayOfBirth.setText(ps.getNgaySinh());

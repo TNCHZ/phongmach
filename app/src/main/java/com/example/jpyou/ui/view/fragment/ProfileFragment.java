@@ -8,6 +8,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -143,18 +145,27 @@ public class ProfileFragment extends Fragment {
                 btnUpdateInformation.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), UpdateInformation.class);
-                        intent.putExtra("PersonInformation", db.getInformation(userID));
-                        startActivity(intent);
+                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+                        UpdateInformationFragment anotherFragment = new UpdateInformationFragment(userID);
+                        transaction.replace(R.id.fragment_profile, anotherFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
                     }
                 });
 
                 btnChangePassword.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), ChangePasswordFragment.class);
-                        intent.putExtra("NamePerson", userID);
-                        startActivity(intent);
+                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+                        ChangePasswordFragment anotherFragment = new ChangePasswordFragment(userID);
+                        transaction.replace(R.id.fragment_profile, anotherFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+
                     }
                 });
 

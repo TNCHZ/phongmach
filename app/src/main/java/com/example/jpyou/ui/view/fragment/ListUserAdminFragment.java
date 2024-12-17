@@ -72,6 +72,7 @@ public class ListUserAdminFragment extends Fragment {
                 return false;
             }
         });
+
         ShowInformationUserAdapter adapter = new ShowInformationUserAdapter(getContext(), R.layout.row_information, rs);
         lv.setAdapter(adapter);
 

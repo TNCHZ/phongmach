@@ -72,7 +72,7 @@ public class AddDoctorWorkDayNurseFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp.setAdapter(adapter);
 
-
+        selectedDate = utils.getCurrentDate();
         clv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -85,7 +85,6 @@ public class AddDoctorWorkDayNurseFragment extends Fragment {
                     LocalDate localDate1 = LocalDate.parse(selectedDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                     LocalDate localDate2 = LocalDate.parse(utils.getCurrentDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                     tenBacSi = db.getDoctorWorkAtDay(selectedDate);
-                    Log.d("Ten", selectedDate + tenBacSi);
                     if (localDate2.isAfter(localDate1)) {
                         tv2.setVisibility(View.GONE);
                         btnConfirm.setVisibility(View.GONE);
@@ -128,11 +127,10 @@ public class AddDoctorWorkDayNurseFragment extends Fragment {
             }
         });
 
-
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (tenBacSi != null) {
+                if (tenBacSi == null) {
                     if (db.updateDoctor(selectedDoctor.getId(), selectedDate))
                         Toast.makeText(getActivity(), "Đặt lịch thành công", Toast.LENGTH_SHORT).show();
                     else

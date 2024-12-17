@@ -76,7 +76,6 @@ public class AddMedicineDoctorFragment extends Fragment {
             sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    // Filter results when the user submits the query (optional)
                     filterMedicines(query);
                     return false;
                 }
@@ -88,6 +87,7 @@ public class AddMedicineDoctorFragment extends Fragment {
                     return false;
                 }
             });
+
 
             lvMedicine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

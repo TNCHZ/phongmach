@@ -15,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.jpyou.ui.view.adapter.ViewPagerAdapterUser;
+import com.example.jpyou.ui.viewmodel.SharedViewModel;
 import com.example.myapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -49,6 +50,8 @@ public class UserInterface extends AppCompatActivity {
             editor.putString("TaiKhoanID", userID);
             editor.apply();
         }
+
+
         sharedPreferencesNight = getSharedPreferences("NightMode", MODE_PRIVATE);
         isNightMode = sharedPreferencesNight.getBoolean("night", false);
         if (isNightMode){

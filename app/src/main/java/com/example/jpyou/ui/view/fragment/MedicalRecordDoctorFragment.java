@@ -99,7 +99,6 @@ public class MedicalRecordDoctorFragment extends Fragment {
                         getActivity().getSupportFragmentManager()
                                 .beginTransaction()
                                 .replace(R.id.fragment_doctor_medical_records, addMedicineDoctorFragment)
-                                .addToBackStack(null)
                                 .commit();
                     } else {
                         // Xử lý khi context không hợp lệ (tùy vào tình huống)
