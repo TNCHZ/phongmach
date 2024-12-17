@@ -1,17 +1,9 @@
 package com.example.jpyou.ui.view.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -22,7 +14,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.jpyou.data.model.NightMode;
 import com.example.jpyou.ui.view.adapter.ViewPagerAdapterUser;
 import com.example.myapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

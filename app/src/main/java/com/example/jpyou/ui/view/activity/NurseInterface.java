@@ -3,7 +3,6 @@ package com.example.jpyou.ui.view.activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -14,7 +13,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.jpyou.data.model.NightMode;
 import com.example.jpyou.ui.view.adapter.ViewPagerAdapterNurse;
 import com.example.myapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

@@ -9,20 +9,16 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.SeekBar;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jpyou.data.datasource.MyDatabaseHelper;
 import com.example.jpyou.UpdateInformation;
-import com.example.jpyou.data.model.NightMode;
 import com.example.jpyou.ui.view.activity.UserInterface;
 import com.example.jpyou.ui.view.activity.SignIn;
 import com.example.myapplication.R;
@@ -43,7 +39,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private Switch swicthNightMode;
-    private Boolean isNightMode;
+    private Boolean isNightMode = false;
     SharedPreferences sharedPreferences, sharedPreferencesNight;
     SharedPreferences.Editor editor, editorNight;
     private Button btnUpdateInformation, btnChangePassword, btnLogOut, btnLogIn;
@@ -65,24 +61,29 @@ public class ProfileFragment extends Fragment {
             swicthNightMode = view.findViewById(R.id.switchNightMode_ProfileFragment);
             if (isNightMode) {
                 swicthNightMode.setText("Tắt chế độ ban đêm");
+                swicthNightMode.setChecked(true);
                 isNightMode = false;
             }
-            swicthNightMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            swicthNightMode.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    isNightMode = b;
+                public void onClick(View view) {
+                    isNightMode = swicthNightMode.isChecked();
                     editorNight = sharedPreferencesNight.edit();
                     if (isNightMode) {
                         swicthNightMode.setText("Tắt chế độ ban đêm");
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        swicthNightMode.setChecked(true);
                     } else {
                         swicthNightMode.setText("Bật chế độ ban đêm");
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        swicthNightMode.setChecked(false);
                     }
-                    editorNight.putBoolean("night", b);
-                    editorNight.commit();
+                    editorNight.putBoolean("night", isNightMode);
+                    editorNight.apply();
                 }
             });
+
 //            sBFontSize = view.findViewById(R.id.seekBarFontSize_ProfileFragment);
 //            textView = view.findViewById(R.id.textViewFontSize_ProfileFragment);
 //            sBFontSize.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
