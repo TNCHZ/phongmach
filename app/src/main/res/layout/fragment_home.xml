@@ -45,6 +45,8 @@
             android:id="@+id/scrollview_HomeFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/custom_button_empty"
+            android:padding="10dp"
             android:layout_margin="5dp">
 
             <LinearLayout
