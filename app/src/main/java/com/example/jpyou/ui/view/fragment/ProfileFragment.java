@@ -152,7 +152,7 @@ public class ProfileFragment extends Fragment {
                 btnChangePassword.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), UpdateInformation.class);
+                        Intent intent = new Intent(getActivity(), ChangePasswordFragment.class);
                         intent.putExtra("NamePerson", userID);
                         startActivity(intent);
                     }
