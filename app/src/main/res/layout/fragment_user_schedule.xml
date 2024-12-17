@@ -21,7 +21,8 @@
         <CalendarView
             android:id="@+id/calendar_ScheduleUserFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_calendar"/>
 
         <ListView
             android:id="@+id/listSchedule_ScheduleUserFragment"
