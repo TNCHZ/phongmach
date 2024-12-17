@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -127,7 +128,7 @@ public class ProfileFragment extends Fragment {
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                         }
                         editor.putBoolean("night", b);
-                        editor.commit();
+                        editor.apply();
                     }
                 });
 
@@ -157,8 +158,10 @@ public class ProfileFragment extends Fragment {
                 btnLogOut.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), UserInterface.class);
-                        startActivity(intent);
+                        Intent intentLogout = new Intent(getActivity(), UserInterface.class);
+                        boolean check = true;
+                        intentLogout.putExtra("TaiKhoanID", check);
+                        startActivity(intentLogout);
                     }
                 });
             }

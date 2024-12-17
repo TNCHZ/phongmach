@@ -40,14 +40,14 @@ public class DoctorInterface extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        userID = sharedPreferences.getString("TaiKhoanID", null);
-        if(userID != null){
-            editor.putString("TaiKhoanID", userID);
-            editor.apply();
-        }else {
+//        userID = sharedPreferences.getString("TaiKhoanID", null);
+//        if(userID != null){
+//            editor.putString("TaiKhoanID", userID);
+//            editor.apply();
+//        }else {
             editor.putString("TaiKhoanID", getIntent().getStringExtra("TaiKhoanID"));
             editor.apply();
-        }
+//        }
 
         viewPager = findViewById(R.id.viewPager_DoctorInterface);
         bottomNavigationView = findViewById(R.id.bottomNavigation_DoctorInterface);

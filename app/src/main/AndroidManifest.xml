@@ -29,10 +29,9 @@
             android:exported="false" />
         <activity
             android:name="com.example.jpyou.ui.view.activity.AdminInterface"
-
             android:exported="false" />
-
         <activity
+
             android:name="com.example.jpyou.ui.view.activity.UserInterface"
             android:exported="true">
 

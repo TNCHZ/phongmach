@@ -2,12 +2,14 @@ package com.example.jpyou.ui.view.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +34,7 @@ public class UserInterface extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     private String userID;
-
+    private Boolean checkLogout = false;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,16 +46,28 @@ public class UserInterface extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
         sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         userID = sharedPreferences.getString("TaiKhoanID", null);
-        if(userID != null){
-            editor.putString("TaiKhoanID", userID);
-            editor.apply();
+        boolean isNight = sharedPreferences.getBoolean("night", false);
+        if (isNight){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+        checkLogout= getIntent().getBooleanExtra("TaiKhoanID", false);
+        if (checkLogout) {
+            Toast.makeText(getApplicationContext(), "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
             editor.putString("TaiKhoanID", getIntent().getStringExtra("TaiKhoanID"));
             editor.apply();
+        } else {
+            if (userID != null) {
+                editor.putString("TaiKhoanID", userID);
+                editor.apply();
+            } else {
+                editor.putString("TaiKhoanID", getIntent().getStringExtra("TaiKhoanID"));
+                editor.apply();
+            }
         }
 
         setUpBottomNavigation();
