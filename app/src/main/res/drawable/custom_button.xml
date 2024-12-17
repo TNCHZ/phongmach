@@ -6,7 +6,8 @@
     <size android:width="100dp"
         android:height="50dp"/>
     <gradient android:startColor="@color/blue"
-        android:endColor="@color/lam"/>
+        android:centerColor="@color/blueSky"
+        android:endColor="#FF6464"/>
     <corners android:radius="30dp"/>
     <stroke android:color="#0A23AB"
         android:width="1dp"/>

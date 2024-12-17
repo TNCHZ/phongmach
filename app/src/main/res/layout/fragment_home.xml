@@ -18,7 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:background="@color/lam"
+            style="@style/TEXT"
+            android:background="@drawable/custom_lineaerlayout_header"
             android:orientation="horizontal"
             android:padding="20dp">
 
@@ -101,23 +102,23 @@
 
                 <Button
                     android:id="@+id/btnTreatment_HomeFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:drawableTop="@drawable/ic_register_for_examination_black"
                     android:background="@drawable/custom_button"
                     android:text="Đặt lịch khám"
-                    android:textColor="@color/black"
+                    style="@style/TEXT"
                     android:textStyle="bold"
                     app:backgroundTint="@null" />
 
                 <Button
                     android:id="@+id/btnChooseDoctor_HomeFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:drawableTop="@drawable/ic_person_add_black"
                     android:background="@drawable/custom_button"
                     android:text="Chọn bác sĩ khám"
-                    android:textColor="@color/black"
+                    style="@style/TEXT"
                     android:textStyle="bold"
                     app:backgroundTint="@null" />
             </TableRow>
