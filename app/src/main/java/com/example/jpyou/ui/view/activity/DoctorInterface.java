@@ -1,5 +1,6 @@
 package com.example.jpyou.ui.view.activity;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ public class DoctorInterface extends AppCompatActivity {
     SharedPreferences.Editor editor;
     private String userID;
 
+    @SuppressLint("SuspiciousIndentation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
