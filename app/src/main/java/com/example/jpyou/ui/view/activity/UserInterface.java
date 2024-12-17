@@ -31,10 +31,10 @@ import com.google.android.material.navigation.NavigationBarView;
 public class UserInterface extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView bottomNavigationView;
-    SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferences, sharedPreferencesNight;
     SharedPreferences.Editor editor;
     private String userID;
-    private Boolean checkLogout = false;
+    private Boolean isNightMode = false, checkLogout = false;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,25 +49,22 @@ public class UserInterface extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         userID = sharedPreferences.getString("TaiKhoanID", null);
-        boolean isNight = sharedPreferences.getBoolean("night", false);
-        if (isNight){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-        checkLogout= getIntent().getBooleanExtra("TaiKhoanID", false);
-        if (checkLogout) {
-            Toast.makeText(getApplicationContext(), "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
+        checkLogout = getIntent().getBooleanExtra("TaiKhoan", false);
+        if (userID == null || checkLogout) {
             editor.putString("TaiKhoanID", getIntent().getStringExtra("TaiKhoanID"));
             editor.apply();
+            checkLogout = false;
         } else {
-            if (userID != null) {
-                editor.putString("TaiKhoanID", userID);
-                editor.apply();
-            } else {
-                editor.putString("TaiKhoanID", getIntent().getStringExtra("TaiKhoanID"));
-                editor.apply();
-            }
+            editor.putString("TaiKhoanID", userID);
+            editor.apply();
+        }
+        sharedPreferencesNight = getSharedPreferences("NightMode", MODE_PRIVATE);
+        isNightMode = sharedPreferencesNight.getBoolean("night", false);
+        if (isNightMode){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            isNightMode = false;
+        }else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
         setUpBottomNavigation();

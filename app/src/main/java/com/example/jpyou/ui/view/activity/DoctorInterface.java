@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -24,9 +25,10 @@ import com.google.android.material.navigation.NavigationBarView;
 public class DoctorInterface extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView bottomNavigationView;
-    SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferences, sharedPreferencesNight;
     SharedPreferences.Editor editor;
     private String userID;
+    private Boolean isNightMode = false, checkLogout = false;
 
     @SuppressLint("SuspiciousIndentation")
     @Override
@@ -42,14 +44,24 @@ public class DoctorInterface extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-//        userID = sharedPreferences.getString("TaiKhoanID", null);
-//        if(userID != null){
-//            editor.putString("TaiKhoanID", userID);
-//            editor.apply();
-//        }else {
+        userID = sharedPreferences.getString("TaiKhoanID", null);
+        checkLogout = getIntent().getBooleanExtra("TaiKhoan", false);
+        if (userID == null || checkLogout) {
             editor.putString("TaiKhoanID", getIntent().getStringExtra("TaiKhoanID"));
             editor.apply();
-//        }
+            checkLogout = false;
+        } else {
+            editor.putString("TaiKhoanID", userID);
+            editor.apply();
+        }
+        sharedPreferencesNight = getSharedPreferences("NightMode", MODE_PRIVATE);
+        isNightMode = sharedPreferencesNight.getBoolean("night", false);
+        if (isNightMode){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            isNightMode = false;
+        }else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
 
         viewPager = findViewById(R.id.viewPager_DoctorInterface);
         bottomNavigationView = findViewById(R.id.bottomNavigation_DoctorInterface);
