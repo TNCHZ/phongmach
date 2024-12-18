@@ -32,8 +32,14 @@ import java.util.List;
 public class MedicalRecordDoctorFragment extends Fragment {
     private String userID;
     private String patientID;
+    private List<Medicine> medicines;
 
-    public MedicalRecordDoctorFragment(){}
+    public MedicalRecordDoctorFragment(String id) {
+        patientID = id;
+    }
+
+    public MedicalRecordDoctorFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +53,7 @@ public class MedicalRecordDoctorFragment extends Fragment {
     private ListView listView;
     private Button btnAddMedicine, btnConfirm;
     private EditText symptom, txtName, txtGender, txtPhone, txtDayOfBirth;
-    private List<Medicine> medicines;
+
     private MyDatabaseHelper db;
     private PersonInformation ps;
 
@@ -79,11 +85,8 @@ public class MedicalRecordDoctorFragment extends Fragment {
                 }
             });
 
-
-            Bundle bundle = getArguments();
-            if (bundle != null) {
-                patientID = bundle.getString("patient_id", "-1");  // Giá trị mặc định là "-1" nếu không tìm thấy
-                ps = db.getInformation(patientID);
+            ps = db.getInformation(patientID);
+            if (ps != null) {
                 txtName.setText(ps.getHoTen());
                 txtPhone.setText(ps.getSoDT());
                 txtGender.setText(ps.getGioiTinh());
@@ -99,9 +102,9 @@ public class MedicalRecordDoctorFragment extends Fragment {
                         getActivity().getSupportFragmentManager()
                                 .beginTransaction()
                                 .replace(R.id.fragment_doctor_medical_records, addMedicineDoctorFragment)
+                                .addToBackStack(null)
                                 .commit();
                     } else {
-                        // Xử lý khi context không hợp lệ (tùy vào tình huống)
                         Log.e("AddMedicine", "Context is null. Cannot perform fragment transaction.");
                     }
                 }

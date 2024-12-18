@@ -158,15 +158,15 @@ public class AddMedicineDoctorFragment extends Fragment {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().popBackStack(); // Quay lại Fragment trước
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
         brnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SharedViewModel viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-                viewModel.setMedicines(saveMedicines);
-                getActivity().getSupportFragmentManager().popBackStack(); // Quay lại Fragment trước
+                viewModel.addMedicines(saveMedicines);
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
         return view;
@@ -182,7 +182,7 @@ public class AddMedicineDoctorFragment extends Fragment {
 
         // Update the adapter with the filtered list
         ShowMedicineAdapter filteredAdapter = new ShowMedicineAdapter(getActivity(), R.layout.row_medicine, filteredList);
-        lvMedicine.setAdapter(filteredAdapter); // Update the ListView with the filtered results
+        lvMedicine.setAdapter(filteredAdapter);
     }
 
 

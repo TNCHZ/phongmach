@@ -104,7 +104,7 @@ public class HomeFragment extends Fragment {
 
 
             if (userID == null) {
-                ShowDoctorAdapter adapter = new ShowDoctorAdapter(getActivity(), R.layout.row_list_doctor, doctors);
+                ShowDoctorAdapter adapter = new ShowDoctorAdapter(getActivity(), R.layout.row_list_doctor, doctors, "");
                 lv.setAdapter(adapter);
                 layout.setVisibility(View.GONE);
                 sv.setVisibility(View.GONE);
@@ -128,12 +128,26 @@ public class HomeFragment extends Fragment {
                                 transaction.replace(R.id.fragment_home, anotherFragment);
                                 transaction.addToBackStack(null);
                                 transaction.commit();
+                            }
+                        }
+                    });
+                    btnChooseDoctor.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (userID == null) {
+                                startActivity(intent);
+                            } else {
+                                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                                FragmentTransaction transaction = fragmentManager.beginTransaction();
 
+                                ChooseDoctorUserFragment anotherFragment = new ChooseDoctorUserFragment(userID, doctors);
+                                transaction.replace(R.id.fragment_home, anotherFragment);
+                                transaction.addToBackStack(null);
+                                transaction.commit();
                             }
                         }
                     });
                 } else if (db.getRole(userID).equals("Bac si")) {
-                    lv.setVisibility(View.GONE);
                     scrview.setVisibility(View.GONE);
                     ln.setVisibility(View.GONE);
                     layout.setVisibility(View.GONE);
@@ -192,8 +206,7 @@ public class HomeFragment extends Fragment {
             }
         }
 
-        // Update the adapter with the filtered list
         SchedulePatientAdapter filteredAdapter = new SchedulePatientAdapter(getActivity(), R.layout.row_medicine, filteredList,userID);
-        lv.setAdapter(filteredAdapter); // Update the ListView with the filtered results
+        lv.setAdapter(filteredAdapter);
     }
 }

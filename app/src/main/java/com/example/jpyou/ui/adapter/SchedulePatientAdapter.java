@@ -80,12 +80,7 @@ public class SchedulePatientAdapter extends BaseAdapter {
             holder.btnComfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Bundle bundlePatientID = new Bundle();
-
-                    bundlePatientID.putString("patient_id", ps.getId());
-                    MedicalRecordDoctorFragment fragment = new MedicalRecordDoctorFragment();
-                    fragment.setArguments(bundlePatientID);
-
+                    MedicalRecordDoctorFragment fragment = new MedicalRecordDoctorFragment(ps.getId());
                     ((FragmentActivity) context).getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.fragment_home, fragment)

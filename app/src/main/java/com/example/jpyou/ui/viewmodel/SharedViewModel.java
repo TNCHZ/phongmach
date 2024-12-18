@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.jpyou.data.model.Medicine;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SharedViewModel extends ViewModel {
@@ -16,8 +17,16 @@ public class SharedViewModel extends ViewModel {
         return medicines;
     }
 
-    public void setMedicines(List<Medicine> updatedMedicines) {
-        medicines.setValue(updatedMedicines);
+    public void addMedicines(List<Medicine> newMedicines) {
+        if (newMedicines == null || newMedicines.isEmpty()) {
+            return;
+        }
+        List<Medicine> currentMedicines = medicines.getValue();
+        if (currentMedicines == null) {
+            currentMedicines = new ArrayList<>();
+        }
+        currentMedicines.addAll(newMedicines); // Thêm thuốc mới vào danh sách cũ
+        medicines.setValue(currentMedicines);  // Cập nhật lại LiveData
     }
 
 }

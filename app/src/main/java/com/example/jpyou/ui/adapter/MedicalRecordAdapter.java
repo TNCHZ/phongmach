@@ -65,7 +65,8 @@ public class MedicalRecordAdapter extends BaseAdapter {
         holder.btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                medicines.remove(i);
+                notifyDataSetChanged();
             }
         });
         return view;

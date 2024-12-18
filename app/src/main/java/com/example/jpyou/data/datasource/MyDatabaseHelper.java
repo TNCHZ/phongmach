@@ -134,6 +134,15 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 "BacSiID INTEGER, " +
                 "FOREIGN KEY(BacSiID) REFERENCES BacSi(BacSiID));";
 
+        String createDanhGiaTable = "CREATE TABLE DanhGia (" +
+                "DanhGiaID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "NoiDung TEXT, " +
+                "BacSiID INTEGER, " +
+                "BenhNhanID INTEGER, " +
+                "FOREIGN KEY(BenhNhanID) REFERENCES BenhNhan(BenhNhanID), " +
+                "FOREIGN KEY(BacSiID) REFERENCES BacSi(BacSiID));";
+
+
         // Thực thi các lệnh tạo bảng
         db.execSQL(createTaiKhoanTable);
         db.execSQL(createNguoiDungTable);
@@ -147,6 +156,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createToaThuocTable);
         db.execSQL(createToaThuocThuocTable);
         db.execSQL(createLichLamViecTable);
+        db.execSQL(createDanhGiaTable);
 
 
         String insertTaiKhoan1 = "INSERT INTO TaiKhoan (TaiKhoan, MatKhau, NgayThamGia, HoatDong) VALUES ('admin_user', 'user123', '14/11/2024', 1);";
@@ -226,6 +236,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS NguoiDung");
         db.execSQL("DROP TABLE IF EXISTS TaiKhoan");
         db.execSQL("DROP TABLE IF EXISTS LichLamViec");
+        db.execSQL("DROP TABLE IF EXISTS DanhGia");
 
         // Gọi lại onCreate để tạo lại các bảng với cấu trúc mới
         onCreate(db);
@@ -518,7 +529,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             // Truy vấn dữ liệu
             String query = "SELECT TenLichHen, NgayKham, SoThuTuKham " +
                     "FROM LichHen " +
-                    "WHERE BenhNhanID = ?";
+                    "WHERE BenhNhanID = ? AND isHuy = 0";
             cursor = db.rawQuery(query, new String[]{id});
 
             // Duyệt qua kết quả
@@ -790,7 +801,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 "FROM LichHen " +
                 "JOIN BenhNhan ON LichHen.BenhNhanID = BenhNhan.BenhNhanID " +
                 "INNER JOIN NguoiDung ON BenhNhan.TaiKhoanID = NguoiDung.TaiKhoanID " +
-                "WHERE LichHen.isHen = 0 AND LichHen.isKham = 0";
+                "WHERE LichHen.isHen = 0 AND LichHen.isKham = 0 AND LichHen.isHuy = 0";
 
         Cursor cursor = db.rawQuery(query, null);
         if (cursor != null) {
@@ -921,7 +932,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean cancelDay(String id) {
+    public boolean cancelDay(String id, String day) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -930,8 +941,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         int rowsAffected = db.update(
                 "LichHen",
                 values,
-                "isHuy = ?",
-                new String[]{id}
+                "BenhNhanID = ? AND NgayKham = ?",
+                new String[]{id, day}
         );
 
         db.close();
@@ -1120,4 +1131,28 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return rowsAffected > 0;
     }
+
+    public List<String> getAllDayDoctorWork(String bacSiID) {
+        List<String> ngayLamList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase(); // Lấy đối tượng SQLiteDatabase để đọc dữ liệu
+
+        // SQL truy vấn lấy NgayLam từ bảng LichLamViec theo BacSiID
+        String query = "SELECT NgayLamViec FROM LichLamViec WHERE BacSiID = ?";
+
+        // Thực hiện truy vấn và lấy con trỏ (Cursor)
+        Cursor cursor = db.rawQuery(query, new String[]{bacSiID});
+
+        // Kiểm tra nếu có dữ liệu
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                String ngayLam = cursor.getString(cursor.getColumnIndexOrThrow("NgayLamViec"));
+                ngayLamList.add(ngayLam);
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+
+        db.close(); // Đóng cơ sở dữ liệu
+        return ngayLamList; // Trả về danh sách NgayLam
+    }
+
 }

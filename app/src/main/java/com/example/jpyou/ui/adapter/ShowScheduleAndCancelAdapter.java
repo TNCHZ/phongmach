@@ -99,7 +99,7 @@ public class ShowScheduleAndCancelAdapter extends BaseAdapter {
                 holder.btnCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(db.cancelDay(ps.getId()))
+                        if(db.cancelDay(ps.getId(), ps.getAppointDay()))
                             Toast.makeText(context, "Hủy lịch thành công", Toast.LENGTH_SHORT).show();
                         else
                             Toast.makeText(context, "Hủy lịch thất bại", Toast.LENGTH_SHORT).show();

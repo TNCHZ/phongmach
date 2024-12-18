@@ -19,9 +19,6 @@
             android:name="com.example.jpyou.ui.view.activity.NurseInterface"
             android:exported="false" />
         <activity
-            android:name="com.example.jpyou.UpdateInformation"
-            android:exported="false" />
-        <activity
             android:name="com.example.jpyou.ui.view.activity.UserSignUp"
             android:exported="false" />
         <activity
