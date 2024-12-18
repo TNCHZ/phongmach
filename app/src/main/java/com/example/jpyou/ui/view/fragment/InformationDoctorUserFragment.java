@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jpyou.data.datasource.MyDatabaseHelper;
+import com.example.jpyou.data.model.Comment;
 import com.example.jpyou.data.model.Doctor;
 import com.example.jpyou.data.model.PersonInformation;
+import com.example.jpyou.ui.adapter.CommentAdapter;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
@@ -34,6 +37,7 @@ public class InformationDoctorUserFragment extends Fragment {
     private List<String> day;
     private PersonInformation ps;
     private String selectedDay;
+    private List<Comment> cmts;
     public InformationDoctorUserFragment() {
     }
 
@@ -53,16 +57,20 @@ public class InformationDoctorUserFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_user_information_doctor, container, false);
         btnRegis = view.findViewById(R.id.buttonRegis_InformationDoctorUserFragment);
-        if(userID.isEmpty())
+        lv = view.findViewById(R.id.listViewCmt_InformationDoctorUserFragment);
+        sp = view.findViewById(R.id.spinnerDay_InformationDoctorUserFragment);
+
+        if(userID.isEmpty()) {
             btnRegis.setVisibility(View.GONE);
+            sp.setVisibility(View.GONE);
+        }
+
         tvName = view.findViewById(R.id.txtName_InformationDoctorUserFragment);
         tvExp = view.findViewById(R.id.txtExp_InformationDoctorUserFragment);
         tvName.setText(doctor.getHoTen());
         tvExp.setText(doctor.getKinhNghiem());
         db = new MyDatabaseHelper(getActivity());
-        sp = view.findViewById(R.id.spinnerDay_InformationDoctorUserFragment);
         ps = db.getInformation(userID);
-
 
         btnBack = view.findViewById(R.id.buttonBack_InformationDoctorUserFragment);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +95,7 @@ public class InformationDoctorUserFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                selectedDay = parent.getItemAtPosition(0).toString();
             }
         });
 
@@ -101,6 +110,11 @@ public class InformationDoctorUserFragment extends Fragment {
         });
 
 
+        cmts = new ArrayList<>();
+        cmts = db.getCommentByDoctorID(doctor.getId());
+
+        CommentAdapter adapter1 = new CommentAdapter(getActivity(), R.layout.row_comment, cmts);
+        lv.setAdapter(adapter1);
 
 
 

@@ -11,7 +11,8 @@ public class Patient extends PersonInformation {
         this.txtDescribe = txtDescribe;
     }
 
-    
+
+
     public Patient(int id, String appointDay, String nameAppoint) {
         super(String.valueOf(id));
         this.appointDay = appointDay;

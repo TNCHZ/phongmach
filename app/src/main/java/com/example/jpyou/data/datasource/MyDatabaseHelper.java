@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.example.jpyou.data.model.Comment;
 import com.example.jpyou.data.model.Doctor;
 import com.example.jpyou.data.model.Medicine;
 import com.example.jpyou.data.model.PersonInformation;
@@ -643,65 +644,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return ls;
     }
 
-//    public void addMedicine(String patientID, String doctorID, String symp, List<Medicine> medicines) {
-//        SQLiteDatabase db = this.getWritableDatabase();  // Mở cơ sở dữ liệu ở chế độ ghi
-//
-//        db.beginTransaction();
-//
-//        try {
-//            ContentValues toaThuocValues = new ContentValues();
-//            toaThuocValues.put("NgayKeToa", utils.getCurrentDate());
-//
-//            long toaThuocID = db.insert("ToaThuoc", null, toaThuocValues);
-//
-//            for (Medicine medicine : medicines) {
-//                ContentValues med = new ContentValues();
-//                med.put("SoLuong", medicine.getQuantity());
-//                med.put("HuongDanSuDung", medicine.getUsage());
-//                med.put("ThuocID", medicine.getId());
-//                med.put("ToaThuocID", toaThuocID);
-//
-//                Log.d("MedicineInsert", "SoLuong: " + medicine.getQuantity());
-//                Log.d("MedicineInsert", "HuongDanSuDung: " + medicine.getUsage());
-//                Log.d("MedicineInsert", "ThuocID: " + medicine.getId());
-//                Log.d("MedicineInsert", "ToaThuocID: " + toaThuocID);
-//
-//                db.insert("ToaThuoc_Thuoc", null, med);
-//            }
-//
-//            ContentValues result = new ContentValues();
-//            result.put("TenKetQuaChuanDoan", symp);  // Chèn triệu chứng vào
-//            result.put("BacSiID", doctorID);  // Chèn ID bác sĩ vào
-//            result.put("BenhNhanID", patientID);  // Chèn ID bệnh nhân vào
-//            result.put("ToaThuocID", toaThuocID);  // Chèn ID toa thuốc vào
-//            long ketQuaChuanDoanID = db.insert("KetQuaChuanDoan", null, result);  // Thêm bản ghi vào bảng KetQuaChuanDoan và nhận về KetQuaChuanDoanID
-//
-//            ContentValues updateValues = new ContentValues();
-//            updateValues.put("KetQuaChuanDoanID", ketQuaChuanDoanID);  // Cập nhật KetQuaChuanDoanID
-//            updateValues.put("isKham", 1);
-//
-//            String whereClause = "BenhNhanID = ? AND BacSiID = ? AND NgayKham = ?";
-//            String[] whereArgs = new String[]{patientID, doctorID, utils.getCurrentDate()};  // Các tham số điều kiện cho WHERE
-//
-//            int rowsUpdated = db.update("LichHen", updateValues, whereClause, whereArgs);
-//
-//            if (ketQuaChuanDoanID != -1 && rowsUpdated > 0) {
-//                ContentValues updateLichHenID = new ContentValues();
-//                updateLichHenID.put("LichHenID", rowsUpdated);  // Lưu LichHenID vào bảng KetQuaChuanDoan
-//
-//                String whereClauseForKetQuaChuanDoan = "KetQuaChuanDoanID = ?";
-//                String[] whereArgsForKetQuaChuanDoan = new String[]{String.valueOf(ketQuaChuanDoanID)};
-//                db.update("KetQuaChuanDoan", updateLichHenID, whereClauseForKetQuaChuanDoan, whereArgsForKetQuaChuanDoan);
-//            }
-//
-//            db.setTransactionSuccessful();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            db.endTransaction();
-//        }
-//    }
-
     public void addMedicine(String patientID, String doctorID, String symp, List<Medicine> medicines) {
         SQLiteDatabase db = this.getWritableDatabase(); // Mở cơ sở dữ liệu ở chế độ ghi
         db.beginTransaction();
@@ -1155,4 +1097,77 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return ngayLamList; // Trả về danh sách NgayLam
     }
 
+    public List<Comment> getCommentByDoctorID(String doctorID) {
+        List<Comment> cms = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        // Define the query
+        String query = "SELECT DanhGia.NoiDung, NguoiDung.HoTen " +
+                "FROM DanhGia " +
+                "JOIN BenhNhan ON BenhNhan.BenhNhanID = DanhGia.BenhNhanID " +
+                "JOIN NguoiDung ON BenhNhan.TaiKhoanID = NguoiDung.TaiKhoanID " +
+                "WHERE BacSiID = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{doctorID});
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                String hoTen = cursor.getString(cursor.getColumnIndexOrThrow("HoTen"));
+                String noiDung = cursor.getString(cursor.getColumnIndexOrThrow("NoiDung"));
+
+                Comment comment = new Comment(hoTen, noiDung);
+                cms.add(comment);
+            } while (cursor.moveToNext());
+        }
+
+        // Close the cursor and database
+        cursor.close();
+        db.close();
+
+        return cms;
+    }
+
+    public List<Doctor> getDoctorsByPatientID(String patientID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Doctor> doctors = new ArrayList<>();
+
+        String query = "SELECT DISTINCT BacSi.BacSiID, BacSi.KinhNghiem, NguoiDung.HoTen " +
+                "FROM LichHen " +
+                "JOIN BacSi ON LichHen.BacSiID = BacSi.BacSiID " +
+                "JOIN NguoiDung ON BacSi.TaiKhoanID = NguoiDung.TaiKhoanID " +
+                "WHERE LichHen.BenhNhanID = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{patientID});
+
+        if (cursor.moveToFirst()) {
+            do {
+                String doctorID = cursor.getString(cursor.getColumnIndexOrThrow("BacSiID"));
+                String hoTen = cursor.getString(cursor.getColumnIndexOrThrow("HoTen"));
+
+                // Assuming the Doctor class has a constructor with these parameters
+                Doctor doctor = new Doctor(doctorID, hoTen);
+                doctors.add(doctor);
+            } while (cursor.moveToNext());
+        }
+
+        // Close the cursor and database
+        cursor.close();
+        db.close();
+
+        return doctors;
+    }
+
+
+    public boolean commentDoctor(String patientID, Doctor selectedDoctor, String commentContent) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("NoiDung", commentContent);
+        values.put("BacSiID", selectedDoctor.getId());
+        values.put("BenhNhanID", Integer.parseInt(patientID));
+
+        long result = db.insert("DanhGia", null, values);
+
+        db.close();
+
+        return result != -1;
+    }
 }

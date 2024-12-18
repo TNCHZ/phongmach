@@ -19,7 +19,6 @@ public class PersonInformation implements Serializable {
     }
 
 
-
     public PersonInformation() {
     }
 

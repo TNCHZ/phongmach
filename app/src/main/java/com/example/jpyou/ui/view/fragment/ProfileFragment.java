@@ -42,7 +42,7 @@ public class ProfileFragment extends Fragment {
     private Boolean isNightMode = false;
     SharedPreferences sharedPreferences, sharedPreferencesNight;
     SharedPreferences.Editor editor, editorNight;
-    private Button btnUpdateInformation, btnChangePassword, btnLogOut, btnLogIn;
+    private Button btnUpdateInformation, btnChangePassword, btnLogOut, btnLogIn, btnComment;
 
 
     @SuppressLint("MissingInflatedId")
@@ -116,14 +116,21 @@ public class ProfileFragment extends Fragment {
 //                    textView.setTextSize(fontSize);
 //                }
 //            });
-
+            btnUpdateInformation = view.findViewById(R.id.btnUpdateInformation_ProfileFragment);
+            btnChangePassword = view.findViewById(R.id.btnChangePassword_ProfileFragment);
             swicthNightMode = view.findViewById(R.id.switchNightMode_ProfileFragment);
             btnLogOut = view.findViewById(R.id.btnLogOut_FragmentProfile);
             btnLogIn = view.findViewById(R.id.btnLogIn_ProfileFragment);
+            btnComment = view.findViewById(R.id.btnCMTDoctor_ProfileFragment);
+            btnComment.setVisibility(View.GONE);
+            db = new MyDatabaseHelper(getActivity());
+
+
             if (userID == null) {
                 btnLogOut.setVisibility(View.INVISIBLE);
                 btnLogIn.setVisibility(View.VISIBLE);
-
+                btnUpdateInformation.setVisibility(View.GONE);
+                btnChangePassword.setVisibility(View.GONE);
                 btnLogIn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -134,11 +141,23 @@ public class ProfileFragment extends Fragment {
             } else {
                 btnLogIn.setVisibility(View.INVISIBLE);
                 btnLogOut.setVisibility(View.VISIBLE);
+                btnUpdateInformation.setVisibility(View.VISIBLE);
+                btnChangePassword.setVisibility(View.VISIBLE);
+                if(db.getRole(userID).equals("Benh nhan"))
+                    btnComment.setVisibility(View.VISIBLE);
 
-                db = new MyDatabaseHelper(getActivity());
-                btnUpdateInformation = view.findViewById(R.id.btnUpdateInformation_ProfileFragment);
-                btnChangePassword = view.findViewById(R.id.btnChangePassword_ProfileFragment);
+                btnComment.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
 
+                        CommentDoctorFragment anotherFragment = new CommentDoctorFragment(userID);
+                        transaction.replace(R.id.fragment_profile, anotherFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
+                });
 
                 btnUpdateInformation.setOnClickListener(new View.OnClickListener() {
                     @Override
