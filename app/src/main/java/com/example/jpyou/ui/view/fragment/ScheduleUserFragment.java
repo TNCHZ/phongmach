@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.provider.CalendarContract;
@@ -68,7 +69,7 @@ public class ScheduleUserFragment extends Fragment {
 
             layoutChecked = view.findViewById(R.id.linearLayoutChecked_ScheduleUserFragment);
             layoutNotChecked = view.findViewById(R.id.linearLayoutNotChecked_ScheduleUserFragment);
-            if (userID== null) {
+            if (userID == null) {
                 layoutNotChecked.setVisibility(View.VISIBLE);
                 btnCheck = view.findViewById(R.id.btnChecked_ScheduleUserFragment);
                 btnCheck.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +86,6 @@ public class ScheduleUserFragment extends Fragment {
                 sv = view.findViewById(R.id.searchView_ScheduleUserFragment);
                 db = new MyDatabaseHelper(getActivity());
                 cldView = view.findViewById(R.id.calendar_ScheduleUserFragment);
-                cldView.setDateTextAppearance(R.style.CalenderViewDateCustomText);
                 lv = view.findViewById(R.id.listSchedule_ScheduleUserFragment);
 
                 sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -100,6 +100,13 @@ public class ScheduleUserFragment extends Fragment {
                         // Filter results as the user types
                         filterAtDay(newText);
                         return false;
+                    }
+                });
+
+                cldView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                    @Override
+                    public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                        view.setDateTextAppearance(R.style.CalenderViewDateCustomText); // Style tùy chỉnh
                     }
                 });
 

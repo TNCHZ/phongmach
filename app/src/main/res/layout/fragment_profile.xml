@@ -117,7 +117,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/buttonInform_ProfileFragment"
             style="@style/BUTTON"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
             app:backgroundTint="@null" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/buttonHotline_ProfileFragment"
             style="@style/BUTTON"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

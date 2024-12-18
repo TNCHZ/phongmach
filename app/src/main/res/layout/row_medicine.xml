@@ -3,32 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:backgroundTint="@null"
-    android:background="@drawable/custom_empty_rim" >
+    android:background="@drawable/custom_empty_rim"
+    android:padding="15dp">
 
-    <TextView
-        android:id="@+id/textViewName_DoctorRowMedicine"
-        android:layout_width="218dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="-1dp"
-        android:text="Name"
-        android:textColor="@color/black"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/textViewName_DoctorRowMedicine"
+            style="@style/TEXT"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:hint="Name Medicine"
+            android:layout_gravity="center"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textViewUnit_DoctorRowMedicine"
-        android:layout_width="218dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="-1dp"
-        android:layout_toRightOf="@id/textViewName_DoctorRowMedicine"
-        android:text="Unit"
-        android:textColor="@color/black"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textViewUnit_DoctorRowMedicine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Unit"
+            style="@style/TEXT"
+            android:layout_gravity="center"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 
 </RelativeLayout>

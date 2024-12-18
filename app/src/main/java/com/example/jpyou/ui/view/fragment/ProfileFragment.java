@@ -42,7 +42,7 @@ public class ProfileFragment extends Fragment {
     private Boolean isNightMode = false;
     SharedPreferences sharedPreferences, sharedPreferencesNight;
     SharedPreferences.Editor editor, editorNight;
-    private Button btnUpdateInformation, btnChangePassword, btnLogOut, btnLogIn, btnComment;
+    private Button btnUpdateInformation, btnChangePassword, btnLogOut, btnLogIn, btnComment, btnInform, btnHotline;
 
 
     @SuppressLint("MissingInflatedId")
@@ -116,6 +116,8 @@ public class ProfileFragment extends Fragment {
 //                    textView.setTextSize(fontSize);
 //                }
 //            });
+            btnInform = view.findViewById(R.id.buttonInform_ProfileFragment);
+            btnHotline = view.findViewById(R.id.buttonHotline_ProfileFragment);
             btnUpdateInformation = view.findViewById(R.id.btnUpdateInformation_ProfileFragment);
             btnChangePassword = view.findViewById(R.id.btnChangePassword_ProfileFragment);
             swicthNightMode = view.findViewById(R.id.switchNightMode_ProfileFragment);
@@ -131,6 +133,8 @@ public class ProfileFragment extends Fragment {
                 btnLogIn.setVisibility(View.VISIBLE);
                 btnUpdateInformation.setVisibility(View.GONE);
                 btnChangePassword.setVisibility(View.GONE);
+                btnHotline.setVisibility(View.VISIBLE);
+                btnInform.setVisibility(View.VISIBLE);
                 btnLogIn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -139,6 +143,17 @@ public class ProfileFragment extends Fragment {
                     }
                 });
             } else {
+                if(db.getRole(userID).equals("Admin"))
+                {
+                    btnUpdateInformation.setVisibility(View.GONE);
+                    btnChangePassword.setVisibility(View.GONE);
+                    btnLogIn.setVisibility(View.GONE);
+                    btnLogOut.setVisibility(View.VISIBLE);
+                    btnHotline.setVisibility(View.GONE);
+                    btnInform.setVisibility(View.GONE);
+                }
+                btnHotline.setVisibility(View.VISIBLE);
+                btnInform.setVisibility(View.VISIBLE);
                 btnLogIn.setVisibility(View.INVISIBLE);
                 btnLogOut.setVisibility(View.VISIBLE);
                 btnUpdateInformation.setVisibility(View.VISIBLE);

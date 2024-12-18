@@ -531,6 +531,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             String query = "SELECT TenLichHen, NgayKham, SoThuTuKham " +
                     "FROM LichHen " +
                     "WHERE BenhNhanID = ? AND isHuy = 0";
+
             cursor = db.rawQuery(query, new String[]{id});
 
             // Duyệt qua kết quả
@@ -545,7 +546,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            // Đóng Cursor và cơ sở dữ liệu
             if (cursor != null) cursor.close();
             db.close();
         }

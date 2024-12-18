@@ -12,6 +12,14 @@
         style="@style/SCREEN"
         android:orientation="vertical">
 
+        <Button
+            android:id="@+id/btnBack_RegisterForExaminonUserFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_back"
+            android:layout_alignParentTop="true"
+            app:backgroundTint="@null" />
+
         <TableLayout
             android:id="@+id/tableInformation_RegisterForExaminonUserFragment"
             android:layout_width="match_parent"

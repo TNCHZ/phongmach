@@ -28,7 +28,7 @@ public class RegisterForExaminationUserFragment extends Fragment {
     private EditText txtName, txtDayOfBirth, txtPhone, txtEmail, txtDayRegis;
     private MyDatabaseHelper db;
     private RadioButton rdMale, rdFemale;
-    private Button btnRegis;
+    private Button btnRegis, btnBack;
     private EditText txtDate, txtSymptom;
 
     public RegisterForExaminationUserFragment(){}
@@ -51,7 +51,7 @@ public class RegisterForExaminationUserFragment extends Fragment {
 
             txtDate = view.findViewById(R.id.txtDate_RegisterForExaminonUserFragment);
             txtSymptom = view.findViewById(R.id.txtSymptom_RegisterForExaminonUserFragment);
-
+            btnBack = view.findViewById(R.id.btnBack_RegisterForExaminonUserFragment);
             btnRegis = view.findViewById(R.id.btnUpdate_RegisterForExaminonUserFragment);
             btnRegis.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -72,6 +72,13 @@ public class RegisterForExaminationUserFragment extends Fragment {
 //                transaction.replace(R.id.fragment_home, anotherFragment);
 //                transaction.addToBackStack(null);
 //                transaction.commit();
+                }
+            });
+            btnBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().getSupportFragmentManager().popBackStack(); // Quay lại Fragment trước
+
                 }
             });
         }
