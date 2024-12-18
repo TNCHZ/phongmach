@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -128,6 +129,7 @@ public class ProfileFragment extends Fragment {
             db = new MyDatabaseHelper(getActivity());
 
 
+
             if (userID == null) {
                 btnLogOut.setVisibility(View.INVISIBLE);
                 btnLogIn.setVisibility(View.VISIBLE);
@@ -143,49 +145,50 @@ public class ProfileFragment extends Fragment {
                     }
                 });
             } else {
-                if(db.getRole(userID).equals("Admin"))
-                {
+                Log.d("1", db.getRole(userID));
+                if (db.getRole(userID).equals("Admin")) {
                     btnUpdateInformation.setVisibility(View.GONE);
-                    btnChangePassword.setVisibility(View.GONE);
+                    btnChangePassword.setVisibility(View.VISIBLE);
                     btnLogIn.setVisibility(View.GONE);
                     btnLogOut.setVisibility(View.VISIBLE);
                     btnHotline.setVisibility(View.GONE);
                     btnInform.setVisibility(View.GONE);
+                } else {
+                    btnHotline.setVisibility(View.VISIBLE);
+                    btnInform.setVisibility(View.VISIBLE);
+                    btnLogIn.setVisibility(View.INVISIBLE);
+                    btnLogOut.setVisibility(View.VISIBLE);
+                    btnUpdateInformation.setVisibility(View.VISIBLE);
+                    btnChangePassword.setVisibility(View.VISIBLE);
+                    if (db.getRole(userID).equals("Benh nhan"))
+                        btnComment.setVisibility(View.VISIBLE);
+
+                    btnComment.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                            FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+                            CommentDoctorFragment anotherFragment = new CommentDoctorFragment(userID);
+                            transaction.replace(R.id.fragment_profile, anotherFragment);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                        }
+                    });
+
+                    btnUpdateInformation.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                            FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+                            UpdateInformationFragment anotherFragment = new UpdateInformationFragment(userID);
+                            transaction.replace(R.id.fragment_profile, anotherFragment);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                        }
+                    });
                 }
-                btnHotline.setVisibility(View.VISIBLE);
-                btnInform.setVisibility(View.VISIBLE);
-                btnLogIn.setVisibility(View.INVISIBLE);
-                btnLogOut.setVisibility(View.VISIBLE);
-                btnUpdateInformation.setVisibility(View.VISIBLE);
-                btnChangePassword.setVisibility(View.VISIBLE);
-                if(db.getRole(userID).equals("Benh nhan"))
-                    btnComment.setVisibility(View.VISIBLE);
-
-                btnComment.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-                        CommentDoctorFragment anotherFragment = new CommentDoctorFragment(userID);
-                        transaction.replace(R.id.fragment_profile, anotherFragment);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
-                    }
-                });
-
-                btnUpdateInformation.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-                        UpdateInformationFragment anotherFragment = new UpdateInformationFragment(userID);
-                        transaction.replace(R.id.fragment_profile, anotherFragment);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
-                    }
-                });
 
                 btnChangePassword.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -211,7 +214,6 @@ public class ProfileFragment extends Fragment {
                         startActivity(intentLogout);
                     }
                 });
-
             }
         }
         return view;

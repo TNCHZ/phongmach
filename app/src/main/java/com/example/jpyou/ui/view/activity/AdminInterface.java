@@ -1,6 +1,7 @@
 package com.example.jpyou.ui.view.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,6 +11,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -24,6 +26,10 @@ import com.google.android.material.navigation.NavigationBarView;
 public class AdminInterface extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView bottomNavigationView;
+    SharedPreferences sharedPreferences, sharedPreferencesNight;
+    SharedPreferences.Editor editor;
+    private String userID;
+    private Boolean isNightMode = false, checkLogout = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +41,28 @@ public class AdminInterface extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        userID = sharedPreferences.getString("TaiKhoanID", null);
+        checkLogout = getIntent().getBooleanExtra("TaiKhoan", false);
+        if (userID == null || checkLogout) {
+            editor.putString("TaiKhoanID", getIntent().getStringExtra("TaiKhoanID"));
+            editor.apply();
+            checkLogout = false;
+        } else {
+            editor.putString("TaiKhoanID", userID);
+            editor.apply();
+        }
+        sharedPreferencesNight = getSharedPreferences("NightMode", MODE_PRIVATE);
+        isNightMode = sharedPreferencesNight.getBoolean("night", false);
+        if (isNightMode){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            isNightMode = false;
+        }else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
 
         viewPager = findViewById(R.id.viewPager_AdminInterface);
         bottomNavigationView = findViewById(R.id.bottomNavigation_AdminInterface);

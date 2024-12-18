@@ -50,8 +50,6 @@ public class UserInterface extends AppCompatActivity {
             editor.putString("TaiKhoanID", userID);
             editor.apply();
         }
-
-
         sharedPreferencesNight = getSharedPreferences("NightMode", MODE_PRIVATE);
         isNightMode = sharedPreferencesNight.getBoolean("night", false);
         if (isNightMode){
