@@ -8,164 +8,174 @@
     tools:context="com.example.jpyou.ui.view.fragment.ProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:ignore="UseSwitchCompatOrMaterialXml">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/linearLayoutTop_ProfileFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_alignParentTop="true"
             android:background="@drawable/custom_lineaerlayout_header"
-            android:orientation="horizontal"
             android:padding="20dp">
 
             <TextView
                 android:id="@+id/textViewHeader_HomeFragment"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:text="Thiết lập"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="34sp"
                 android:textStyle="bold" />
-
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnUpdateInformation_ProfileFragment"
-            style="@style/BUTTON"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:text="Cập nhật thông tin cá nhân"
-            android:textAlignment="viewStart"
-            android:textSize="16sp"
-            app:backgroundTint="@null" />
-
-        <TextView
-            android:id="@+id/textViewSetting_ProfileFragment"
-            style="@style/TEXT"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Cài đặt"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <Switch
-            android:id="@+id/switchNightMode_ProfileFragment"
-            style="@style/BUTTON"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:padding="15dp"
-            android:text="Bật chế độ ban đêm"
-            android:textAlignment="viewStart" />
-
         <LinearLayout
-            style="@style/BUTTON"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/linearLayoutTop_ProfileFragment"
+            android:layout_above="@+id/linearLayoutBottom_ProfileFragment"
+            tools:ignore="UseSwitchCompatOrMaterialXml">
+
+            <Button
+                android:id="@+id/btnUpdateInformation_ProfileFragment"
+                style="@style/BUTTON"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="Cập nhật thông tin cá nhân"
+                android:textAlignment="viewStart"
+                android:textSize="16sp"
+                app:backgroundTint="@null" />
+
+            <Button
+                android:id="@+id/btnCMTDoctor_ProfileFragment"
+                style="@style/BUTTON"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đánh giá bác sĩ"
+                android:textAlignment="viewStart"
+                app:backgroundTint="@null" />
 
             <TextView
-                android:id="@+id/textViewFontSize_ProfileFragment"
+                android:id="@+id/textViewSetting_ProfileFragment"
                 style="@style/TEXT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Cỡ chữ"
-                android:textAlignment="viewStart"
-                android:textSize="16sp"
+                android:text="Cài đặt"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <SeekBar
-                android:id="@+id/seekBarFontSize_ProfileFragment"
-                style="@style/Widget.AppCompat.SeekBar.Discrete"
+            <Switch
+                android:id="@+id/switchNightMode_ProfileFragment"
+                style="@style/BUTTON"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:padding="15dp"
+                android:text="Bật chế độ ban đêm"
+                android:textAlignment="viewStart" />
+
+            <LinearLayout
+                style="@style/BUTTON"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewFontSize_ProfileFragment"
+                    style="@style/TEXT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Cỡ chữ"
+                    android:textAlignment="viewStart"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <SeekBar
+                    android:id="@+id/seekBarFontSize_ProfileFragment"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:max="3"
+                    android:progress="1" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnChangePassword_ProfileFragment"
+                style="@style/BUTTON"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="Đổi mật khẩu"
+                android:textAlignment="viewStart"
+                app:backgroundTint="@null" />
+
+            <TextView
+                android:id="@+id/textViewSupport_ProfileFragment"
+                style="@style/TEXT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:max="2"
-                android:progress="1" />
+                android:text="Hỗ trợ"
+                android:textAlignment="viewStart"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/buttonInform_ProfileFragment"
+                style="@style/BUTTON"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Thông tin hỗ trợ"
+                android:textAlignment="viewStart"
+                app:backgroundTint="@null" />
+
+            <Button
+                android:id="@+id/buttonHotline_ProfileFragment"
+                style="@style/BUTTON"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Liên hệ hỗ trợ"
+                android:textAlignment="viewStart"
+                app:backgroundTint="@null" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnChangePassword_ProfileFragment"
-            style="@style/BUTTON"
+        <LinearLayout
+            android:id="@+id/linearLayoutBottom_ProfileFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="Đổi mật khẩu"
-            android:textAlignment="viewStart"
-            app:backgroundTint="@null" />
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textViewSupport_ProfileFragment"
-            style="@style/TEXT"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Hỗ trợ"
-            android:textAlignment="viewStart"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <Button
+                android:id="@+id/btnLogOut_FragmentProfile"
+                style="@style/BUTTON"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đăng xuất"
+                android:textAlignment="viewStart"
+                app:backgroundTint="@null" />
 
-        <Button
-            android:id="@+id/buttonInform_ProfileFragment"
-            style="@style/BUTTON"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Thông tin hỗ trợ"
-            android:textAlignment="viewStart"
-            app:backgroundTint="@null" />
+            <Button
+                android:id="@+id/btnLogIn_ProfileFragment"
+                style="@style/TEXT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_button"
+                android:text="Đăng nhập"
+                app:backgroundTint="@null" />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/buttonHotline_ProfileFragment"
-            style="@style/BUTTON"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Liên hệ hỗ trợ"
-            android:textAlignment="viewStart"
-            app:backgroundTint="@null" />
-
-        <Button
-            android:id="@+id/btnCMTDoctor_ProfileFragment"
-            style="@style/BUTTON"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Đánh giá bác sĩ"
-            android:textAlignment="viewStart"
-            app:backgroundTint="@null" />
-
-
-        <Button
-            android:id="@+id/btnLogOut_FragmentProfile"
-            style="@style/BUTTON"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="Đăng xuất"
-            android:textAlignment="viewStart"
-            app:backgroundTint="@null" />
-
-
-        <Button
-            android:id="@+id/btnLogIn_ProfileFragment"
-            style="@style/TEXT"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/custom_button"
-            android:text="Đăng nhập"
-            app:backgroundTint="@null" />
-    </LinearLayout>
+    </RelativeLayout>
 
 </FrameLayout>

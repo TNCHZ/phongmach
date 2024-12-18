@@ -58,9 +58,7 @@ public class HomeFragment extends Fragment {
         isClick = iC != null;
     }
 
-    public HomeFragment() {
-
-    }
+    public HomeFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

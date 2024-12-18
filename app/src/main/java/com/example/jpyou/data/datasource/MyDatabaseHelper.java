@@ -716,8 +716,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT BacSi.BacSiID " +
                 "FROM BacSi " +
-                "JOIN NguoiDung ON BacSi.TaiKhoanID = NguoiDung.TaiKhoanID " +
-                "WHERE NguoiDung.TaiKhoanID = ?";
+                "JOIN TaiKhoan ON BacSi.TaiKhoanID = TaiKhoan.TaiKhoanID " +
+                "WHERE TaiKhoan.TaiKhoanID = ?";
 
         Cursor cursor = db.rawQuery(query, new String[]{userID});
 
