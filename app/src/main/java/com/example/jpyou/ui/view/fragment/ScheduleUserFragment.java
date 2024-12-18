@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -84,6 +85,7 @@ public class ScheduleUserFragment extends Fragment {
                 sv = view.findViewById(R.id.searchView_ScheduleUserFragment);
                 db = new MyDatabaseHelper(getActivity());
                 cldView = view.findViewById(R.id.calendar_ScheduleUserFragment);
+                cldView.setDateTextAppearance(R.style.CalenderViewDateCustomText);
                 lv = view.findViewById(R.id.listSchedule_ScheduleUserFragment);
 
                 sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -109,6 +111,7 @@ public class ScheduleUserFragment extends Fragment {
 
                 cldView.setOnDateChangeListener((calendarView, year, month, dayOfMonth) -> {
                     Calendar calendar = Calendar.getInstance();
+
                     calendar.set(year, month, dayOfMonth);
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                     String selectedDate = sdf.format(calendar.getTime());

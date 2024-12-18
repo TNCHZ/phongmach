@@ -6,6 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main">
 
+    <Button
+        android:id="@+id/btnBack_UpdateInformation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_back"
+        android:layout_alignParentTop="true"
+        app:backgroundTint="@null" />
+
     <LinearLayout
         style="@style/SCREEN"
         android:layout_width="match_parent"

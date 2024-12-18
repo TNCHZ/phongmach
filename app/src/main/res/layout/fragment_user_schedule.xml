@@ -17,14 +17,15 @@
             android:id="@+id/searchView_ScheduleUserFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:queryHint="Nhập ngày"
-            />
+            android:queryHint="Nhập ngày" />
 
         <CalendarView
             android:id="@+id/calendar_ScheduleUserFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_calendar"/>
+            android:weekDayTextAppearance="@style/CalenderViewWeekCustomText"
+            android:theme="@style/CalenderViewCustom"/>
+
 
         <ListView
             android:id="@+id/listSchedule_ScheduleUserFragment"

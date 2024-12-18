@@ -1,5 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/SCREEN"
@@ -20,21 +21,32 @@
                 android:id="@+id/buttonBack_CommentDoctorFragment"
                 android:layout_width="75dp"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:background="@drawable/ic_back"
+                style="@style/BUTTON"
+                app:backgroundTint="@null" />
 
             <TextView
                 android:id="@+id/textView5"
+                style="@style/TEXT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="Đánh giá bác sĩ" />
+                android:text="Đánh giá bác sĩ"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/textView7"
+            style="@style/TEXT"
             android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:text="Bác sĩ bạn từng khám" />
+            android:layout_height="wrap_content"
+            android:text="Bác sĩ bạn từng khám"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/spinnerDoctor_CommentDoctorFragment"
@@ -43,22 +55,31 @@
 
         <TextView
             android:id="@+id/textViewNameDoctor_CommentDoctorFragment"
+            style="@style/TEXT"
             android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:text="TextView" />
+            android:layout_height="wrap_content"
+            android:hint="NAME"
+            android:textAlignment="center"
+            android:layout_margin="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editTextText_CommentDoctorFragment"
             android:layout_width="match_parent"
-            android:layout_height="144dp"
+            android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="text"
-            android:text="Name" />
+            style="@style/EDITTEXT"
+            android:layout_margin="10dp"
+            android:inputType="text"/>
 
         <Button
             android:id="@+id/buttonConfirm_CommentDoctorFragment"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            app:backgroundTint="@null"
+            android:layout_gravity="center"
+            style="@style/BUTTON"
+            android:text="Gửi đánh giá" />
     </LinearLayout>
 </FrameLayout>

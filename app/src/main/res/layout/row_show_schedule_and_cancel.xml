@@ -5,15 +5,15 @@
     android:layout_height="match_parent"
     app:backgroundTint="@null"
     android:background="@drawable/custom_empty_rim"
+    android:padding="10dp"
     style="@style/SCREEN">
 
     <TextView
         android:id="@+id/textViewName_UserRowSchedule"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_margin="15dp"
         android:layout_toLeftOf="@id/btnCancel_UserRowSchedule"
-        android:text="Name"
+        android:hint="NAME"
         style="@style/TEXT"
         android:textSize="20sp"
         android:background="@drawable/custom_empty_rim"
@@ -25,10 +25,11 @@
         style="@style/TEXT"
         android:layout_width="200dp"
         android:layout_height="50dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
         android:layout_below="@+id/textViewName_UserRowSchedule"
-        android:layout_margin="15dp"
         android:layout_toLeftOf="@id/btnCancel_UserRowSchedule"
-        android:text="Day"
+        android:hint="Day"
         android:background="@drawable/custom_empty_rim"
         android:padding="10dp"
         android:textSize="18sp" />
