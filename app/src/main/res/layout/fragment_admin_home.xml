@@ -55,7 +55,16 @@
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/btnStatistics_HomeAdminFragment"
+                    android:id="@+id/btnPatientStatistics_HomeAdminFragment"
+                    style="@style/BUTTON"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_person"
+                    android:text="Thống kê Bệnh Nhân"
+                    app:backgroundTint="@null" />
+
+                <Button
+                    android:id="@+id/btnRevenueStatistics_HomeAdminFragment"
                     style="@style/BUTTON"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

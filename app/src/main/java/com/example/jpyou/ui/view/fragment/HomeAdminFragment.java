@@ -33,7 +33,7 @@ public class HomeAdminFragment extends Fragment {
         {
             btnAdd = view.findViewById(R.id.btnCreateEmployee_HomeAdminFragment);
             btnList = view.findViewById(R.id.btnListNguoiDung_HomeAdminFragment);
-            btnStatic = view.findViewById(R.id.btnStatistics_HomeAdminFragment);
+            btnStatic = view.findViewById(R.id.btnPatientStatistics_HomeAdminFragment);
 
             btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
