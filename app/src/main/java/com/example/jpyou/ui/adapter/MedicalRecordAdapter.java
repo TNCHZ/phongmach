@@ -1,6 +1,7 @@
 package com.example.jpyou.ui.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +19,24 @@ public class MedicalRecordAdapter extends BaseAdapter {
     private Context context;
     private Integer layout;
     private List<Medicine> medicines;
+    private OnMedicineRemovedListener listener;
 
+    public interface OnMedicineRemovedListener {
+        void onMedicineRemoved(Medicine removedMedicine);
+
+    }
 
     public MedicalRecordAdapter(Context context, Integer layout, List<Medicine> medicines) {
         this.context = context;
         this.layout = layout;
         this.medicines = medicines;
+    }
+
+    public MedicalRecordAdapter(Context context, Integer layout, List<Medicine> medicines, OnMedicineRemovedListener listener) {
+        this.context = context;
+        this.layout = layout;
+        this.medicines = medicines;
+        this.listener = listener;
     }
 
     //Lớp ViewHolder giúp tránh ánh xạ lặp đi lặp lại khi lướt lên xuống
@@ -62,13 +75,16 @@ public class MedicalRecordAdapter extends BaseAdapter {
         holder.txtQuantity.setText(mc.getQuantity());
         holder.txtUnit.setText(mc.getUnit());
         holder.txtUsage.setText(mc.getUsage());
-        holder.btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                medicines.remove(i);
-                notifyDataSetChanged();
+        holder.btnCancel.setOnClickListener(v -> {
+            if (i >= 0 && i < medicines.size()) {
+                Medicine removedMedicine = medicines.remove(i);
+                notifyDataSetChanged(); // Cập nhật giao diện
+                if (listener != null) {
+                    listener.onMedicineRemoved(removedMedicine); // Gọi callback để thông báo ra ngoài
+                }
             }
         });
+
         return view;
     }
 }

@@ -161,6 +161,7 @@ public class AddMedicineDoctorFragment extends Fragment {
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });
+
         brnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

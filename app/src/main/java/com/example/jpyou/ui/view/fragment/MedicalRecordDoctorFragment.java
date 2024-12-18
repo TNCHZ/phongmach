@@ -1,8 +1,6 @@
 package com.example.jpyou.ui.view.fragment;
 
 import android.annotation.SuppressLint;
-import android.app.Person;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.example.jpyou.data.datasource.MyDatabaseHelper;
@@ -29,7 +26,7 @@ import com.example.myapplication.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MedicalRecordDoctorFragment extends Fragment {
+public class MedicalRecordDoctorFragment extends Fragment implements MedicalRecordAdapter.OnMedicineRemovedListener{
     private String userID;
     private String patientID;
     private List<Medicine> medicines;
@@ -49,9 +46,9 @@ public class MedicalRecordDoctorFragment extends Fragment {
     }
 
 
-    //====================================================================
+    private MedicalRecordAdapter adapter;
     private ListView listView;
-    private Button btnAddMedicine, btnConfirm;
+    private Button btnAddMedicine, btnConfirm, btnBack;
     private EditText symptom, txtName, txtGender, txtPhone, txtDayOfBirth;
 
     private MyDatabaseHelper db;
@@ -72,13 +69,29 @@ public class MedicalRecordDoctorFragment extends Fragment {
             txtGender = view.findViewById(R.id.txtGender_MedicalRecordDoctorFragment);
             txtPhone = view.findViewById(R.id.txtPhone_MedicalRecordDoctorFragment);
             medicines = new ArrayList<>();
+            btnBack = view.findViewById(R.id.btnBack_MedicalRecordDoctorFragment);
 
             SharedViewModel viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
             viewModel.getMedicines().observe(getViewLifecycleOwner(), saveMedicines -> {
+                medicines.clear();
                 medicines.addAll(saveMedicines);
 
                 if (!saveMedicines.isEmpty()) {
-                    MedicalRecordAdapter adapter = new MedicalRecordAdapter(getActivity(), R.layout.row_medicine_chosen, saveMedicines);
+                    adapter = new MedicalRecordAdapter(getActivity(), R.layout.row_medicine_chosen, saveMedicines,new MedicalRecordAdapter.OnMedicineRemovedListener(){
+                        @Override
+                        public void onMedicineRemoved(Medicine removedMedicine) {
+                            medicines.remove(removedMedicine); // Xóa thuốc khỏi danh sách local
+                            adapter.notifyDataSetChanged(); // Cập nhật giao diện adapter
+
+                            SharedViewModel viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+                            viewModel.removeMedicine(removedMedicine); // Cập nhật LiveData trong ViewModel
+
+                            if (medicines.isEmpty()) {
+                                listView.setVisibility(View.GONE); // Ẩn ListView nếu không có thuốc nào
+                            }
+                        }
+
+                    });
                     listView.setAdapter(adapter);
                 } else {
                     listView.setVisibility(View.GONE);
@@ -122,7 +135,18 @@ public class MedicalRecordDoctorFragment extends Fragment {
                 }
             });
 
+            btnBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().getSupportFragmentManager().popBackStack();
+                }
+            });
         }
         return view;
+    }
+
+
+    @Override
+    public void onMedicineRemoved(Medicine removedMedicine) {
     }
 }

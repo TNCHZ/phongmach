@@ -14,6 +14,15 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <Button
+            android:id="@+id/btnBack_MedicalRecordDoctorFragment"
+            android:layout_width="58dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/ic_back"
+            app:backgroundTint="@null" />
+
+
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -29,4 +29,16 @@ public class SharedViewModel extends ViewModel {
         medicines.setValue(currentMedicines);  // Cập nhật lại LiveData
     }
 
+    public void removeMedicine(Medicine medicineToRemove) {
+        if (medicineToRemove == null) {
+            return;
+        }
+        List<Medicine> currentMedicines = medicines.getValue();
+        if (currentMedicines != null && currentMedicines.contains(medicineToRemove)) {
+            currentMedicines.remove(medicineToRemove); // Xóa thuốc khỏi danh sách
+            medicines.setValue(currentMedicines);     // Cập nhật lại LiveData
+        }
+    }
+
+
 }
