@@ -86,7 +86,6 @@ public class ProfileFragment extends Fragment {
             });
 
 //            sBFontSize = view.findViewById(R.id.seekBarFontSize_ProfileFragment);
-//            textView = view.findViewById(R.id.textViewFontSize_ProfileFragment);
 //            sBFontSize.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 //                @Override
 //                public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -101,22 +100,13 @@ public class ProfileFragment extends Fragment {
 //                            fontSize = i + 15;
 //                            break;
 //                    }
-//                    sharedPreferences = view.getContext().getSharedPreferences("FONT", Context.MODE_PRIVATE);
-//                    editor = sharedPreferences.edit();
-//                    editor.putInt("fontText", i);
-//                    editor.commit();
 //                }
-//
 //                @Override
-//                public void onStartTrackingTouch(SeekBar seekBar) {
-//
-//                }
-//
+//                public void onStartTrackingTouch(SeekBar seekBar) {}
 //                @Override
-//                public void onStopTrackingTouch(SeekBar seekBar) {
-//                    textView.setTextSize(fontSize);
-//                }
+//                public void onStopTrackingTouch(SeekBar seekBar) {}
 //            });
+
             btnInform = view.findViewById(R.id.buttonInform_ProfileFragment);
             btnHotline = view.findViewById(R.id.buttonHotline_ProfileFragment);
             btnUpdateInformation = view.findViewById(R.id.btnUpdateInformation_ProfileFragment);
