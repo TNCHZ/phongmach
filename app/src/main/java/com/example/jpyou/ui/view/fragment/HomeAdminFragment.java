@@ -58,6 +58,18 @@ public class HomeAdminFragment extends Fragment {
                     transaction.commit();
                 }
             });
+
+            btnStatic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    ChartAdminFragment anotherFragment = new ChartAdminFragment();
+                    transaction.replace(R.id.homeAdminFragment, anotherFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+            });
         }
         return view;
     }

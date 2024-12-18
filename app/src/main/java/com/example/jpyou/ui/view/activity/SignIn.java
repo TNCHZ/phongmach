@@ -68,6 +68,10 @@ public class SignIn extends AppCompatActivity {
                         Intent intent = new Intent(SignIn.this, NurseInterface.class);
                         intent.putExtra("TaiKhoanID", taiKhoanID);
                         startActivity(intent);
+                    } else if (role.equals("Admin")) {
+                        Intent intent = new Intent(SignIn.this, AdminInterface.class);
+                        intent.putExtra("TaiKhoanID", taiKhoanID);
+                        startActivity(intent);
                     }
                 }
             }

@@ -28,7 +28,6 @@
             android:name="com.example.jpyou.ui.view.activity.AdminInterface"
 
             android:exported="false" />
-
         <activity
             android:name="com.example.jpyou.ui.view.activity.UserInterface"
 
@@ -39,7 +38,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.jpyou.ui.view.activity.AdminLogin" />
     </application>
 
 </manifest>

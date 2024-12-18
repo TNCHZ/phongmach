@@ -160,20 +160,20 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createDanhGiaTable);
 
 
-        String insertTaiKhoan1 = "INSERT INTO TaiKhoan (TaiKhoan, MatKhau, NgayThamGia, HoatDong) VALUES ('admin_user', 'user123', '14/11/2024', 1);";
-        String insertTaiKhoan2 = "INSERT INTO TaiKhoan (TaiKhoan, MatKhau, NgayThamGia, HoatDong) VALUES ('admin_report', 'report123', '14/11/2024', 1);";
+        String insertTaiKhoan1 = "INSERT INTO TaiKhoan (TaiKhoan, MatKhau, NgayThamGia, HoatDong) VALUES ('0938563411', '123', '14/11/2024', 1);";
+        String insertTaiKhoan2 = "INSERT INTO TaiKhoan (TaiKhoan, MatKhau, NgayThamGia, HoatDong) VALUES ('0938563412', '123', '14/11/2024', 1);";
 
         db.execSQL(insertTaiKhoan1);
         db.execSQL(insertTaiKhoan2);
 
-        String insertNguoiDung1 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_user'), 'Admin User');";
-        String insertNguoiDung2 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_report'), 'Admin Report');";
+        String insertNguoiDung1 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = '0938563411'), 'Admin User');";
+        String insertNguoiDung2 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = '0938563412'), 'Admin Report');";
 
         db.execSQL(insertNguoiDung1);
         db.execSQL(insertNguoiDung2);
 
-        String insertAdmin1 = "INSERT INTO Admin (ChucNang, TaiKhoanID) VALUES ('Quản lý đăng nhập', (SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_user'));";
-        String insertAdmin2 = "INSERT INTO Admin (ChucNang, TaiKhoanID) VALUES ('Xem thống kê', (SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = 'admin_report'));";
+        String insertAdmin1 = "INSERT INTO Admin (ChucNang, TaiKhoanID) VALUES ('Quản lý đăng nhập', (SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = '0938563411'));";
+        String insertAdmin2 = "INSERT INTO Admin (ChucNang, TaiKhoanID) VALUES ('Xem thống kê', (SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = '0938563412'));";
 
         db.execSQL(insertAdmin1);
         db.execSQL(insertAdmin2);
@@ -254,7 +254,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             account.put("NgayThamGia", utils.getCurrentDate());
             account.put("HoatDong", 1);
             long addAccount = db.insert("TaiKhoan", null, account);
-            if(addAccount==-1)
+            if (addAccount == -1)
                 return false;
 
             ContentValues userinform = new ContentValues();
@@ -265,34 +265,34 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             userinform.put("SoDT", phone);
             userinform.put("Email", email);
             long addUserInform = db.insert("NguoiDung", null, userinform);
-            if(addUserInform==-1)
+            if (addUserInform == -1)
                 return false;
 
             if (who.equals("Bệnh nhân")) {
                 ContentValues patientInform = new ContentValues();
                 patientInform.put("TaiKhoanID", addAccount);
                 long addpatientinform = db.insert("BenhNhan", null, patientInform);
-                if(addpatientinform==-1)
+                if (addpatientinform == -1)
                     return false;
             } else if (who.equals("Bác sĩ")) {
                 ContentValues doctorInform = new ContentValues();
                 doctorInform.put("TaiKhoanID", addAccount);
                 doctorInform.put("KinhNghiem", exp);
                 long addDoctorInform = db.insert("BacSi", null, doctorInform);
-                if(addDoctorInform==-1)
+                if (addDoctorInform == -1)
                     return false;
             } else if (who.equals("Y tá")) {
                 ContentValues nurseInform = new ContentValues();
                 nurseInform.put("TaiKhoanID", addAccount);
                 long addNurseInform = db.insert("YTa", null, nurseInform);
-                if(addNurseInform==-1)
+                if (addNurseInform == -1)
                     return false;
-            }else {
+            } else {
                 ContentValues adminInform = new ContentValues();
                 adminInform.put("TaiKhoanID", addAccount);
                 adminInform.put("ChucNang", role);
                 long addAdminInform = db.insert("Admin", null, adminInform);
-                if(addAdminInform==-1)
+                if (addAdminInform == -1)
                     return false;
             }
 
@@ -927,8 +927,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public List<Role> showInformationForPerson()
-    {
+    public List<Role> showInformationForPerson() {
         SQLiteDatabase db = this.getReadableDatabase();
         List<Role> rs = new ArrayList<>();
 
@@ -1059,15 +1058,15 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public boolean changePassword(String id, String newPass, String oldPass) {
         SQLiteDatabase db = this.getWritableDatabase(); // Sử dụng writable database để thực hiện update
 
-        // Cập nhật giá trị HoatDong thành 1 (mở khóa)
+
         ContentValues values = new ContentValues();
         values.put("MatKhau", newPass);
 
         int rowsAffected = db.update(
                 "TaiKhoan",
                 values,
-                "TaiKhoanID = ? AND MatKhau = ?" , // Điều kiện WHERE
-                new String[]{id, oldPass} // Giá trị cho điều kiện
+                "TaiKhoanID = ? AND MatKhau = ?",
+                new String[]{id, oldPass}
         );
 
         db.close();
@@ -1170,4 +1169,30 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         return result != -1;
     }
+
+    public int countPatient(String timePeriod) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int count = 0;
+
+        // Query to count patients based on month or year, adjust for dd/MM/yyyy format
+        String query = "SELECT COUNT(BenhNhanID) AS PatientCount " +
+                "FROM LichHen " +
+                "WHERE strftime('%m', date(substr(NgayKham, 7, 4) || '-' || substr(NgayKham, 4, 2) || '-' || substr(NgayKham, 1, 2))) = ? " +
+                "AND isKham = 1";
+
+        Cursor cursor = db.rawQuery(query, new String[]{timePeriod});
+
+        // Retrieve the count from the result
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(cursor.getColumnIndexOrThrow("PatientCount"));
+        }
+
+        // Close the cursor and database
+        cursor.close();
+        db.close();
+
+        return count;
+    }
+
+
 }

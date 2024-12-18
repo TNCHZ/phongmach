@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +23,8 @@ public class ChangePasswordFragment extends Fragment {
     private Button btn;
     private MyDatabaseHelper db;
 
-    public ChangePasswordFragment(String userID) {
-        userID = userID;
+    public ChangePasswordFragment(String id) {
+        userID = id;
     }
 
     @Override
@@ -50,7 +51,7 @@ public class ChangePasswordFragment extends Fragment {
                     newPass = txtNewPass.getText().toString();
                     newPassConfirm = txtNewPassConfirm.getText().toString();
                     if (newPass.equals(newPassConfirm)) {
-                        if (db.changePassword(userID, oldPass, newPass))
+                        if (db.changePassword(userID, newPass, oldPass))
                             Toast.makeText(getActivity(), "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
                         else
                             Toast.makeText(getActivity(), "Mật khẩu cũ không đúng", Toast.LENGTH_SHORT).show();
