@@ -84,7 +84,6 @@ public class SchedulePatientAdapter extends BaseAdapter {
                     ((FragmentActivity) context).getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.fragment_home, fragment)
-                            .addToBackStack(null)
                             .commit();
                 }
             });

@@ -86,6 +86,7 @@ public class ScheduleUserFragment extends Fragment {
                 sv = view.findViewById(R.id.searchView_ScheduleUserFragment);
                 db = new MyDatabaseHelper(getActivity());
                 cldView = view.findViewById(R.id.calendar_ScheduleUserFragment);
+
                 lv = view.findViewById(R.id.listSchedule_ScheduleUserFragment);
 
                 sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -144,4 +145,6 @@ public class ScheduleUserFragment extends Fragment {
         ShowScheduleAndCancelAdapter filteredAdapter = new ShowScheduleAndCancelAdapter(getActivity(), R.layout.row_show_schedule_and_cancel, filteredList);
         lv.setAdapter(filteredAdapter); // Update the ListView with the filtered results
     }
+
+
 }

@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
@@ -80,14 +82,14 @@ public class MedicalRecordDoctorFragment extends Fragment implements MedicalReco
                     adapter = new MedicalRecordAdapter(getActivity(), R.layout.row_medicine_chosen, saveMedicines,new MedicalRecordAdapter.OnMedicineRemovedListener(){
                         @Override
                         public void onMedicineRemoved(Medicine removedMedicine) {
-                            medicines.remove(removedMedicine); // Xóa thuốc khỏi danh sách local
-                            adapter.notifyDataSetChanged(); // Cập nhật giao diện adapter
+                            medicines.remove(removedMedicine);
+                            adapter.notifyDataSetChanged();
 
                             SharedViewModel viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-                            viewModel.removeMedicine(removedMedicine); // Cập nhật LiveData trong ViewModel
+                            viewModel.removeMedicine(removedMedicine);
 
                             if (medicines.isEmpty()) {
-                                listView.setVisibility(View.GONE); // Ẩn ListView nếu không có thuốc nào
+                                listView.setVisibility(View.GONE);
                             }
                         }
 
@@ -131,14 +133,24 @@ public class MedicalRecordDoctorFragment extends Fragment implements MedicalReco
                     if (!medicines.isEmpty() && !symp.isEmpty()) {
                         db.addMedicine(db.getPatientID(patientID), db.getDoctorID(userID), symp, medicines);
                     }
-                    getActivity().getSupportFragmentManager().popBackStack(); // Quay lại Fragment trước
+                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+                    HomeFragment anotherFragment = new HomeFragment();
+                    transaction.replace(R.id.fragment_doctor_medical_records, anotherFragment);
+                    transaction.commit();
                 }
             });
 
             btnBack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    getActivity().getSupportFragmentManager().popBackStack();
+                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+                    HomeFragment anotherFragment = new HomeFragment();
+                    transaction.replace(R.id.fragment_doctor_medical_records, anotherFragment);
+                    transaction.commit();
                 }
             });
         }

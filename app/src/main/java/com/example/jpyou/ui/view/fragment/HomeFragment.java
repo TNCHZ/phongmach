@@ -49,8 +49,14 @@ public class HomeFragment extends Fragment {
     private TextView tv;
     private SearchView sv;
     private LinearLayout ln, lnScrV;
+    private Boolean isClick;
 
     private SharedViewModel userViewModel;
+
+    public HomeFragment(Boolean iC)
+    {
+        isClick = iC != null;
+    }
 
     public HomeFragment() {
 
@@ -82,7 +88,7 @@ public class HomeFragment extends Fragment {
             layout = view.findViewById(R.id.table_HomeFragment);
             sv = view.findViewById(R.id.searchView_HomeFragment);
             doctors = db.getDoctors();
-
+            isClick = false;
 
             final Handler handler = new Handler();
             final Runnable scrollRunnable = new Runnable() {
@@ -177,7 +183,6 @@ public class HomeFragment extends Fragment {
                     layout.setVisibility(View.GONE);
                     sv.setVisibility(View.GONE);
                     btnRegisForDoctor.setVisibility(View.VISIBLE);
-                    Log.d("1", userID);
                     btnRegisForDoctor.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -186,7 +191,6 @@ public class HomeFragment extends Fragment {
 
                             AddDoctorWorkDayNurseFragment anotherFragment = new AddDoctorWorkDayNurseFragment();
                             transaction.replace(R.id.fragment_home, anotherFragment);
-                            transaction.addToBackStack(null);
                             transaction.commit();
                         }
                     });
@@ -209,4 +213,21 @@ public class HomeFragment extends Fragment {
         SchedulePatientAdapter filteredAdapter = new SchedulePatientAdapter(getActivity(), R.layout.row_medicine, filteredList,userID);
         lv.setAdapter(filteredAdapter);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isClick) {
+            updateDataInHomeFragment();
+        }
+    }
+
+    private void updateDataInHomeFragment() {
+        patients = new ArrayList<>();
+        patients = db.showPatientForDoctor(db.getDoctorID(userID));
+        SchedulePatientAdapter adapterPatient = new SchedulePatientAdapter(getActivity(), R.layout.row_list_patient, patients, userID);
+        lv.setAdapter(adapterPatient);
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.jpyou.ui.view.fragment;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.example.jpyou.data.datasource.MyDatabaseHelper;
@@ -34,7 +36,7 @@ public class ChartAdminFragment extends Fragment {
     private List<String> xValue;
     private List<String> quy = Arrays.asList("Quý 1", "Quý 2", "Quý 3", "Quý 4", "Năm");
     private MyDatabaseHelper db;
-
+    private Button btnBack;
     private Spinner sp;
 
     public ChartAdminFragment() {
@@ -47,18 +49,26 @@ public class ChartAdminFragment extends Fragment {
 
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_chart, container, false);
         barChart = view.findViewById(R.id.chart);
         sp = view.findViewById(R.id.spinner_ChartAdminFragment);
+        btnBack = view.findViewById(R.id.buttonBack_ChartAdminFragment);
         db = new MyDatabaseHelper(getActivity());
         // Thiết lập Adapter cho Spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, quy);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp.setAdapter(adapter);
 
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
         // Xử lý sự kiện Spinner
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -134,7 +144,7 @@ public class ChartAdminFragment extends Fragment {
     private ArrayList<BarEntry> chartQuarter(int startMonth) {
         ArrayList<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i <= 2; i++) {
-            String j = String.valueOf(startMonth+i);
+            String j = String.valueOf(startMonth + i);
             entries.add(new BarEntry(i, db.countPatient(j) * 1f));
 
         }
