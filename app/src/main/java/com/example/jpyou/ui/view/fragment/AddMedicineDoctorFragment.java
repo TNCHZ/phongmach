@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddMedicineDoctorFragment extends Fragment {
-    private String userID;
     private MyDatabaseHelper db;
 
     public AddMedicineDoctorFragment()
@@ -41,8 +40,7 @@ public class AddMedicineDoctorFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
-        userID = sharedPreferences.getString("TaiKhoanID", null);
+
     }
 
     private ListView lvMedicine, lvMedicineChosen;

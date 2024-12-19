@@ -42,18 +42,8 @@ public class AdminInterface extends AppCompatActivity {
             return insets;
         });
 
-        sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        userID = sharedPreferences.getString("TaiKhoanID", null);
-        checkLogout = getIntent().getBooleanExtra("TaiKhoan", false);
-        if (userID == null || checkLogout) {
-            editor.putString("TaiKhoanID", getIntent().getStringExtra("TaiKhoanID"));
-            editor.apply();
-            checkLogout = false;
-        } else {
-            editor.putString("TaiKhoanID", userID);
-            editor.apply();
-        }
+        userID = getIntent().getStringExtra("TaiKhoanID");
+
         sharedPreferencesNight = getSharedPreferences("NightMode", MODE_PRIVATE);
         isNightMode = sharedPreferencesNight.getBoolean("night", false);
         if (isNightMode){
@@ -66,7 +56,7 @@ public class AdminInterface extends AppCompatActivity {
 
         viewPager = findViewById(R.id.viewPager_AdminInterface);
         bottomNavigationView = findViewById(R.id.bottomNavigation_AdminInterface);
-        ViewPagerAdapterAdmin adapterNurse = new ViewPagerAdapterAdmin(this);
+        ViewPagerAdapterAdmin adapterNurse = new ViewPagerAdapterAdmin(this, userID);
         viewPager.setAdapter(adapterNurse);
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {

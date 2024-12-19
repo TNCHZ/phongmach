@@ -45,8 +45,10 @@ public class ScheduleDoctorFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_doctor_schedule, container, false);
 
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
-        userID = sharedPreferences.getString("TaiKhoanID", null);
+        if (getArguments() != null) {
+            userID = getArguments().getString("userID");
+        }
+
         db = new MyDatabaseHelper(getActivity());
 
         btnBack = view.findViewById(R.id.buttonBack_DoctorScheduleFragment);

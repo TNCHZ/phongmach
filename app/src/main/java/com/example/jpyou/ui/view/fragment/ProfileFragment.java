@@ -36,8 +36,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
-//        userID = sharedPreferences.getString("TaiKhoanID", null);
     }
 
     private Switch swicthNightMode;
@@ -54,8 +52,9 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         {
-            sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
-            userID = sharedPreferences.getString("TaiKhoanID", null);
+            if (getArguments() != null) {
+                userID = getArguments().getString("userID");
+            }
 
             sharedPreferencesNight = requireActivity().getSharedPreferences("NightMode", Context.MODE_PRIVATE);
             isNightMode = sharedPreferencesNight.getBoolean("night", false);

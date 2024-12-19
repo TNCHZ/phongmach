@@ -37,8 +37,9 @@ public class HomeAdminFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_admin_home, container, false);
 
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
-        userID = sharedPreferences.getString("TaiKhoanID", null);
+        if (getArguments() != null) {
+            userID = getArguments().getString("userID");
+        }
 
         btnAdd = view.findViewById(R.id.btnCreateEmployee_HomeAdminFragment);
         btnList = view.findViewById(R.id.btnListNguoiDung_HomeAdminFragment);

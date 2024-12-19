@@ -56,8 +56,9 @@ public class ScheduleUserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_schedule, container, false);
 
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
-        userID = sharedPreferences.getString("TaiKhoanID", null);
+        if (getArguments() != null) {
+            userID = getArguments().getString("userID");
+        }
 
         btnRefresh = view.findViewById(R.id.buttonRefresh_ScheduleUserFragment);
         layoutChecked = view.findViewById(R.id.linearLayoutChecked_ScheduleUserFragment);

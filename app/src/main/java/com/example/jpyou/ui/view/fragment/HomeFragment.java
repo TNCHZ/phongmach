@@ -51,7 +51,11 @@ public class HomeFragment extends Fragment {
     private LinearLayout ln, lnScrV;
     private Boolean isClick;
 
-    private SharedViewModel userViewModel;
+
+    public HomeFragment(String id)
+    {
+        userID = id;
+    }
 
     public HomeFragment(Boolean iC)
     {
@@ -70,8 +74,9 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         {
-            SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
-            userID = sharedPreferences.getString("TaiKhoanID", null);
+            if (getArguments() != null) {
+                userID = getArguments().getString("userID");
+            }
 
             db = new MyDatabaseHelper(getActivity());
             Intent intent = new Intent(getActivity(), SignIn.class);
@@ -98,7 +103,7 @@ public class HomeFragment extends Fragment {
                     if (currentScrollX >= maxScrollX) {
                         scrview.smoothScrollTo(0, 0);  // Quay lại đầu
                     } else {
-                        int nextPosition = currentScrollX + 700;
+                        int nextPosition = currentScrollX + 600;
                         scrview.smoothScrollTo(nextPosition, 0);
                     }
                     handler.postDelayed(this, 2000);
@@ -128,7 +133,7 @@ public class HomeFragment extends Fragment {
                                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                                 FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-                                RegisterForExaminationUserFragment anotherFragment = new RegisterForExaminationUserFragment();
+                                RegisterForExaminationUserFragment anotherFragment = new RegisterForExaminationUserFragment(userID);
                                 transaction.replace(R.id.fragment_home, anotherFragment);
                                 transaction.addToBackStack(null);
                                 transaction.commit();

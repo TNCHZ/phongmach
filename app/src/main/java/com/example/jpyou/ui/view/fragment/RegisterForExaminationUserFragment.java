@@ -31,13 +31,15 @@ public class RegisterForExaminationUserFragment extends Fragment {
     private Button btnRegis, btnBack;
     private EditText txtDate, txtSymptom;
 
-    public RegisterForExaminationUserFragment(){}
+
+
+    public RegisterForExaminationUserFragment(String userID) {
+        this.userID = userID;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
-        userID = sharedPreferences.getString("TaiKhoanID", null);
     }
 
     @SuppressLint("MissingInflatedId")

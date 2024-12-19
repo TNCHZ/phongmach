@@ -28,13 +28,14 @@ import com.example.myapplication.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MedicalRecordDoctorFragment extends Fragment implements MedicalRecordAdapter.OnMedicineRemovedListener{
+public class MedicalRecordDoctorFragment extends Fragment implements MedicalRecordAdapter.OnMedicineRemovedListener {
     private String userID;
     private String patientID;
     private List<Medicine> medicines;
 
-    public MedicalRecordDoctorFragment(String id) {
+    public MedicalRecordDoctorFragment(String id, String tkId) {
         patientID = id;
+        userID = tkId;
     }
 
     public MedicalRecordDoctorFragment() {
@@ -43,8 +44,7 @@ public class MedicalRecordDoctorFragment extends Fragment implements MedicalReco
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
-        userID = sharedPreferences.getString("TaiKhoanID", null);
+
     }
 
 
@@ -63,6 +63,7 @@ public class MedicalRecordDoctorFragment extends Fragment implements MedicalReco
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_doctor_medical_record, container, false);
         {
+
             listView = view.findViewById(R.id.listPrescriptions_MedicalRecordDoctorFragment);
             symptom = view.findViewById(R.id.txtResults_MedicalRecordDoctorFragment);
             db = new MyDatabaseHelper(getActivity());
@@ -79,7 +80,7 @@ public class MedicalRecordDoctorFragment extends Fragment implements MedicalReco
                 medicines.addAll(saveMedicines);
 
                 if (!saveMedicines.isEmpty()) {
-                    adapter = new MedicalRecordAdapter(getActivity(), R.layout.row_medicine_chosen, saveMedicines,new MedicalRecordAdapter.OnMedicineRemovedListener(){
+                    adapter = new MedicalRecordAdapter(getActivity(), R.layout.row_medicine_chosen, saveMedicines, new MedicalRecordAdapter.OnMedicineRemovedListener() {
                         @Override
                         public void onMedicineRemoved(Medicine removedMedicine) {
                             medicines.remove(removedMedicine);
@@ -113,6 +114,7 @@ public class MedicalRecordDoctorFragment extends Fragment implements MedicalReco
                 @Override
                 public void onClick(View v) {
                     if (getActivity() != null) {
+                        ;
                         AddMedicineDoctorFragment addMedicineDoctorFragment = new AddMedicineDoctorFragment();
                         getActivity().getSupportFragmentManager()
                                 .beginTransaction()
@@ -129,6 +131,7 @@ public class MedicalRecordDoctorFragment extends Fragment implements MedicalReco
             btnConfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Log.d("1", userID);
                     String symp = symptom.getText().toString();
                     if (!medicines.isEmpty() && !symp.isEmpty()) {
                         db.addMedicine(db.getPatientID(patientID), db.getDoctorID(userID), symp, medicines);
@@ -136,7 +139,7 @@ public class MedicalRecordDoctorFragment extends Fragment implements MedicalReco
                     FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                     FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-                    HomeFragment anotherFragment = new HomeFragment();
+                    HomeFragment anotherFragment = new HomeFragment(userID);
                     transaction.replace(R.id.fragment_doctor_medical_records, anotherFragment);
                     transaction.commit();
                 }
@@ -147,8 +150,7 @@ public class MedicalRecordDoctorFragment extends Fragment implements MedicalReco
                 public void onClick(View view) {
                     FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                     FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-                    HomeFragment anotherFragment = new HomeFragment();
+                    HomeFragment anotherFragment = new HomeFragment(userID);
                     transaction.replace(R.id.fragment_doctor_medical_records, anotherFragment);
                     transaction.commit();
                 }
