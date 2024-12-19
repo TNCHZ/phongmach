@@ -74,6 +74,14 @@ public class AddDoctorWorkDayNurseFragment extends Fragment {
             sp.setAdapter(adapter);
 
             selectedDate = utils.getCurrentDate();
+            tenBacSi = db.getDoctorWorkAtDay(selectedDate);
+            if (tenBacSi != null) {
+                tv1.setVisibility(View.VISIBLE);
+                tv1.setText("Bác sĩ " + tenBacSi + " đã được đặt lịch làm");
+            } else {
+                tv1.setVisibility(View.GONE);
+            }
+
             clv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                 @SuppressLint("SetTextI18n")
                 @Override
@@ -131,20 +139,30 @@ public class AddDoctorWorkDayNurseFragment extends Fragment {
             btnConfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    boolean isSuccess = false;
                     if (tenBacSi == null) {
-                        if (db.updateDoctor(selectedDoctor.getId(), selectedDate))
-                            Toast.makeText(getActivity(), "Đặt lịch thành công", Toast.LENGTH_SHORT).show();
-                        else
-                            Toast.makeText(getActivity(), "Đặt lịch thất bại", Toast.LENGTH_SHORT).show();
+                        isSuccess = db.updateDoctor(selectedDoctor.getId(), selectedDate);
+                        Toast.makeText(getActivity(), isSuccess ? "Đặt lịch thành công" : "Đặt lịch thất bại", Toast.LENGTH_SHORT).show();
                     } else {
-                        if (db.changeDoctorWork(selectedDoctor.getId(), selectedDate))
-                            Toast.makeText(getActivity(), "Thay đổi bác sĩ thành công", Toast.LENGTH_SHORT).show();
-                        else
-                            Toast.makeText(getActivity(), "Thay đổi bác sĩ thất bại", Toast.LENGTH_SHORT).show();
+                        isSuccess = db.changeDoctorWork(selectedDoctor.getId(), selectedDate);
+                        Toast.makeText(getActivity(), isSuccess ? "Thay đổi bác sĩ thành công" : "Thay đổi bác sĩ thất bại", Toast.LENGTH_SHORT).show();
+                    }
+
+                    // Nếu thành công, cập nhật lại giao diện
+                    if (isSuccess) {
+                        tenBacSi = db.getDoctorWorkAtDay(selectedDate); // Lấy lại tên bác sĩ
+                        if (tenBacSi != null) {
+                            tv1.setVisibility(View.VISIBLE);
+                            tv1.setText("Bác sĩ " + tenBacSi + " đã được đặt lịch làm");
+                        } else {
+                            tv1.setVisibility(View.GONE);
+                        }
                     }
                 }
             });
+
         }
         return view;
     }
+
 }

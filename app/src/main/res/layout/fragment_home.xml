@@ -43,11 +43,12 @@
 
         <HorizontalScrollView
             android:id="@+id/scrollview_HomeFragment"
-            android:layout_width="match_parent"
+            android:layout_width="208dp"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_gravity="center"
             android:background="@drawable/custom_empty_rim_black"
-            android:padding="10dp"
-            android:layout_margin="5dp">
+            android:padding="10dp">
 
             <LinearLayout
                 android:id="@+id/linearLayoutScrollView_HomeFragment"
@@ -89,6 +90,21 @@
                     android:layout_height="200dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/img4" />
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/img5" />
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/img6" />
+
 
             </LinearLayout>
         </HorizontalScrollView>

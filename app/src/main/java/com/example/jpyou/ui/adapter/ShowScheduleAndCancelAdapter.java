@@ -41,12 +41,12 @@ public class ShowScheduleAndCancelAdapter extends BaseAdapter {
     }
 
     //Lớp ViewHolder giúp tránh ánh xạ lặp đi lặp lại khi lướt lên xuống
-    private class ViewHolder {
-        TextView txtNameAppoint;
-        TextView txtDay;
-        Button btnCancel;
-        Button btnShow;
-    }
+//    private class ViewHolder {
+//        TextView txtNameAppoint;
+//        TextView txtDay;
+//        Button btnCancel;
+//        Button btnShow;
+//    }
 
     @Override
     public int getCount() {
@@ -66,44 +66,34 @@ public class ShowScheduleAndCancelAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        ViewHolder holder;
-        if (view == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE); //Khai báo của hệ thống
-            view = inflater.inflate(layout, null); //Lấy layout NurseRowSchedule
-            holder = new ViewHolder();
-            db = new MyDatabaseHelper(context);
-
-
-            holder.txtNameAppoint = (TextView) view.findViewById(R.id.textViewName_UserRowSchedule);
-            holder.txtDay = (TextView) view.findViewById(R.id.textViewDay_UserRowSchedule);
-            holder.btnCancel = (Button) view.findViewById(R.id.btnCancel_UserRowSchedule);
-            holder.btnShow = (Button) view.findViewById(R.id.btnShow_UserRowSchedule);
-            view.setTag(holder);//Truyền trạng thái ánh xạ
-        } else {
-            holder = (ViewHolder) view.getTag();
-        }
-
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE); //Khai báo của hệ thống
+        view = inflater.inflate(layout, null); //Lấy layout NurseRowSchedule
+        db = new MyDatabaseHelper(context);
+        TextView txtNameAppoint = (TextView) view.findViewById(R.id.textViewName_UserRowSchedule);
+        TextView txtDay = (TextView) view.findViewById(R.id.textViewDay_UserRowSchedule);
+        Button btnCancel = (Button) view.findViewById(R.id.btnCancel_UserRowSchedule);
+        Button btnShow = (Button) view.findViewById(R.id.btnShow_UserRowSchedule);
 
 
         //Gán giá trị
         Patient ps = patient.get(i);
-        holder.txtNameAppoint.setText(ps.getNameAppoint());
-        holder.txtDay.setText(ps.getAppointDay());
+        txtNameAppoint.setText(ps.getNameAppoint());
+        txtDay.setText(ps.getAppointDay());
         String today = utils.getCurrentDate();
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             LocalDate localDate1 = LocalDate.parse(ps.getAppointDay(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             LocalDate localDate2 = LocalDate.parse(today, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             if (localDate2.isAfter(localDate1) || localDate2.isEqual(localDate1)) {
-                holder.btnCancel.setVisibility(View.GONE);
+                btnCancel.setVisibility(View.GONE);
             } else {
-                holder.btnCancel.setOnClickListener(v -> {
+                btnCancel.setOnClickListener(v -> {
                     if (cancelListener != null) {
                         cancelListener.onCancelClick(ps, v);  // Gọi phương thức của listener
                     }
                 });
             }
         }
-        holder.btnShow.setOnClickListener(new View.OnClickListener() {
+        btnShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle bundlePatientID = new Bundle();
@@ -127,6 +117,7 @@ public class ShowScheduleAndCancelAdapter extends BaseAdapter {
     public interface OnCancelClickListener {
         void onCancelClick(Patient patient, View view);
     }
+
     private OnCancelClickListener cancelListener;
 
     public void setOnCancelClickListener(OnCancelClickListener listener) {

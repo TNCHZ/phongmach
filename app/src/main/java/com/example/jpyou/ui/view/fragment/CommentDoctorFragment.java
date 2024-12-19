@@ -73,7 +73,7 @@ public class CommentDoctorFragment extends Fragment {
         doctors = new ArrayList<>();
         doctors = db.getDoctorsByPatientID(db.getPatientID(userID));
 
-        if(!doctors.isEmpty()) {
+        if (!doctors.isEmpty()) {
             for (Doctor dc : doctors)
                 doctorNames.add(dc.getHoTen());
 
@@ -93,27 +93,28 @@ public class CommentDoctorFragment extends Fragment {
                     selectedDoctor = doctors.get(0);
                 }
             });
-        }
-        else {
+        } else {
             sp.setVisibility(View.GONE);
 
         }
 
 
-        if (!txtCMT.getText().toString().isEmpty()) {
-            btnConfirm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!txtCMT.getText().toString().isEmpty()) {
                     if (db.commentDoctor(db.getPatientID(userID), selectedDoctor, txtCMT.getText().toString())) {
                         Toast.makeText(getActivity(), "Đánh giá thành công", Toast.LENGTH_SHORT).show();
                     } else
                         Toast.makeText(getActivity(), "Đánh giá thất bại", Toast.LENGTH_SHORT).show();
                     getActivity().getSupportFragmentManager().popBackStack();
+                } else {
+                    Toast.makeText(getActivity(), "Chưa nhập đánh giá", Toast.LENGTH_SHORT).show();
                 }
-            });
-        }else {
-            Toast.makeText(getActivity(), "Chưa nhập đánh giá", Toast.LENGTH_SHORT).show();
-        }
+
+            }
+        });
+
 
         return view;
     }

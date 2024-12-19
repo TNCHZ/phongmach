@@ -901,13 +901,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put("NgayLamViec", selectedDate);
+        values.put("BacSiID", id);
 
         int rowsAffected = db.update(
                 "LichLamViec",
                 values,
-                "BacSiID = ?",
-                new String[]{id}
+                "NgayLamViec = ?",
+                new String[]{selectedDate}
         );
 
         db.close();
@@ -1125,11 +1125,24 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 String ngayLam = cursor.getString(cursor.getColumnIndexOrThrow("NgayLamViec"));
-                ngayLamList.add(ngayLam);
+                String today = utils.getCurrentDate();
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    try {
+                        LocalDate regisDate = LocalDate.parse(ngayLam, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                        LocalDate currentDate = LocalDate.parse(today, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+                        if (regisDate.isAfter(currentDate)) {
+                            ngayLamList.add(ngayLam);
+                        }
+                    } catch (DateTimeParseException e) {
+                        e.printStackTrace();
+                        db.close();
+                    }
+
+                }
             } while (cursor.moveToNext());
             cursor.close();
         }
-
         db.close(); // Đóng cơ sở dữ liệu
         return ngayLamList; // Trả về danh sách NgayLam
     }
@@ -1231,8 +1244,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         return count;
     }
-    public String getAdminRole(String id)
-    {
+
+    public String getAdminRole(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
         String role = "";
 
