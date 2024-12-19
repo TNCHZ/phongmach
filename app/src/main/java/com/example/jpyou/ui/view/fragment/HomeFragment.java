@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment {
                     if (currentScrollX >= maxScrollX) {
                         scrview.smoothScrollTo(0, 0);  // Quay lại đầu
                     } else {
-                        int nextPosition = currentScrollX + 600;
+                        int nextPosition = currentScrollX + 700;
                         scrview.smoothScrollTo(nextPosition, 0);
                     }
                     handler.postDelayed(this, 2000);

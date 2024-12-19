@@ -10,8 +10,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-
 import com.example.jpyou.data.model.Comment;
 import com.example.jpyou.data.model.Doctor;
 import com.example.jpyou.data.model.Medicine;
@@ -861,24 +859,25 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
 
     public boolean updateDoctor(String bacSiID, String ngayLam) {
-        SQLiteDatabase db = this.getWritableDatabase();  // Mở kết nối với database (quyền ghi)
+        SQLiteDatabase db = this.getWritableDatabase();  // Open connection to database (write mode)
 
         ContentValues values = new ContentValues();
-        values.put("BacSiID", bacSiID);  // Cập nhật trường BacSiID
-        values.put("NgayLamViec", ngayLam);  // Cập nhật trường NgayLamViec
-        long result = db.insert("LichLamViec", null, values);
+        values.put("BacSiID", bacSiID);  // Update BacSiID
+        values.put("NgayLamViec", ngayLam);  // Update NgayLamViec
+        long result = db.insert("LichLamViec", null, values);  // Insert into LichLamViec table
 
-
-        db.close();
         return result != -1;
     }
 
-    public String getDoctorWorkAtDay(String day) {
+
+
+    public Doctor getDoctorWorkAtDay(String day) {
         SQLiteDatabase db = this.getWritableDatabase();
         String doctorName = null;
-
+        String id = null;
+        Doctor dc = null;
         // Corrected query
-        String query = "SELECT NguoiDung.HoTen " +
+        String query = "SELECT NguoiDung.HoTen, BacSi.BacSiID " +
                 "FROM NguoiDung " +
                 "JOIN BacSi ON BacSi.TaiKhoanID = NguoiDung.TaiKhoanID " +
                 "JOIN LichLamViec ON LichLamViec.BacSiID = BacSi.BacSiID " +
@@ -888,16 +887,18 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         if (cursor != null) {
             try {
                 if (cursor.moveToFirst()) { // Chỉ lấy hàng đầu tiên
+                    id = cursor.getString(cursor.getColumnIndexOrThrow("BacSiID"));
                     doctorName = cursor.getString(cursor.getColumnIndexOrThrow("HoTen"));
+                    dc = new Doctor(id, doctorName);
                 }
             } finally {
                 cursor.close(); // Đảm bảo đóng con trỏ
             }
         }
-        return doctorName; // Trả về null nếu không có kết quả
+        return dc;
     }
 
-    public boolean changeDoctorWork(String id, String selectedDate) {
+    public boolean changeDoctorWork(String id, String selectedDate, String id2) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -909,6 +910,24 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 "NgayLamViec = ?",
                 new String[]{selectedDate}
         );
+
+        String query = "SELECT TrieuChung FROM LichHen WHERE BacSiID = ? AND NgayKham = ? AND isKham = 0 AND isHen = 1";
+        Cursor cursor = db.rawQuery(query, new String[]{id2, selectedDate});
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                String trieuChung = cursor.getString(cursor.getColumnIndexOrThrow("TrieuChung"));
+
+                if (trieuChung.equals("1010")) {
+                    db.delete("LichHen", "BacSiID = ? AND NgayKham = ?", new String[]{id2, selectedDate});
+                } else {
+                    ContentValues updateValues = new ContentValues();
+                    updateValues.put("BacSiID", id);
+                    db.update("LichHen", updateValues, "BacSiID = ? AND NgayKham = ?", new String[]{id2, selectedDate});
+                }
+            }
+            cursor.close();
+        }
 
         db.close();
         return rowsAffected > 0;

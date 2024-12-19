@@ -30,7 +30,7 @@ import java.util.List;
 
 public class AddDoctorWorkDayNurseFragment extends Fragment {
 
-    public AddDoctorWorkDayNurseFragment(){
+    public AddDoctorWorkDayNurseFragment() {
     }
 
     @Override
@@ -48,6 +48,7 @@ public class AddDoctorWorkDayNurseFragment extends Fragment {
     private Doctor selectedDoctor;
     private TextView tv1, tv2;
     private String tenBacSi;
+    private Doctor lastDoctor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,7 +61,7 @@ public class AddDoctorWorkDayNurseFragment extends Fragment {
             tv1 = view.findViewById(R.id.textviewConfirm_AddDoctorWorkDayNurseFragment);
             tv2 = view.findViewById(R.id.textview_AddDoctorWorkDayNurseFragment);
             btnBack = view.findViewById(R.id.buttonBack_AddDoctorWorkDayNurseFragment);
-
+            tenBacSi = null;
             doctors = new ArrayList<>();
             doctors = db.getDoctors();
 
@@ -74,7 +75,12 @@ public class AddDoctorWorkDayNurseFragment extends Fragment {
             sp.setAdapter(adapter);
 
             selectedDate = utils.getCurrentDate();
-            tenBacSi = db.getDoctorWorkAtDay(selectedDate);
+
+            if (db.getDoctorWorkAtDay(selectedDate) != null) {
+                tenBacSi = db.getDoctorWorkAtDay(selectedDate).getHoTen();
+                lastDoctor = db.getDoctorWorkAtDay(selectedDate);
+            }
+
             if (tenBacSi != null) {
                 tv1.setVisibility(View.VISIBLE);
                 tv1.setText("Bác sĩ " + tenBacSi + " đã được đặt lịch làm");
@@ -93,7 +99,11 @@ public class AddDoctorWorkDayNurseFragment extends Fragment {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                         LocalDate localDate1 = LocalDate.parse(selectedDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                         LocalDate localDate2 = LocalDate.parse(utils.getCurrentDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                        tenBacSi = db.getDoctorWorkAtDay(selectedDate);
+                        if (db.getDoctorWorkAtDay(selectedDate) != null) {
+                            tenBacSi = db.getDoctorWorkAtDay(selectedDate).getHoTen();
+                        }else
+                            tenBacSi = null;
+
                         if (localDate2.isAfter(localDate1)) {
                             tv2.setVisibility(View.GONE);
                             btnConfirm.setVisibility(View.GONE);
@@ -144,13 +154,13 @@ public class AddDoctorWorkDayNurseFragment extends Fragment {
                         isSuccess = db.updateDoctor(selectedDoctor.getId(), selectedDate);
                         Toast.makeText(getActivity(), isSuccess ? "Đặt lịch thành công" : "Đặt lịch thất bại", Toast.LENGTH_SHORT).show();
                     } else {
-                        isSuccess = db.changeDoctorWork(selectedDoctor.getId(), selectedDate);
+                        isSuccess = db.changeDoctorWork(selectedDoctor.getId(), selectedDate, lastDoctor.getId());
                         Toast.makeText(getActivity(), isSuccess ? "Thay đổi bác sĩ thành công" : "Thay đổi bác sĩ thất bại", Toast.LENGTH_SHORT).show();
                     }
 
                     // Nếu thành công, cập nhật lại giao diện
                     if (isSuccess) {
-                        tenBacSi = db.getDoctorWorkAtDay(selectedDate); // Lấy lại tên bác sĩ
+                        tenBacSi = db.getDoctorWorkAtDay(selectedDate).getHoTen(); // Lấy lại tên bác sĩ
                         if (tenBacSi != null) {
                             tv1.setVisibility(View.VISIBLE);
                             tv1.setText("Bác sĩ " + tenBacSi + " đã được đặt lịch làm");

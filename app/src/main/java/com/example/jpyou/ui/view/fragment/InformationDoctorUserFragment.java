@@ -105,7 +105,7 @@ public class InformationDoctorUserFragment extends Fragment {
         btnRegis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(db.registerExamination(db.getPatientID(userID), selectedDay, ""))
+                if(db.registerExamination(db.getPatientID(userID), selectedDay, "1010"))
                     Toast.makeText(getActivity(), "Đặt lịch thành công", Toast.LENGTH_SHORT).show();
                 else
                     Toast.makeText(getActivity(), "Bạn đã có lịch khám vào ngày này", Toast.LENGTH_SHORT).show();
