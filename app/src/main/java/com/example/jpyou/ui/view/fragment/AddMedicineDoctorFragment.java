@@ -90,7 +90,6 @@ public class AddMedicineDoctorFragment extends Fragment {
             lvMedicine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    // Get the selected medicine
                     Medicine selectedMedicine = medicines.get(position);
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -179,9 +178,73 @@ public class AddMedicineDoctorFragment extends Fragment {
             }
         }
 
-        // Update the adapter with the filtered list
         ShowMedicineAdapter filteredAdapter = new ShowMedicineAdapter(getActivity(), R.layout.row_medicine, filteredList);
         lvMedicine.setAdapter(filteredAdapter);
+
+
+        lvMedicine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Medicine selectedMedicine = filteredList.get(position);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Nhập thông tin");
+
+                // Set up the input fields (number picker for quantity and instructions TextView)
+                LinearLayout layout = new LinearLayout(getActivity());
+                layout.setOrientation(LinearLayout.VERTICAL);
+
+                // Input for quantity
+                final EditText etQuantity = new EditText(getActivity());
+                etQuantity.setHint("Nhập số lượng");
+                etQuantity.setInputType(InputType.TYPE_CLASS_NUMBER); // Restrict to numeric input
+                layout.addView(etQuantity);
+
+                // Instructions TextView (Fix: Use correct EditText for instructions)
+                final EditText etUsage = new EditText(getActivity());
+                etUsage.setHint("Hướng dẫn sử dụng");  // Fixed: Set hint for etUsage
+                etUsage.setInputType(InputType.TYPE_CLASS_TEXT); // Restrict to text input (for usage instructions)
+                layout.addView(etUsage);
+
+                builder.setView(layout);
+
+                // Set up the "Confirm" button
+                builder.setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Get the quantity entered by the user
+                        String quantityText = etQuantity.getText().toString();
+                        String usageText = etUsage.getText().toString();
+                        if (!quantityText.isEmpty() && !usageText.isEmpty()) {
+                            // Parse quantity as integer and set usage as string
+                            int quantity = Integer.parseInt(quantityText); // Convert quantity to integer
+                            selectedMedicine.setUsage(usageText);
+                            selectedMedicine.setQuantity(quantityText);
+
+                            chosenMedicines.add(selectedMedicine.getName());
+
+                            saveMedicines.add(selectedMedicine);
+
+                            // Update the list view with the new data
+                            ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, chosenMedicines);
+                            lvMedicineChosen.setAdapter(adapter1);  // Assuming lvMedicineChosen is defined correctly
+                        }
+                    }
+                });
+
+                // Set up the "Cancel" button
+                builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                // Show the dialog
+                builder.show();
+            }
+        });
+
     }
 
 
