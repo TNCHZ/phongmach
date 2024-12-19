@@ -84,27 +84,6 @@ public class ProfileFragment extends Fragment {
                 }
             });
 
-//            sBFontSize = view.findViewById(R.id.seekBarFontSize_ProfileFragment);
-//            sBFontSize.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-//                @Override
-//                public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-//                    switch (i){
-//                        case 1:
-//                            fontSize = i + 17;
-//                            break;
-//                        case 2:
-//                            fontSize = i + 19;
-//                            break;
-//                        default:
-//                            fontSize = i + 15;
-//                            break;
-//                    }
-//                }
-//                @Override
-//                public void onStartTrackingTouch(SeekBar seekBar) {}
-//                @Override
-//                public void onStopTrackingTouch(SeekBar seekBar) {}
-//            });
 
             btnUpdateInformation = view.findViewById(R.id.btnUpdateInformation_ProfileFragment);
             btnChangePassword = view.findViewById(R.id.btnChangePassword_ProfileFragment);
