@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ChartAdminFragment extends Fragment {
+public class ChartPatientAdminFragment extends Fragment {
     private BarChart barChart;
     //private HorizontalBarChart barChart;
     private List<String> xValue;
@@ -39,7 +38,7 @@ public class ChartAdminFragment extends Fragment {
     private Button btnBack;
     private Spinner sp;
 
-    public ChartAdminFragment() {
+    public ChartPatientAdminFragment() {
         // Required empty public constructor
     }
 
@@ -144,7 +143,7 @@ public class ChartAdminFragment extends Fragment {
     private ArrayList<BarEntry> chartQuarter(int startMonth) {
         ArrayList<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i <= 2; i++) {
-            String j = String.valueOf(startMonth + i);
+            String j = startMonth < 10 ? "0" + String.valueOf(startMonth + i) : String.valueOf(startMonth + i);
             entries.add(new BarEntry(i, db.countPatient(j) * 1f));
 
         }
@@ -154,7 +153,7 @@ public class ChartAdminFragment extends Fragment {
     private ArrayList<BarEntry> chartYear() {
         ArrayList<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
-            String j = String.valueOf(i + 1);
+            String j = i < 9 ? "0" + String.valueOf(i + 1) : String.valueOf(i + 1);
             entries.add(new BarEntry(i, db.countPatient(j) * 1f));
         }
         return entries;

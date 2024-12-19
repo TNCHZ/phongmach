@@ -39,9 +39,8 @@ public class WarningAccount {
             txtWarning.setText("\"Số điện thoại\" không hợp lệ");
         } else if (password.isEmpty()) {
             txtWarning.setText("Vui lòng nhập \"Mật khẩu\"");
-        } else if (password.length() < 8) {
-            txtWarning.setText("Mật khẩu không đủ 8 ký tự");
-            this.check = true;
+        } else if (password.length() < 6) {
+            txtWarning.setText("Mật khẩu không đủ 6 ký tự");
         } else if (taiKhoanID.equals("-1")) {
             txtWarning.setText("Không tìm thông tin tài khoản");
         } else {

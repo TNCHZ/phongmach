@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -55,7 +56,6 @@ public class ProfileFragment extends Fragment {
         {
             sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
             userID = sharedPreferences.getString("TaiKhoanID", null);
-
 
             sharedPreferencesNight = requireActivity().getSharedPreferences("NightMode", Context.MODE_PRIVATE);
             isNightMode = sharedPreferencesNight.getBoolean("night", false);
@@ -135,7 +135,6 @@ public class ProfileFragment extends Fragment {
                     }
                 });
             } else {
-                Log.d("1", db.getRole(userID));
                 if (db.getRole(userID).equals("Admin")) {
                     btnUpdateInformation.setVisibility(View.GONE);
                     btnChangePassword.setVisibility(View.VISIBLE);

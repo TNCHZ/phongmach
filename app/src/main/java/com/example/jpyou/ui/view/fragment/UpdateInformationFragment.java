@@ -22,7 +22,7 @@ public class UpdateInformationFragment extends Fragment {
     private EditText txtName, txtDayOfBirth, txtPhone, txtEmail;
     private MyDatabaseHelper db;
     private RadioButton rdMale, rdFemale;
-    private Button btnUpdate;
+    private Button btnUpdate, btnBack;
     private String userID;
 
     public UpdateInformationFragment(String userID) {
@@ -60,7 +60,13 @@ public class UpdateInformationFragment extends Fragment {
             } else {
                 rdFemale.setChecked(true);
             }
-
+            btnBack = view.findViewById(R.id.btnBack_UpdateInformation);
+            btnBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().getSupportFragmentManager().popBackStack();
+                }
+            });
 
             btnUpdate = view.findViewById(R.id.btnUpdate_UpdateInformationFragment);
             btnUpdate.setOnClickListener(new View.OnClickListener() {

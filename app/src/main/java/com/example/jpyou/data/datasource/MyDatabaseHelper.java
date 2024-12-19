@@ -3,6 +3,7 @@ package com.example.jpyou.data.datasource;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -19,6 +20,11 @@ import com.example.jpyou.data.model.Patient;
 import com.example.jpyou.data.model.Role;
 import com.example.jpyou.utils;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -30,194 +36,231 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "phongmach.db";
     public static final int DATABASE_VERSION = 1;
 
+    private static final String DB_PATH_SUFFIX = "/databases/";
 
-    public MyDatabaseHelper(@Nullable Context context) {
+    public MyDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
+        processCopy(); // Thực hiện sao chép database khi khởi tạo
+    }
+
+    private void processCopy() {
+        File dbFile = new File(getDatabasePath());
+        if (!dbFile.exists()) {
+            try {
+                copyDatabaseFromAssets();
+                Toast.makeText(context, "Database copied successfully from assets.", Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                Toast.makeText(context, "Error copying database: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private String getDatabasePath() {
+        return context.getApplicationInfo().dataDir + DB_PATH_SUFFIX + DATABASE_NAME;
+    }
+
+    private void copyDatabaseFromAssets() throws IOException {
+        AssetManager assetManager = context.getAssets();
+        InputStream myInput = assetManager.open(DATABASE_NAME);
+        String outFileName = getDatabasePath();
+        File dbFolder = new File(context.getApplicationInfo().dataDir + DB_PATH_SUFFIX);
+        if (!dbFolder.exists()) {
+            dbFolder.mkdirs(); // Tạo thư mục nếu chưa tồn tại
+        }
+
+        OutputStream myOutput = new FileOutputStream(outFileName);
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = myInput.read(buffer)) > 0) {
+            myOutput.write(buffer, 0, length);
+        }
+
+        myOutput.flush();
+        myOutput.close();
+        myInput.close();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Tạo bảng TaiKhoan
-        String createTaiKhoanTable = "CREATE TABLE TaiKhoan (" +
-                "TaiKhoanID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "TaiKhoan TEXT NOT NULL UNIQUE, " +
-                "MatKhau TEXT NOT NULL, " +
-                "NgayThamGia TEXT NOT NULL, " +
-                "HoatDong INTEGER NOT NULL);";
-
-        // Tạo bảng NguoiDung
-        String createNguoiDungTable = "CREATE TABLE NguoiDung (" +
-                "TaiKhoanID INTEGER PRIMARY KEY, " +
-                "HoTen TEXT, " +
-                "GioiTinh TEXT, " +
-                "NgaySinh TEXT, " +
-                "SoDT TEXT UNIQUE, " +
-                "Email TEXT UNIQUE, " +
-                "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
-
-
-        // Tạo bảng Admin
-        String createAdminTable = "CREATE TABLE Admin (" +
-                "AdminID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "ChucNang TEXT NOT NULL, " +
-                "TaiKhoanID INTEGER, " +
-                "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
-
-        // Tạo bảng BacSi
-        String createBacSiTable = "CREATE TABLE BacSi (" +
-                "BacSiID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "KinhNghiem TEXT NOT NULL, " +
-                "TaiKhoanID INTEGER, " +
-                "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
-
-        // Tạo bảng YTa
-        String createYTaTable = "CREATE TABLE YTa (" +
-                "YTaID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "TaiKhoanID INTEGER, " +
-                "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
-
-        // Tạo bảng BenhNhan
-        String createBenhNhanTable = "CREATE TABLE BenhNhan (" +
-                "BenhNhanID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "TaiKhoanID INTEGER, " +
-                "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
-
-        String createLichHenTable = "CREATE TABLE LichHen (" +
-                "LichHenID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "TenLichHen TEXT NOT NULL, " +
-                "TrieuChung TEXT, " +
-                "NgayKham TEXT NOT NULL, " +
-                "SoThuTuKham INTEGER, " +
-                "isHen INTEGER, " +
-                "isKham INTEGER, " +
-                "isHuy INTEGER, " +
-                "BacSiID INTEGER, " +
-                "BenhNhanID INTEGER, " +
-                "FOREIGN KEY(BacSiID) REFERENCES BacSi(BacSiID), " +
-                "FOREIGN KEY(BenhNhanID) REFERENCES BenhNhan(BenhNhanID));";
-
-        String createKetQuaChuanDoanTable = "CREATE TABLE KetQuaChuanDoan (" +
-                "LichHenID INTEGER PRIMARY KEY, " +
-                "TenKetQuaChuanDoan TEXT NOT NULL, " +
-                "BacSiID INTEGER, " +
-                "BenhNhanID INTEGER, " +
-                "ToaThuocID INTEGER, " +
-                "FOREIGN KEY(LichhenID) REFERENCES LichHen(LichhenID), " +
-                "FOREIGN KEY(BacSiID) REFERENCES BacSi(BacSiID), " +
-                "FOREIGN KEY(BenhNhanID) REFERENCES BenhNhan(BenhNhanID), " +
-                "FOREIGN KEY(ToaThuocID) REFERENCES ToaThuoc(ToaThuocID));";
-
-        // Tạo bảng Thuoc
-        String createThuocTable = "CREATE TABLE Thuoc (" +
-                "ThuocID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "TenThuoc TEXT NOT NULL, " +
-                "DonVi TEXT);";
-
-        // Tạo bảng ToaThuoc
-        String createToaThuocTable = "CREATE TABLE ToaThuoc (" +
-                "ToathuocID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "NgayKeToa TEXT);";
-
-        // Tạo bảng ToaThuoc_Thuoc
-        String createToaThuocThuocTable = "CREATE TABLE ToaThuoc_Thuoc (" +
-                "ToaThuocThuocID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "SoLuong TEXT, " +
-                "HuongDanSuDung TEXT, " +
-                "ThuocID INTEGER, " +
-                "ToaThuocID INTEGER, " +
-                "FOREIGN KEY(ThuocID) REFERENCES Thuoc(ThuocID), " +
-                "FOREIGN KEY(ToaThuocID) REFERENCES ToaThuoc(ToaThuocID));";
-
-        String createLichLamViecTable = "CREATE TABLE LichLamViec (" +
-                "LichLamViecID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "NgayLamViec TEXT UNIQUE, " +
-                "BacSiID INTEGER, " +
-                "FOREIGN KEY(BacSiID) REFERENCES BacSi(BacSiID));";
-
-        String createDanhGiaTable = "CREATE TABLE DanhGia (" +
-                "DanhGiaID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "NoiDung TEXT, " +
-                "BacSiID INTEGER, " +
-                "BenhNhanID INTEGER, " +
-                "FOREIGN KEY(BenhNhanID) REFERENCES BenhNhan(BenhNhanID), " +
-                "FOREIGN KEY(BacSiID) REFERENCES BacSi(BacSiID));";
-
-
-        // Thực thi các lệnh tạo bảng
-        db.execSQL(createTaiKhoanTable);
-        db.execSQL(createNguoiDungTable);
-        db.execSQL(createAdminTable);
-        db.execSQL(createBacSiTable);
-        db.execSQL(createYTaTable);
-        db.execSQL(createBenhNhanTable);
-        db.execSQL(createLichHenTable);
-        db.execSQL(createKetQuaChuanDoanTable);
-        db.execSQL(createThuocTable);
-        db.execSQL(createToaThuocTable);
-        db.execSQL(createToaThuocThuocTable);
-        db.execSQL(createLichLamViecTable);
-        db.execSQL(createDanhGiaTable);
-
-
-        String insertTaiKhoan1 = "INSERT INTO TaiKhoan (TaiKhoan, MatKhau, NgayThamGia, HoatDong) VALUES ('0938563411', '123', '14/11/2024', 1);";
-        String insertTaiKhoan2 = "INSERT INTO TaiKhoan (TaiKhoan, MatKhau, NgayThamGia, HoatDong) VALUES ('0938563412', '123', '14/11/2024', 1);";
-
-        db.execSQL(insertTaiKhoan1);
-        db.execSQL(insertTaiKhoan2);
-
-        String insertNguoiDung1 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = '0938563411'), 'Admin User');";
-        String insertNguoiDung2 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = '0938563412'), 'Admin Report');";
-
-        db.execSQL(insertNguoiDung1);
-        db.execSQL(insertNguoiDung2);
-
-        String insertAdmin1 = "INSERT INTO Admin (ChucNang, TaiKhoanID) VALUES ('Quản lý đăng nhập', (SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = '0938563411'));";
-        String insertAdmin2 = "INSERT INTO Admin (ChucNang, TaiKhoanID) VALUES ('Xem thống kê', (SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = '0938563412'));";
-
-        db.execSQL(insertAdmin1);
-        db.execSQL(insertAdmin2);
-        ContentValues values = new ContentValues();
-
-        values.put("TenThuoc", "Paracetamol");
-        values.put("DonVi", "Viên");
-        db.insert("Thuoc", null, values);
-
-        values.put("TenThuoc", "Aspirin");
-        values.put("DonVi", "Viên");
-        db.insert("Thuoc", null, values);
-
-        values.put("TenThuoc", "Amoxicillin");
-        values.put("DonVi", "Viên");
-        db.insert("Thuoc", null, values);
-
-        values.put("TenThuoc", "Ibuprofen");
-        values.put("DonVi", "Viên");
-        db.insert("Thuoc", null, values);
-
-        values.put("TenThuoc", "Vitamin C");
-        values.put("DonVi", "Viên");
-        db.insert("Thuoc", null, values);
-
-        values.put("TenThuoc", "Loratadine");
-        values.put("DonVi", "Viên");
-        db.insert("Thuoc", null, values);
-
-        values.put("TenThuoc", "Omeprazole");
-        values.put("DonVi", "Viên");
-        db.insert("Thuoc", null, values);
-
-        values.put("TenThuoc", "Cetirizine");
-        values.put("DonVi", "Viên");
-        db.insert("Thuoc", null, values);
-
-        values.put("TenThuoc", "Diphenhydramine");
-        values.put("DonVi", "Viên");
-        db.insert("Thuoc", null, values);
-
-        values.put("TenThuoc", "Metformin");
-        values.put("DonVi", "Viên");
-        db.insert("Thuoc", null, values);
+//        String createTaiKhoanTable = "CREATE TABLE TaiKhoan (" +
+//                "TaiKhoanID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//                "TaiKhoan TEXT NOT NULL UNIQUE, " +
+//                "MatKhau TEXT NOT NULL, " +
+//                "NgayThamGia TEXT NOT NULL, " +
+//                "HoatDong INTEGER NOT NULL);";
+//
+//        // Tạo bảng NguoiDung
+//        String createNguoiDungTable = "CREATE TABLE NguoiDung (" +
+//                "TaiKhoanID INTEGER PRIMARY KEY, " +
+//                "HoTen TEXT, " +
+//                "GioiTinh TEXT, " +
+//                "NgaySinh TEXT, " +
+//                "SoDT TEXT UNIQUE, " +
+//                "Email TEXT UNIQUE, " +
+//                "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
+//
+//
+//        // Tạo bảng Admin
+//        String createAdminTable = "CREATE TABLE Admin (" +
+//                "AdminID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//                "ChucNang TEXT NOT NULL, " +
+//                "TaiKhoanID INTEGER, " +
+//                "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
+//
+//        // Tạo bảng BacSi
+//        String createBacSiTable = "CREATE TABLE BacSi (" +
+//                "BacSiID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//                "KinhNghiem TEXT NOT NULL, " +
+//                "TaiKhoanID INTEGER, " +
+//                "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
+//
+//        // Tạo bảng YTa
+//        String createYTaTable = "CREATE TABLE YTa (" +
+//                "YTaID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//                "TaiKhoanID INTEGER, " +
+//                "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
+//
+//        // Tạo bảng BenhNhan
+//        String createBenhNhanTable = "CREATE TABLE BenhNhan (" +
+//                "BenhNhanID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//                "TaiKhoanID INTEGER, " +
+//                "FOREIGN KEY(TaiKhoanID) REFERENCES TaiKhoan(TaiKhoanID));";
+//
+//        String createLichHenTable = "CREATE TABLE LichHen (" +
+//                "LichHenID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//                "TenLichHen TEXT NOT NULL, " +
+//                "TrieuChung TEXT, " +
+//                "NgayKham TEXT NOT NULL, " +
+//                "SoThuTuKham INTEGER, " +
+//                "isHen INTEGER, " +
+//                "isKham INTEGER, " +
+//                "BacSiID INTEGER, " +
+//                "BenhNhanID INTEGER, " +
+//                "FOREIGN KEY(BacSiID) REFERENCES BacSi(BacSiID), " +
+//                "FOREIGN KEY(BenhNhanID) REFERENCES BenhNhan(BenhNhanID));";
+//
+//        String createKetQuaChuanDoanTable = "CREATE TABLE KetQuaChuanDoan (" +
+//                "LichHenID INTEGER PRIMARY KEY, " +
+//                "TenKetQuaChuanDoan TEXT NOT NULL, " +
+//                "BacSiID INTEGER, " +
+//                "BenhNhanID INTEGER, " +
+//                "ToaThuocID INTEGER, " +
+//                "FOREIGN KEY(LichhenID) REFERENCES LichHen(LichhenID), " +
+//                "FOREIGN KEY(BacSiID) REFERENCES BacSi(BacSiID), " +
+//                "FOREIGN KEY(BenhNhanID) REFERENCES BenhNhan(BenhNhanID), " +
+//                "FOREIGN KEY(ToaThuocID) REFERENCES ToaThuoc(ToaThuocID));";
+//
+//        // Tạo bảng Thuoc
+//        String createThuocTable = "CREATE TABLE Thuoc (" +
+//                "ThuocID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//                "TenThuoc TEXT NOT NULL, " +
+//                "DonVi TEXT);";
+//
+//        // Tạo bảng ToaThuoc
+//        String createToaThuocTable = "CREATE TABLE ToaThuoc (" +
+//                "ToathuocID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//                "NgayKeToa TEXT);";
+//
+//        // Tạo bảng ToaThuoc_Thuoc
+//        String createToaThuocThuocTable = "CREATE TABLE ToaThuoc_Thuoc (" +
+//                "ToaThuocThuocID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//                "SoLuong TEXT, " +
+//                "HuongDanSuDung TEXT, " +
+//                "ThuocID INTEGER, " +
+//                "ToaThuocID INTEGER, " +
+//                "FOREIGN KEY(ThuocID) REFERENCES Thuoc(ThuocID), " +
+//                "FOREIGN KEY(ToaThuocID) REFERENCES ToaThuoc(ToaThuocID));";
+//
+//        String createLichLamViecTable = "CREATE TABLE LichLamViec (" +
+//                "LichLamViecID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//                "NgayLamViec TEXT UNIQUE, " +
+//                "BacSiID INTEGER, " +
+//                "FOREIGN KEY(BacSiID) REFERENCES BacSi(BacSiID));";
+//
+//        String createDanhGiaTable = "CREATE TABLE DanhGia (" +
+//                "DanhGiaID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//                "NoiDung TEXT, " +
+//                "BacSiID INTEGER, " +
+//                "BenhNhanID INTEGER, " +
+//                "FOREIGN KEY(BenhNhanID) REFERENCES BenhNhan(BenhNhanID), " +
+//                "FOREIGN KEY(BacSiID) REFERENCES BacSi(BacSiID));";
+//
+//
+//        // Thực thi các lệnh tạo bảng
+//        db.execSQL(createTaiKhoanTable);
+//        db.execSQL(createNguoiDungTable);
+//        db.execSQL(createAdminTable);
+//        db.execSQL(createBacSiTable);
+//        db.execSQL(createYTaTable);
+//        db.execSQL(createBenhNhanTable);
+//        db.execSQL(createLichHenTable);
+//        db.execSQL(createKetQuaChuanDoanTable);
+//        db.execSQL(createThuocTable);
+//        db.execSQL(createToaThuocTable);
+//        db.execSQL(createToaThuocThuocTable);
+//        db.execSQL(createLichLamViecTable);
+//        db.execSQL(createDanhGiaTable);
+//
+//
+//        String insertTaiKhoan1 = "INSERT INTO TaiKhoan (TaiKhoan, MatKhau, NgayThamGia, HoatDong) VALUES ('0938563411', '123', '14/11/2024', 1);";
+//        String insertTaiKhoan2 = "INSERT INTO TaiKhoan (TaiKhoan, MatKhau, NgayThamGia, HoatDong) VALUES ('0938563412', '123', '14/11/2024', 1);";
+//
+//        db.execSQL(insertTaiKhoan1);
+//        db.execSQL(insertTaiKhoan2);
+//
+//        String insertNguoiDung1 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = '0938563411'), 'Admin User');";
+//        String insertNguoiDung2 = "INSERT INTO NguoiDung (TaiKhoanID, HoTen) VALUES ((SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = '0938563412'), 'Admin Report');";
+//
+//        db.execSQL(insertNguoiDung1);
+//        db.execSQL(insertNguoiDung2);
+//
+//        String insertAdmin1 = "INSERT INTO Admin (ChucNang, TaiKhoanID) VALUES ('Quản lý đăng nhập', (SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = '0938563411'));";
+//        String insertAdmin2 = "INSERT INTO Admin (ChucNang, TaiKhoanID) VALUES ('Xem thống kê', (SELECT TaiKhoanID FROM TaiKhoan WHERE TaiKhoan = '0938563412'));";
+//
+//        db.execSQL(insertAdmin1);
+//        db.execSQL(insertAdmin2);
+//        ContentValues values = new ContentValues();
+//
+//        values.put("TenThuoc", "Paracetamol");
+//        values.put("DonVi", "Viên");
+//        db.insert("Thuoc", null, values);
+//
+//        values.put("TenThuoc", "Aspirin");
+//        values.put("DonVi", "Viên");
+//        db.insert("Thuoc", null, values);
+//
+//        values.put("TenThuoc", "Amoxicillin");
+//        values.put("DonVi", "Viên");
+//        db.insert("Thuoc", null, values);
+//
+//        values.put("TenThuoc", "Ibuprofen");
+//        values.put("DonVi", "Viên");
+//        db.insert("Thuoc", null, values);
+//
+//        values.put("TenThuoc", "Vitamin C");
+//        values.put("DonVi", "Viên");
+//        db.insert("Thuoc", null, values);
+//
+//        values.put("TenThuoc", "Loratadine");
+//        values.put("DonVi", "Viên");
+//        db.insert("Thuoc", null, values);
+//
+//        values.put("TenThuoc", "Omeprazole");
+//        values.put("DonVi", "Viên");
+//        db.insert("Thuoc", null, values);
+//
+//        values.put("TenThuoc", "Cetirizine");
+//        values.put("DonVi", "Viên");
+//        db.insert("Thuoc", null, values);
+//
+//        values.put("TenThuoc", "Diphenhydramine");
+//        values.put("DonVi", "Viên");
+//        db.insert("Thuoc", null, values);
+//
+//        values.put("TenThuoc", "Metformin");
+//        values.put("DonVi", "Viên");
+//        db.insert("Thuoc", null, values);
 
     }
 
@@ -452,14 +495,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 return false;
             }
         }
-        Log.d("a", ":");
-        // Thêm bản ghi mới vào LichHen
+
         ContentValues regis = new ContentValues();
         regis.put("BenhNhanID", id);
         regis.put("TenLichHen", "Khám bệnh");
         regis.put("NgayKham", dayRegis);
         regis.put("isKham", 0);
-        regis.put("isHuy", 0);
         regis.put("TrieuChung", symptom);
         regis.put("isHen", 0);
 
@@ -530,7 +571,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             // Truy vấn dữ liệu
             String query = "SELECT TenLichHen, NgayKham, SoThuTuKham " +
                     "FROM LichHen " +
-                    "WHERE BenhNhanID = ? AND isHuy = 0";
+                    "WHERE BenhNhanID = ?";
 
             cursor = db.rawQuery(query, new String[]{id});
 
@@ -572,7 +613,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                     String ngayKham = cursor.getString(cursor.getColumnIndexOrThrow("NgayKham"));
 
                     // Ghép thông tin
-                    Patient patient = new Patient(ngayKham, tenLichHen);
+                    Patient patient = new Patient(Integer.parseInt(id), ngayKham, tenLichHen);
                     ls.add(patient);
                 } while (cursor.moveToNext());
             }
@@ -743,7 +784,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 "FROM LichHen " +
                 "JOIN BenhNhan ON LichHen.BenhNhanID = BenhNhan.BenhNhanID " +
                 "INNER JOIN NguoiDung ON BenhNhan.TaiKhoanID = NguoiDung.TaiKhoanID " +
-                "WHERE LichHen.isHen = 0 AND LichHen.isKham = 0 AND LichHen.isHuy = 0";
+                "WHERE LichHen.isHen = 0 AND LichHen.isKham = 0";
 
         Cursor cursor = db.rawQuery(query, null);
         if (cursor != null) {
@@ -877,12 +918,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public boolean cancelDay(String id, String day) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put("isHuy", 1);
-
-        int rowsAffected = db.update(
+        int rowsAffected = db.delete(
                 "LichHen",
-                values,
                 "BenhNhanID = ? AND NgayKham = ?",
                 new String[]{id, day}
         );
@@ -890,6 +927,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return rowsAffected > 0;
     }
+
 
     public List<Medicine> getResult(String id, String day) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -1193,6 +1231,26 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         return count;
     }
+    public String getAdminRole(String id)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String role = "";
 
+        // Query to count patients based on month or year, adjust for dd/MM/yyyy format
+        String query = "SELECT ChucNang FROM Admin WHERE TaiKhoanID = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{id});
+
+        // Retrieve the count from the result
+        if (cursor.moveToFirst()) {
+            role = cursor.getString(cursor.getColumnIndexOrThrow("ChucNang"));
+        }
+
+        // Close the cursor and database
+        cursor.close();
+        db.close();
+
+        return role;
+    }
 
 }

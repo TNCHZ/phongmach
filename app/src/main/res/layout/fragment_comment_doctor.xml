@@ -1,9 +1,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_comment_doctor"
+    style="@style/SCREEN"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/SCREEN"
     tools:context="com.example.jpyou.ui.view.fragment.CommentDoctorFragment">
 
 
@@ -19,10 +20,10 @@
 
             <Button
                 android:id="@+id/buttonBack_CommentDoctorFragment"
+                style="@style/BUTTON"
                 android:layout_width="75dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_back"
-                style="@style/BUTTON"
                 app:backgroundTint="@null" />
 
             <TextView
@@ -43,9 +44,9 @@
             style="@style/TEXT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:text="Bác sĩ bạn từng khám"
             android:textSize="20sp"
-            android:layout_margin="10dp"
             android:textStyle="bold" />
 
         <Spinner
@@ -58,28 +59,28 @@
             style="@style/TEXT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:hint="NAME"
             android:textAlignment="center"
-            android:layout_margin="10dp"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editTextText_CommentDoctorFragment"
+            style="@style/EDITTEXT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            style="@style/EDITTEXT"
             android:layout_margin="10dp"
-            android:inputType="text"/>
+            android:ems="10"
+            android:inputType="text" />
 
         <Button
             android:id="@+id/buttonConfirm_CommentDoctorFragment"
+            style="@style/BUTTON"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:backgroundTint="@null"
             android:layout_gravity="center"
-            style="@style/BUTTON"
-            android:text="Gửi đánh giá" />
+            android:text="Gửi đánh giá"
+            app:backgroundTint="@null" />
     </LinearLayout>
 </FrameLayout>

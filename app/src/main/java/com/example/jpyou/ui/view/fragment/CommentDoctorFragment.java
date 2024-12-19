@@ -73,27 +73,32 @@ public class CommentDoctorFragment extends Fragment {
         doctors = new ArrayList<>();
         doctors = db.getDoctorsByPatientID(db.getPatientID(userID));
 
-        for (Doctor dc : doctors)
-            doctorNames.add(dc.getHoTen());
+        if(!doctors.isEmpty()) {
+            for (Doctor dc : doctors)
+                doctorNames.add(dc.getHoTen());
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, doctorNames);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sp.setAdapter(adapter);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, doctorNames);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            sp.setAdapter(adapter);
+            sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    tv.setText(doctorNames.get(position));
+                    selectedDoctor = doctors.get(position);
+                }
 
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    tv.setText(doctorNames.get(0));
+                    selectedDoctor = doctors.get(0);
+                }
+            });
+        }
+        else {
+            sp.setVisibility(View.GONE);
 
-        sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                tv.setText(doctorNames.get(position));
-                selectedDoctor = doctors.get(position);
-            }
+        }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                tv.setText(doctorNames.get(0));
-                selectedDoctor = doctors.get(0);
-            }
-        });
 
         if (!txtCMT.getText().toString().isEmpty()) {
             btnConfirm.setOnClickListener(new View.OnClickListener() {

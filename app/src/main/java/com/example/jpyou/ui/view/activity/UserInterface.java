@@ -2,8 +2,10 @@ package com.example.jpyou.ui.view.activity;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -20,6 +22,12 @@ import com.example.myapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 public class UserInterface extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView bottomNavigationView;
@@ -27,6 +35,7 @@ public class UserInterface extends AppCompatActivity {
     SharedPreferences.Editor editor;
     private String userID;
     private Boolean isNightMode = false, checkLogout = false;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +61,10 @@ public class UserInterface extends AppCompatActivity {
         }
         sharedPreferencesNight = getSharedPreferences("NightMode", MODE_PRIVATE);
         isNightMode = sharedPreferencesNight.getBoolean("night", false);
-        if (isNightMode){
+        if (isNightMode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             isNightMode = false;
-        }else {
+        } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
@@ -100,4 +109,6 @@ public class UserInterface extends AppCompatActivity {
             }
         });
     }
+
+
 }

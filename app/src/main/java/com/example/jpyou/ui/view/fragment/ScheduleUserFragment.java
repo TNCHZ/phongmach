@@ -20,8 +20,10 @@ import android.widget.CalendarView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.jpyou.data.model.Medicine;
+import com.example.jpyou.ui.adapter.SchedulePatientAdapter;
 import com.example.jpyou.ui.adapter.ShowMedicineAdapter;
 import com.example.jpyou.ui.adapter.ShowScheduleAndCancelAdapter;
 import com.example.jpyou.data.datasource.MyDatabaseHelper;
@@ -43,7 +45,7 @@ public class ScheduleUserFragment extends Fragment {
     private ListView lv;
     private MyDatabaseHelper db;
     private List<Patient> schedules;
-
+    private ShowScheduleAndCancelAdapter  adapter, adapter2;
 
     public ScheduleUserFragment() {
         // Required empty public constructor
@@ -54,7 +56,7 @@ public class ScheduleUserFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    private Button btnCheck;
+    private Button btnCheck, btnRefresh;
     private LinearLayout layoutChecked, layoutNotChecked;
     private SearchView sv;
 
@@ -66,7 +68,7 @@ public class ScheduleUserFragment extends Fragment {
         {
             SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE);
             userID = sharedPreferences.getString("TaiKhoanID", null);
-
+            btnRefresh = view.findViewById(R.id.buttonRefresh_ScheduleUserFragment);
             layoutChecked = view.findViewById(R.id.linearLayoutChecked_ScheduleUserFragment);
             layoutNotChecked = view.findViewById(R.id.linearLayoutNotChecked_ScheduleUserFragment);
             if (userID == null) {
@@ -114,18 +116,48 @@ public class ScheduleUserFragment extends Fragment {
 
                 schedules = new ArrayList<>();
                 schedules = db.getDaySchedule(db.getPatientID(userID));
-                ShowScheduleAndCancelAdapter adapter = new ShowScheduleAndCancelAdapter(getActivity(), R.layout.row_show_schedule_and_cancel, schedules);
+                adapter = new ShowScheduleAndCancelAdapter(getActivity(), R.layout.row_show_schedule_and_cancel, schedules);
                 lv.setAdapter(adapter);
+
+
+                adapter.setOnCancelClickListener(new ShowScheduleAndCancelAdapter.OnCancelClickListener() {
+                    @Override
+                    public void onCancelClick(Patient patient, View view) {
+                        if (db.cancelDay(patient.getId(), patient.getAppointDay())) {
+                            Toast.makeText(getActivity(), "Hủy lịch thành công", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), "Hủy lịch thất bại", Toast.LENGTH_SHORT).show();
+                        }
+                        refreshList();
+                    }
+                });
+
+                btnRefresh.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        refreshList();
+                    }
+                });
 
                 cldView.setOnDateChangeListener((calendarView, year, month, dayOfMonth) -> {
                     Calendar calendar = Calendar.getInstance();
-
                     calendar.set(year, month, dayOfMonth);
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                     String selectedDate = sdf.format(calendar.getTime());
 
                     schedules = db.getScheduleAtDay(db.getPatientID(userID), selectedDate);
-                    ShowScheduleAndCancelAdapter adapter2 = new ShowScheduleAndCancelAdapter(getActivity(), R.layout.row_show_schedule_and_cancel, schedules);
+                    adapter2 = new ShowScheduleAndCancelAdapter(getActivity(), R.layout.row_show_schedule_and_cancel, schedules);
+                    adapter2.setOnCancelClickListener(new ShowScheduleAndCancelAdapter.OnCancelClickListener() {
+                        @Override
+                        public void onCancelClick(Patient patient, View view) {
+                            if (db.cancelDay(patient.getId(), patient.getAppointDay())) {
+                                Toast.makeText(getActivity(), "Hủy lịch thành công", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity(), "Hủy lịch thất bại", Toast.LENGTH_SHORT).show();
+                            }
+                            refreshList();
+                        }
+                    });
                     lv.setAdapter(adapter2);
                 });
             }
@@ -145,6 +177,11 @@ public class ScheduleUserFragment extends Fragment {
         ShowScheduleAndCancelAdapter filteredAdapter = new ShowScheduleAndCancelAdapter(getActivity(), R.layout.row_show_schedule_and_cancel, filteredList);
         lv.setAdapter(filteredAdapter); // Update the ListView with the filtered results
     }
-
+    private void refreshList() {
+        schedules.clear();
+        schedules.addAll(db.getDaySchedule(db.getPatientID(userID)));
+        adapter.notifyDataSetChanged();
+        adapter2.notifyDataSetChanged();
+    }
 
 }

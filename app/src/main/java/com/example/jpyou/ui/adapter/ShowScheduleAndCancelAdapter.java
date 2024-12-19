@@ -96,13 +96,9 @@ public class ShowScheduleAndCancelAdapter extends BaseAdapter {
             if (localDate2.isAfter(localDate1) || localDate2.isEqual(localDate1)) {
                 holder.btnCancel.setVisibility(View.GONE);
             } else {
-                holder.btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(db.cancelDay(ps.getId(), ps.getAppointDay()))
-                            Toast.makeText(context, "Hủy lịch thành công", Toast.LENGTH_SHORT).show();
-                        else
-                            Toast.makeText(context, "Hủy lịch thất bại", Toast.LENGTH_SHORT).show();
+                holder.btnCancel.setOnClickListener(v -> {
+                    if (cancelListener != null) {
+                        cancelListener.onCancelClick(ps, v);  // Gọi phương thức của listener
                     }
                 });
             }
@@ -127,4 +123,14 @@ public class ShowScheduleAndCancelAdapter extends BaseAdapter {
 
         return view;
     }
+
+    public interface OnCancelClickListener {
+        void onCancelClick(Patient patient, View view);
+    }
+    private OnCancelClickListener cancelListener;
+
+    public void setOnCancelClickListener(OnCancelClickListener listener) {
+        this.cancelListener = listener;
+    }
+
 }

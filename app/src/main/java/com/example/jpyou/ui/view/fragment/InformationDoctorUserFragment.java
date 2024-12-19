@@ -68,7 +68,7 @@ public class InformationDoctorUserFragment extends Fragment {
         tvName = view.findViewById(R.id.txtName_InformationDoctorUserFragment);
         tvExp = view.findViewById(R.id.txtExp_InformationDoctorUserFragment);
         tvName.setText(doctor.getHoTen());
-        tvExp.setText(doctor.getKinhNghiem());
+        tvExp.setText("Kinh nghiệm: "+ doctor.getKinhNghiem());
         db = new MyDatabaseHelper(getActivity());
         ps = db.getInformation(userID);
 
