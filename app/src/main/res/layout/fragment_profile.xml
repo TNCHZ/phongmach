@@ -119,35 +119,6 @@
                 android:textAlignment="viewStart"
                 app:backgroundTint="@null" />
 
-            <TextView
-                android:id="@+id/textViewSupport_ProfileFragment"
-                style="@style/TEXT"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="Hỗ trợ"
-                android:textAlignment="viewStart"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/buttonInform_ProfileFragment"
-                style="@style/BUTTON"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="Thông tin hỗ trợ"
-                android:textAlignment="viewStart"
-                app:backgroundTint="@null" />
-
-            <Button
-                android:id="@+id/buttonHotline_ProfileFragment"
-                style="@style/BUTTON"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Liên hệ hỗ trợ"
-                android:textAlignment="viewStart"
-                app:backgroundTint="@null" />
         </LinearLayout>
 
         <LinearLayout
