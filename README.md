@@ -1,5 +1,5 @@
 # phongmach
-Quản lý phòng khám tư gồm các người dùng như Admin, bác sĩ, y tá và khách hàng (bệnh nhân)
+Quản lý phòng khám tư gồm các người dùng như Admin, bác sĩ, y tá và khách hàng (bệnh nhân).
 Sử dụng Android để lập trình và kết nối database dùng SQLite
 
 Bác sĩ có thể quản lý có thể khám bệnh và lập toa thuốc cho khách hàng
